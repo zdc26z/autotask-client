@@ -16,6 +16,7 @@ class BillingItemEntity extends DataTransferObject
     public int $billingItemType;
     public ?int $companyID;
     public $configurationItemID;
+    public ?int $contractBlockID;
     public $contractChargeID;
     public ?int $contractID;
     public ?int $contractServiceAdjustmentID;
