@@ -1,5 +1,6 @@
 <?php
 
+use Anteris\Autotask\API\Tickets\TicketEntity;
 use Anteris\Autotask\API\TicketHistory\TicketHistoryCollection;
 use Anteris\Autotask\API\TicketHistory\TicketHistoryEntity;
 use Anteris\Autotask\API\TicketHistory\TicketHistoryService;
@@ -11,6 +12,15 @@ use Tests\AbstractTest;
  */
 class TicketHistoryServiceTest extends AbstractTest
 {
+    protected TicketEntity $ticket;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $result = $this->client->tickets()->query()->where('id', 'exist')->records(1)->get();
+        $this->ticket = $result->offsetGet(0);
+    }
     /**
      * @covers TicketHistoryService
      */
@@ -27,7 +37,7 @@ class TicketHistoryServiceTest extends AbstractTest
      */
     public function test_query_returns_collection()
     {
-        $result = $this->client->ticketHistory()->query()->where('id', 'exist')->records(1)->get();
+        $result = $this->client->ticketHistory()->query()->where('ticketID', 'eq', $this->ticket->id)->records(1)->get();
 
         // Make sure its a collection
         $this->assertInstanceOf(
@@ -41,7 +51,7 @@ class TicketHistoryServiceTest extends AbstractTest
      */
     public function test_collection_contains_ticket_history_entities()
     {
-        $result = $this->client->ticketHistory()->query()->where('id', 'exist')->records(1)->get();
+        $result = $this->client->ticketHistory()->query()->where('ticketID', 'eq', $this->ticket->id)->records(1)->get();
 
         // Make sure the collection has entities
         if (count($result) > 0) {

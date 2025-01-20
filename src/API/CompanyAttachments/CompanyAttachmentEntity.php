@@ -29,7 +29,7 @@ class CompanyAttachmentEntity extends DataTransferObject
     public $parentID;
     public int $publish;
     public ?int $salesOrderID;
-    public string $title;
+    public ?string $title;
     /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
     public ?array $userDefinedFields;
 

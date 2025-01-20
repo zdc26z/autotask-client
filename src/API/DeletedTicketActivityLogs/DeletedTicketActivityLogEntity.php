@@ -15,11 +15,11 @@ class DeletedTicketActivityLogEntity extends DataTransferObject
     public int $createdByResourceID;
     public int $deletedByResourceID;
     public Carbon $deletedDateTime;
-    public Carbon $endDateTime;
-    public float $hoursWorked;
+    public ?Carbon $endDateTime;
+    public ?float $hoursWorked;
     public $id;
     public string $noteOrAttachmentTitle;
-    public Carbon $startDateTime;
+    public ?Carbon $startDateTime;
     public int $ticketID;
     public string $ticketNumber;
     public int $typeID;

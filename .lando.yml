@@ -1,0 +1,9 @@
+name: "autotask_client"
+services:
+  appserver:
+    type: php:8.1
+tooling:
+  phpunit:
+    service: appserver
+  composer:
+    service: appserver
