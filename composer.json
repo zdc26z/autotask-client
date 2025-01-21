@@ -28,10 +28,9 @@
         "guzzlehttp/guzzle": "^6.3|^7.0",
         "illuminate/collections": "^8.0 | ^9.0 | ^10.0",
         "nesbot/carbon": "^2.0",
-        "spatie/data-transfer-object": "^3.0"
+        "spatie/laravel-data": "^4.11"
     },
     "require-dev": {
-        "anteris-dev/autotask-client-generator": "^v1.1",
         "brianium/paratest": "^6.0",
         "mockery/mockery": "^1.6",
         "phpunit/phpunit": "^9.3",
