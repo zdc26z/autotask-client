@@ -14,7 +14,6 @@ use Anteris\Autotask\API\ArticleTicketAssociations\ArticleTicketAssociationServi
 use Anteris\Autotask\API\ArticleToArticleAssociations\ArticleToArticleAssociationService;
 use Anteris\Autotask\API\ArticleToDocumentAssociations\ArticleToDocumentAssociationService;
 use Anteris\Autotask\API\AttachmentInfo\AttachmentInfoService;
-use Anteris\Autotask\API\AttachmentNestedAttachments\AttachmentNestedAttachmentService;
 use Anteris\Autotask\API\BillingCodes\BillingCodeService;
 use Anteris\Autotask\API\BillingItemApprovalLevels\BillingItemApprovalLevelService;
 use Anteris\Autotask\API\BillingItems\BillingItemService;
@@ -185,7 +184,6 @@ use Anteris\Autotask\API\ServiceLevelAgreementResults\ServiceLevelAgreementResul
 use Anteris\Autotask\API\Services\ServiceService;
 use Anteris\Autotask\API\ShippingTypes\ShippingTypeService;
 use Anteris\Autotask\API\Skills\SkillService;
-use Anteris\Autotask\API\Subscribeds\SubscribedService;
 use Anteris\Autotask\API\SubscriptionPeriods\SubscriptionPeriodService;
 use Anteris\Autotask\API\Subscriptions\SubscriptionService;
 use Anteris\Autotask\API\SurveyResults\SurveyResultService;
@@ -401,18 +399,6 @@ class Client
         }
 
         return $this->classCache['AttachmentInfo'];
-    }
-
-    /**
-     * Handles any interaction with the AttachmentNestedAttachments endpoint.
-     */
-    public function attachmentNestedAttachments(): AttachmentNestedAttachmentService
-    {
-        if (! isset($this->classCache['AttachmentNestedAttachments'])) {
-            $this->classCache['AttachmentNestedAttachments'] = new AttachmentNestedAttachmentService($this->client);
-        }
-
-        return $this->classCache['AttachmentNestedAttachments'];
     }
 
     /**
@@ -2453,18 +2439,6 @@ class Client
         }
 
         return $this->classCache['Skills'];
-    }
-
-    /**
-     * Handles any interaction with the Subscribeds endpoint.
-     */
-    public function subscribeds(): SubscribedService
-    {
-        if (! isset($this->classCache['Subscribeds'])) {
-            $this->classCache['Subscribeds'] = new SubscribedService($this->client);
-        }
-
-        return $this->classCache['Subscribeds'];
     }
 
     /**
