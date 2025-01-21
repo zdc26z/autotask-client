@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\PurchaseApprovals;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents PurchaseApproval entities.
  */
-class PurchaseApprovalEntity extends DataTransferObject
+class PurchaseApprovalEntity extends Data
 {
     public ?string $costType;
     public $id;
@@ -25,7 +25,7 @@ class PurchaseApprovalEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

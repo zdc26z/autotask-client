@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\ContractExclusionSetExcludedRoles;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents ContractExclusionSetExcludedRole entities.
  */
-class ContractExclusionSetExcludedRoleEntity extends DataTransferObject
+class ContractExclusionSetExcludedRoleEntity extends Data
 {
     public int $contractExclusionSetID;
     public int $excludedRoleID;
@@ -24,7 +24,7 @@ class ContractExclusionSetExcludedRoleEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

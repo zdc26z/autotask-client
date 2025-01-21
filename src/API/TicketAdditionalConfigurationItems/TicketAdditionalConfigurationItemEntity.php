@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\TicketAdditionalConfigurationItems;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents TicketAdditionalConfigurationItem entities.
  */
-class TicketAdditionalConfigurationItemEntity extends DataTransferObject
+class TicketAdditionalConfigurationItemEntity extends Data
 {
     public int $configurationItemID;
     public $id;
@@ -24,7 +24,7 @@ class TicketAdditionalConfigurationItemEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

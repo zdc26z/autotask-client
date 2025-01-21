@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\TicketSecondaryResources;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents TicketSecondaryResource entities.
  */
-class TicketSecondaryResourceEntity extends DataTransferObject
+class TicketSecondaryResourceEntity extends Data
 {
     public $id;
     public $resourceID;
@@ -25,7 +25,7 @@ class TicketSecondaryResourceEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

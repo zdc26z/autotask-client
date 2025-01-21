@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\TaskSecondaryResources;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents TaskSecondaryResource entities.
  */
-class TaskSecondaryResourceEntity extends DataTransferObject
+class TaskSecondaryResourceEntity extends Data
 {
     public $id;
     public int $resourceID;
@@ -25,7 +25,7 @@ class TaskSecondaryResourceEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

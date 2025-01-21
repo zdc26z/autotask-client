@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\CompanyToDos;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents CompanyToDo entities.
  */
-class CompanyToDoEntity extends DataTransferObject
+class CompanyToDoEntity extends Data
 {
     public int $actionType;
     public ?string $activityDescription;
@@ -58,7 +58,7 @@ class CompanyToDoEntity extends DataTransferObject
             $array['startDateTime'] = new Carbon($array['startDateTime']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

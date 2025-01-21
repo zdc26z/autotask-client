@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\WebhookEventErrorLogs;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents WebhookEventErrorLog entities.
  */
-class WebhookEventErrorLogEntity extends DataTransferObject
+class WebhookEventErrorLogEntity extends Data
 {
     public ?int $accountWebhookID;
     public ?int $contactWebhookID;
@@ -33,7 +33,7 @@ class WebhookEventErrorLogEntity extends DataTransferObject
             $array['createDateTime'] = new Carbon($array['createDateTime']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

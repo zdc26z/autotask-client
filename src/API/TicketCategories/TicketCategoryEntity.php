@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\TicketCategories;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents TicketCategory entities.
  */
-class TicketCategoryEntity extends DataTransferObject
+class TicketCategoryEntity extends Data
 {
     public int $displayColorRGB;
     public $id;
@@ -28,7 +28,7 @@ class TicketCategoryEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

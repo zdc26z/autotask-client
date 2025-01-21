@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\ResourceServiceDeskRoles;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents ResourceServiceDeskRole entities.
  */
-class ResourceServiceDeskRoleEntity extends DataTransferObject
+class ResourceServiceDeskRoleEntity extends Data
 {
     public $id;
     public ?bool $isActive;
@@ -26,7 +26,7 @@ class ResourceServiceDeskRoleEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

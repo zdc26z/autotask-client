@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\InventoryStockedItemsTransfer;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents InventoryStockedItemsTransfer entities.
  */
-class InventoryStockedItemsTransferEntity extends DataTransferObject
+class InventoryStockedItemsTransferEntity extends Data
 {
     public $id;
     public ?int $inventoryProductID;
@@ -27,7 +27,7 @@ class InventoryStockedItemsTransferEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

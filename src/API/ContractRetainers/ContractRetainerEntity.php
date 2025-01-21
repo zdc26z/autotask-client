@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\ContractRetainers;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents ContractRetainer entities.
  */
-class ContractRetainerEntity extends DataTransferObject
+class ContractRetainerEntity extends Data
 {
     public float $amount;
     public ?float $amountApproved;
@@ -48,7 +48,7 @@ class ContractRetainerEntity extends DataTransferObject
             $array['startDate'] = new Carbon($array['startDate']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

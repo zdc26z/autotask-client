@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\ServiceBundles;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents ServiceBundle entities.
  */
-class ServiceBundleEntity extends DataTransferObject
+class ServiceBundleEntity extends Data
 {
     public int $billingCodeID;
     public ?Carbon $createDate;
@@ -46,7 +46,7 @@ class ServiceBundleEntity extends DataTransferObject
             $array['lastModifiedDate'] = new Carbon($array['lastModifiedDate']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

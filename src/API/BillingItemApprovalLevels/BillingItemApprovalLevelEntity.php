@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\BillingItemApprovalLevels;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents BillingItemApprovalLevel entities.
  */
-class BillingItemApprovalLevelEntity extends DataTransferObject
+class BillingItemApprovalLevelEntity extends Data
 {
     public Carbon $approvalDateTime;
     public int $approvalLevel;
@@ -31,7 +31,7 @@ class BillingItemApprovalLevelEntity extends DataTransferObject
             $array['approvalDateTime'] = new Carbon($array['approvalDateTime']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

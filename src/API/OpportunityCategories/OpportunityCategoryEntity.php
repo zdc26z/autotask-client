@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\OpportunityCategories;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents OpportunityCategory entities.
  */
-class OpportunityCategoryEntity extends DataTransferObject
+class OpportunityCategoryEntity extends Data
 {
     public int $displayColorRGB;
     public $id;
@@ -27,7 +27,7 @@ class OpportunityCategoryEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\Companies;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents Company entities.
  */
-class CompanyEntity extends DataTransferObject
+class CompanyEntity extends Data
 {
     public ?string $additionalAddressInformation;
     public ?string $address1;
@@ -93,7 +93,7 @@ class CompanyEntity extends DataTransferObject
             $array['lastTrackedModifiedDateTime'] = new Carbon($array['lastTrackedModifiedDateTime']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

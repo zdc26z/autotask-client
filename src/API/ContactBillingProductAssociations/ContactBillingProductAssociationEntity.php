@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\ContactBillingProductAssociations;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents ContactBillingProductAssociation entities.
  */
-class ContactBillingProductAssociationEntity extends DataTransferObject
+class ContactBillingProductAssociationEntity extends Data
 {
     public int $billingProductID;
     public int $contactID;
@@ -35,7 +35,7 @@ class ContactBillingProductAssociationEntity extends DataTransferObject
             $array['expirationDate'] = new Carbon($array['expirationDate']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

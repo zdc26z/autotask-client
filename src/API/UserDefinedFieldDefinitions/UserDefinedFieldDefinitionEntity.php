@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\UserDefinedFieldDefinitions;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents UserDefinedFieldDefinition entities.
  */
-class UserDefinedFieldDefinitionEntity extends DataTransferObject
+class UserDefinedFieldDefinitionEntity extends Data
 {
     public ?Carbon $createDate;
     public $crmToProjectUdfId;
@@ -45,7 +45,7 @@ class UserDefinedFieldDefinitionEntity extends DataTransferObject
             $array['createDate'] = new Carbon($array['createDate']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

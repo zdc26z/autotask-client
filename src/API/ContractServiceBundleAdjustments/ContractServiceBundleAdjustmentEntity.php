@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\ContractServiceBundleAdjustments;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents ContractServiceBundleAdjustment entities.
  */
-class ContractServiceBundleAdjustmentEntity extends DataTransferObject
+class ContractServiceBundleAdjustmentEntity extends Data
 {
     public ?float $adjustedUnitPrice;
     public ?bool $allowRepeatServiceBundle;
@@ -35,7 +35,7 @@ class ContractServiceBundleAdjustmentEntity extends DataTransferObject
             $array['effectiveDate'] = new Carbon($array['effectiveDate']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

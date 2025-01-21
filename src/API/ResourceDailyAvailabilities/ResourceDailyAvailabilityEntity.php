@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\ResourceDailyAvailabilities;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents ResourceDailyAvailability entities.
  */
-class ResourceDailyAvailabilityEntity extends DataTransferObject
+class ResourceDailyAvailabilityEntity extends Data
 {
     public ?float $fridayAvailableHours;
     public $id;
@@ -32,7 +32,7 @@ class ResourceDailyAvailabilityEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

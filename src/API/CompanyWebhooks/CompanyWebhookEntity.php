@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\CompanyWebhooks;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents CompanyWebhook entities.
  */
-class CompanyWebhookEntity extends DataTransferObject
+class CompanyWebhookEntity extends Data
 {
     public string $deactivationUrl;
     public $id;
@@ -35,7 +35,7 @@ class CompanyWebhookEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

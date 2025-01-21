@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\Contracts;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents Contract entities.
  */
-class ContractEntity extends DataTransferObject
+class ContractEntity extends Data
 {
     public ?int $billingPreference;
     public ?int $billToCompanyContactID;
@@ -64,7 +64,7 @@ class ContractEntity extends DataTransferObject
             $array['startDate'] = new Carbon($array['startDate']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

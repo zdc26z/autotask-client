@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\Taxes;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents Tax entities.
  */
-class TaxEntity extends DataTransferObject
+class TaxEntity extends Data
 {
     public int $id;
     public ?bool $isCompounded;
@@ -27,7 +27,7 @@ class TaxEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\DocumentPlainTextContent;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents DocumentPlainTextContent entities.
  */
-class DocumentPlainTextContentEntity extends DataTransferObject
+class DocumentPlainTextContentEntity extends Data
 {
     public ?string $contentData;
     public $id;
@@ -23,7 +23,7 @@ class DocumentPlainTextContentEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

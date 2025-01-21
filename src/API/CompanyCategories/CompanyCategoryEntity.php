@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\CompanyCategories;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents CompanyCategory entities.
  */
-class CompanyCategoryEntity extends DataTransferObject
+class CompanyCategoryEntity extends Data
 {
     public int $displayColorRGB;
     public $id;
@@ -28,7 +28,7 @@ class CompanyCategoryEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

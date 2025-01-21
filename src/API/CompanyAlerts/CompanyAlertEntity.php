@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\CompanyAlerts;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents CompanyAlert entities.
  */
-class CompanyAlertEntity extends DataTransferObject
+class CompanyAlertEntity extends Data
 {
     public string $alertText;
     public int $alertTypeID;
@@ -25,7 +25,7 @@ class CompanyAlertEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

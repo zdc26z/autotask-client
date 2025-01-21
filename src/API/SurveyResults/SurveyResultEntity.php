@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\SurveyResults;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents SurveyResult entities.
  */
-class SurveyResultEntity extends DataTransferObject
+class SurveyResultEntity extends Data
 {
     public ?int $companyID;
     public ?float $companyRating;
@@ -41,7 +41,7 @@ class SurveyResultEntity extends DataTransferObject
             $array['sendDate'] = new Carbon($array['sendDate']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

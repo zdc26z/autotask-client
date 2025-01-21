@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\ResourceRoleQueues;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents ResourceRoleQueue entities.
  */
-class ResourceRoleQueueEntity extends DataTransferObject
+class ResourceRoleQueueEntity extends Data
 {
     public $id;
     public int $queueID;
@@ -24,7 +24,7 @@ class ResourceRoleQueueEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

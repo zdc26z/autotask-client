@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\ServiceBundleServices;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents ServiceBundleService entities.
  */
-class ServiceBundleServiceEntity extends DataTransferObject
+class ServiceBundleServiceEntity extends Data
 {
     public $id;
     public $serviceBundleID;
@@ -24,7 +24,7 @@ class ServiceBundleServiceEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

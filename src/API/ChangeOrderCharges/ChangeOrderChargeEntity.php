@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\ChangeOrderCharges;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents ChangeOrderCharge entities.
  */
-class ChangeOrderChargeEntity extends DataTransferObject
+class ChangeOrderChargeEntity extends Data
 {
     public ?float $billableAmount;
     public ?int $billingCodeID;
@@ -63,7 +63,7 @@ class ChangeOrderChargeEntity extends DataTransferObject
             $array['statusLastModifiedDate'] = new Carbon($array['statusLastModifiedDate']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\Subscriptions;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents Subscription entities.
  */
-class SubscriptionEntity extends DataTransferObject
+class SubscriptionEntity extends Data
 {
     public int $configurationItemID;
     public ?string $description;
@@ -47,7 +47,7 @@ class SubscriptionEntity extends DataTransferObject
             $array['expirationDate'] = new Carbon($array['expirationDate']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

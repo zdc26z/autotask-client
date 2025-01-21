@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\InventoryStockedItems;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents InventoryStockedItem entities.
  */
-class InventoryStockedItemEntity extends DataTransferObject
+class InventoryStockedItemEntity extends Data
 {
     public ?int $availableUnits;
     public ?int $companyID;
@@ -62,7 +62,7 @@ class InventoryStockedItemEntity extends DataTransferObject
             $array['pickedRemovedDateTime'] = new Carbon($array['pickedRemovedDateTime']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

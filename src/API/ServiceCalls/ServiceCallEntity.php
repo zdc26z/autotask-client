@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\ServiceCalls;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents ServiceCall entities.
  */
-class ServiceCallEntity extends DataTransferObject
+class ServiceCallEntity extends Data
 {
     public ?float $cancelationNoticeHours;
     public ?int $canceledByResourceID;
@@ -58,7 +58,7 @@ class ServiceCallEntity extends DataTransferObject
             $array['startDateTime'] = new Carbon($array['startDateTime']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

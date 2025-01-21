@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\TicketRmaCredits;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents TicketRmaCredit entities.
  */
-class TicketRmaCreditEntity extends DataTransferObject
+class TicketRmaCreditEntity extends Data
 {
     public float $creditAmount;
     public ?string $creditDetails;
@@ -26,7 +26,7 @@ class TicketRmaCreditEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

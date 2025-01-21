@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\ArticleNotes;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents ArticleNote entities.
  */
-class ArticleNoteEntity extends DataTransferObject
+class ArticleNoteEntity extends Data
 {
     public int $articleID;
     public ?int $createdByResourceID;
@@ -38,7 +38,7 @@ class ArticleNoteEntity extends DataTransferObject
             $array['lastModifiedDateTime'] = new Carbon($array['lastModifiedDateTime']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

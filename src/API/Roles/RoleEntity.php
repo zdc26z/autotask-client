@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\Roles;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents Role entities.
  */
-class RoleEntity extends DataTransferObject
+class RoleEntity extends Data
 {
     public ?string $description;
     public float $hourlyFactor;
@@ -31,7 +31,7 @@ class RoleEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

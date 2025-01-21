@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\HolidaySets;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents HolidaySet entities.
  */
-class HolidaySetEntity extends DataTransferObject
+class HolidaySetEntity extends Data
 {
     public ?string $holidaySetDescription;
     public string $holidaySetName;
@@ -24,7 +24,7 @@ class HolidaySetEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

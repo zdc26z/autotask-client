@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\DomainRegistrars;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents DomainRegistrar entities.
  */
-class DomainRegistrarEntity extends DataTransferObject
+class DomainRegistrarEntity extends Data
 {
     public $id;
     public string $name;
@@ -24,7 +24,7 @@ class DomainRegistrarEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

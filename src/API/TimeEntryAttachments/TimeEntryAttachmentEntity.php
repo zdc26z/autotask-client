@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\TimeEntryAttachments;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents TimeEntryAttachment entities.
  */
-class TimeEntryAttachmentEntity extends DataTransferObject
+class TimeEntryAttachmentEntity extends Data
 {
     public ?Carbon $attachDate;
     public $attachedByContactID;
@@ -44,7 +44,7 @@ class TimeEntryAttachmentEntity extends DataTransferObject
             $array['attachDate'] = new Carbon($array['attachDate']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

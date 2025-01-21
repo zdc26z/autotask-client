@@ -85,6 +85,9 @@ class ClientMock extends Client
         for($i=0; $i<$count; $i++) {
             $result = [];
             foreach($properties as $property) {
+                if('_' === $property->name[0]) {
+                    continue;
+                }
                 $type = $property->getType();
                 $required = true;
                 if(!is_null($type)) {

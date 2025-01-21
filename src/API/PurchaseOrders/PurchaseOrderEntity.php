@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\PurchaseOrders;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents PurchaseOrder entities.
  */
-class PurchaseOrderEntity extends DataTransferObject
+class PurchaseOrderEntity extends Data
 {
     public ?string $additionalVendorInvoiceNumbers;
     public ?Carbon $cancelDateTime;
@@ -75,7 +75,7 @@ class PurchaseOrderEntity extends DataTransferObject
             $array['submitDateTime'] = new Carbon($array['submitDateTime']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

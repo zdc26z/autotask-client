@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\ConfigurationItemExts;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents ConfigurationItemExt entities.
  */
-class ConfigurationItemExtEntity extends DataTransferObject
+class ConfigurationItemExtEntity extends Data
 {
     public ?int $apiVendorID;
     public int $companyID;
@@ -170,7 +170,7 @@ class ConfigurationItemExtEntity extends DataTransferObject
             $array['warrantyExpirationDate'] = new Carbon($array['warrantyExpirationDate']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

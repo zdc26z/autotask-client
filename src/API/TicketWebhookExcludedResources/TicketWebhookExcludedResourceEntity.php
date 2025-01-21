@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\TicketWebhookExcludedResources;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents TicketWebhookExcludedResource entities.
  */
-class TicketWebhookExcludedResourceEntity extends DataTransferObject
+class TicketWebhookExcludedResourceEntity extends Data
 {
     public $id;
     public int $resourceID;
@@ -24,7 +24,7 @@ class TicketWebhookExcludedResourceEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

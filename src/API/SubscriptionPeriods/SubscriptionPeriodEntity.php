@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\SubscriptionPeriods;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents SubscriptionPeriod entities.
  */
-class SubscriptionPeriodEntity extends DataTransferObject
+class SubscriptionPeriodEntity extends Data
 {
     public $id;
     public float $periodCost;
@@ -37,7 +37,7 @@ class SubscriptionPeriodEntity extends DataTransferObject
             $array['postedDate'] = new Carbon($array['postedDate']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

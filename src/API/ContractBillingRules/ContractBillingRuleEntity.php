@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\ContractBillingRules;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents ContractBillingRule entities.
  */
-class ContractBillingRuleEntity extends DataTransferObject
+class ContractBillingRuleEntity extends Data
 {
     public int $contractID;
     public bool $createChargesAsBillable;
@@ -46,7 +46,7 @@ class ContractBillingRuleEntity extends DataTransferObject
             $array['startDate'] = new Carbon($array['startDate']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

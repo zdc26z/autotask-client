@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\CompanySiteConfigurations;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents CompanySiteConfiguration entities.
  */
-class CompanySiteConfigurationEntity extends DataTransferObject
+class CompanySiteConfigurationEntity extends Data
 {
     public int $companyID;
     public $id;
@@ -24,7 +24,7 @@ class CompanySiteConfigurationEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\QuoteItems;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents QuoteItem entities.
  */
-class QuoteItemEntity extends DataTransferObject
+class QuoteItemEntity extends Data
 {
     public ?float $averageCost;
     public ?int $chargeID;
@@ -51,7 +51,7 @@ class QuoteItemEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

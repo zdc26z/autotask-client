@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\TagAliases;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents TagAlias entities.
  */
-class TagAliasEntity extends DataTransferObject
+class TagAliasEntity extends Data
 {
     public string $alias;
     public $id;
@@ -24,7 +24,7 @@ class TagAliasEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

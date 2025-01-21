@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\ContractBlockHourFactors;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents ContractBlockHourFactor entities.
  */
-class ContractBlockHourFactorEntity extends DataTransferObject
+class ContractBlockHourFactorEntity extends Data
 {
     public float $blockHourMultiplier;
     public ?float $contractHourlyRate;
@@ -27,7 +27,7 @@ class ContractBlockHourFactorEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

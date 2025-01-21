@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\NotificationHistory;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents NotificationHistory entities.
  */
-class NotificationHistoryEntity extends DataTransferObject
+class NotificationHistoryEntity extends Data
 {
     public $companyID;
     public ?string $entityNumber;
@@ -46,7 +46,7 @@ class NotificationHistoryEntity extends DataTransferObject
             $array['notificationSentTime'] = new Carbon($array['notificationSentTime']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

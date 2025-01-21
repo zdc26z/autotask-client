@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\Currencies;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents Currency entities.
  */
-class CurrencyEntity extends DataTransferObject
+class CurrencyEntity extends Data
 {
     public string $currencyNegativeFormat;
     public string $currencyPositiveFormat;
@@ -37,7 +37,7 @@ class CurrencyEntity extends DataTransferObject
             $array['lastModifiedDateTime'] = new Carbon($array['lastModifiedDateTime']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

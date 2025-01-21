@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\SalesOrders;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents SalesOrder entities.
  */
-class SalesOrderEntity extends DataTransferObject
+class SalesOrderEntity extends Data
 {
     public ?string $additionalBillToAddressInformation;
     public ?string $additionalShipToAddressInformation;
@@ -55,7 +55,7 @@ class SalesOrderEntity extends DataTransferObject
             $array['salesOrderDate'] = new Carbon($array['salesOrderDate']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

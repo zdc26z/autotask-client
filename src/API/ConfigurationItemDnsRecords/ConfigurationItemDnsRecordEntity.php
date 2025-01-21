@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\ConfigurationItemDnsRecords;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents ConfigurationItemDnsRecord entities.
  */
-class ConfigurationItemDnsRecordEntity extends DataTransferObject
+class ConfigurationItemDnsRecordEntity extends Data
 {
     public Carbon $createDateTime;
     public string $data;
@@ -32,7 +32,7 @@ class ConfigurationItemDnsRecordEntity extends DataTransferObject
             $array['createDateTime'] = new Carbon($array['createDateTime']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

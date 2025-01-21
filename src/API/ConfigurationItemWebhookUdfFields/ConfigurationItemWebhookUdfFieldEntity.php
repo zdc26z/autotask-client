@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\ConfigurationItemWebhookUdfFields;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents ConfigurationItemWebhookUdfField entities.
  */
-class ConfigurationItemWebhookUdfFieldEntity extends DataTransferObject
+class ConfigurationItemWebhookUdfFieldEntity extends Data
 {
     public $id;
     public bool $isDisplayAlwaysField;
@@ -26,7 +26,7 @@ class ConfigurationItemWebhookUdfFieldEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

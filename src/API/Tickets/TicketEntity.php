@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\Tickets;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents Ticket entities.
  */
-class TicketEntity extends DataTransferObject
+class TicketEntity extends Data
 {
     public ?int $apiVendorID;
     public ?int $assignedResourceID;
@@ -149,7 +149,7 @@ class TicketEntity extends DataTransferObject
             $array['resolvedDueDateTime'] = new Carbon($array['resolvedDueDateTime']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

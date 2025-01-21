@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\ArticleConfigurationItemCategoryAssociations;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents ArticleConfigurationItemCategoryAssociation entities.
  */
-class ArticleConfigurationItemCategoryAssociationEntity extends DataTransferObject
+class ArticleConfigurationItemCategoryAssociationEntity extends Data
 {
     public int $articleID;
     public $id;
@@ -24,7 +24,7 @@ class ArticleConfigurationItemCategoryAssociationEntity extends DataTransferObje
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

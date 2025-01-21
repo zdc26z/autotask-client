@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\TicketHistory;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents TicketHistory entities.
  */
-class TicketHistoryEntity extends DataTransferObject
+class TicketHistoryEntity extends Data
 {
     public string $action;
     public Carbon $date;
@@ -32,7 +32,7 @@ class TicketHistoryEntity extends DataTransferObject
             $array['date'] = new Carbon($array['date']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

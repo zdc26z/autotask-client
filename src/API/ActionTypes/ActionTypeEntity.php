@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\ActionTypes;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents ActionType entities.
  */
-class ActionTypeEntity extends DataTransferObject
+class ActionTypeEntity extends Data
 {
     public $id;
     public bool $isActive;
@@ -26,7 +26,7 @@ class ActionTypeEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

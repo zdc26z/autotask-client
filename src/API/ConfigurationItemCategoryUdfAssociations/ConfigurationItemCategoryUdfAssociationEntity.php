@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\ConfigurationItemCategoryUdfAssociations;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents ConfigurationItemCategoryUdfAssociation entities.
  */
-class ConfigurationItemCategoryUdfAssociationEntity extends DataTransferObject
+class ConfigurationItemCategoryUdfAssociationEntity extends Data
 {
     public int $configurationItemCategoryID;
     public $id;
@@ -25,7 +25,7 @@ class ConfigurationItemCategoryUdfAssociationEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

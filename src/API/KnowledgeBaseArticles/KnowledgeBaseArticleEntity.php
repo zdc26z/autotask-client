@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\KnowledgeBaseArticles;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents KnowledgeBaseArticle entities.
  */
-class KnowledgeBaseArticleEntity extends DataTransferObject
+class KnowledgeBaseArticleEntity extends Data
 {
     public int $articleCategoryID;
     public ?int $createdByResourceID;
@@ -42,7 +42,7 @@ class KnowledgeBaseArticleEntity extends DataTransferObject
             $array['lastModifiedDateTime'] = new Carbon($array['lastModifiedDateTime']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

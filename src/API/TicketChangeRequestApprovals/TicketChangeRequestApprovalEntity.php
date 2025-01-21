@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\TicketChangeRequestApprovals;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents TicketChangeRequestApproval entities.
  */
-class TicketChangeRequestApprovalEntity extends DataTransferObject
+class TicketChangeRequestApprovalEntity extends Data
 {
     public ?Carbon $approveRejectDateTime;
     public ?string $approveRejectNote;
@@ -33,7 +33,7 @@ class TicketChangeRequestApprovalEntity extends DataTransferObject
             $array['approveRejectDateTime'] = new Carbon($array['approveRejectDateTime']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

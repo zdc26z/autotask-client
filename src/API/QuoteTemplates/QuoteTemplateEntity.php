@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\QuoteTemplates;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents QuoteTemplate entities.
  */
-class QuoteTemplateEntity extends DataTransferObject
+class QuoteTemplateEntity extends Data
 {
     public ?bool $calculateTaxSeparately;
     public ?Carbon $createDate;
@@ -50,7 +50,7 @@ class QuoteTemplateEntity extends DataTransferObject
             $array['lastActivityDate'] = new Carbon($array['lastActivityDate']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\ProductTiers;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents ProductTier entities.
  */
-class ProductTierEntity extends DataTransferObject
+class ProductTierEntity extends Data
 {
     public $id;
     public int $productID;
@@ -26,7 +26,7 @@ class ProductTierEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

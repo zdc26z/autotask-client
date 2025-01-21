@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\TicketNotes;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents TicketNote entities.
  */
-class TicketNoteEntity extends DataTransferObject
+class TicketNoteEntity extends Data
 {
     public ?Carbon $createDateTime;
     public ?int $createdByContactID;
@@ -42,7 +42,7 @@ class TicketNoteEntity extends DataTransferObject
             $array['lastActivityDate'] = new Carbon($array['lastActivityDate']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

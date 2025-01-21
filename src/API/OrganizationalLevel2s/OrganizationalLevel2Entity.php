@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\OrganizationalLevel2s;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents OrganizationalLevel2 entities.
  */
-class OrganizationalLevel2Entity extends DataTransferObject
+class OrganizationalLevel2Entity extends Data
 {
     public ?string $description;
     public $id;
@@ -25,7 +25,7 @@ class OrganizationalLevel2Entity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\CompanyWebhookFields;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents CompanyWebhookField entities.
  */
-class CompanyWebhookFieldEntity extends DataTransferObject
+class CompanyWebhookFieldEntity extends Data
 {
     public int $fieldID;
     public $id;
@@ -26,7 +26,7 @@ class CompanyWebhookFieldEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

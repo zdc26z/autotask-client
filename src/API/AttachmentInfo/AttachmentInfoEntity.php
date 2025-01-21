@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\AttachmentInfo;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents AttachmentInfo entities.
  */
-class AttachmentInfoEntity extends DataTransferObject
+class AttachmentInfoEntity extends Data
 {
     public ?int $articleID;
     public ?Carbon $attachDate;
@@ -61,7 +61,7 @@ class AttachmentInfoEntity extends DataTransferObject
             $array['attachDate'] = new Carbon($array['attachDate']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\ClassificationIcons;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents ClassificationIcon entities.
  */
-class ClassificationIconEntity extends DataTransferObject
+class ClassificationIconEntity extends Data
 {
     public ?string $description;
     public $id;
@@ -27,7 +27,7 @@ class ClassificationIconEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

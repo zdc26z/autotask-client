@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\TimeEntries;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents TimeEntry entities.
  */
-class TimeEntryEntity extends DataTransferObject
+class TimeEntryEntity extends Data
 {
     public ?Carbon $billingApprovalDateTime;
     public ?int $billingApprovalLevelMostRecent;
@@ -77,7 +77,7 @@ class TimeEntryEntity extends DataTransferObject
             $array['startDateTime'] = new Carbon($array['startDateTime']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

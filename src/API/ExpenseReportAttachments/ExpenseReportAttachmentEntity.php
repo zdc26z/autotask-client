@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\ExpenseReportAttachments;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents ExpenseReportAttachment entities.
  */
-class ExpenseReportAttachmentEntity extends DataTransferObject
+class ExpenseReportAttachmentEntity extends Data
 {
     public ?Carbon $attachDate;
     public $attachedByContactID;
@@ -43,7 +43,7 @@ class ExpenseReportAttachmentEntity extends DataTransferObject
             $array['attachDate'] = new Carbon($array['attachDate']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

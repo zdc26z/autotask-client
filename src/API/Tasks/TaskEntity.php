@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\Tasks;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents Task entities.
  */
-class TaskEntity extends DataTransferObject
+class TaskEntity extends Data
 {
     public ?int $assignedResourceID;
     public ?int $assignedResourceRoleID;
@@ -77,7 +77,7 @@ class TaskEntity extends DataTransferObject
             $array['startDateTime'] = new Carbon($array['startDateTime']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

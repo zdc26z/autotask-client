@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\Departments;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents Department entities.
  */
-class DepartmentEntity extends DataTransferObject
+class DepartmentEntity extends Data
 {
     public ?string $description;
     public $id;
@@ -26,7 +26,7 @@ class DepartmentEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

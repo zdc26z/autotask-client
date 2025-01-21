@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\Quotes;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents Quote entities.
  */
-class QuoteEntity extends DataTransferObject
+class QuoteEntity extends Data
 {
     public ?int $approvalStatus;
     public ?int $approvalStatusChangedByResourceID;
@@ -90,7 +90,7 @@ class QuoteEntity extends DataTransferObject
             $array['lastPublishedDateTime'] = new Carbon($array['lastPublishedDateTime']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

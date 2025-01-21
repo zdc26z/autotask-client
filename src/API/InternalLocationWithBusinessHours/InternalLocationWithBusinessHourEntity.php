@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\InternalLocationWithBusinessHours;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents InternalLocationWithBusinessHour entities.
  */
-class InternalLocationWithBusinessHourEntity extends DataTransferObject
+class InternalLocationWithBusinessHourEntity extends Data
 {
     public ?string $additionalAddressInfo;
     public ?string $address1;
@@ -200,7 +200,7 @@ class InternalLocationWithBusinessHourEntity extends DataTransferObject
             $array['wednesdayExtendedHoursStartTime'] = new Carbon($array['wednesdayExtendedHoursStartTime']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

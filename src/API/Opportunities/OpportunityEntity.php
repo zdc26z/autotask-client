@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\Opportunities;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents Opportunity entities.
  */
-class OpportunityEntity extends DataTransferObject
+class OpportunityEntity extends Data
 {
     public ?float $advancedField1;
     public ?float $advancedField2;
@@ -114,7 +114,7 @@ class OpportunityEntity extends DataTransferObject
             $array['throughDate'] = new Carbon($array['throughDate']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\ClientPortalUsers;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents ClientPortalUser entities.
  */
-class ClientPortalUserEntity extends DataTransferObject
+class ClientPortalUserEntity extends Data
 {
     public int $contactID;
     public int $dateFormat;
@@ -30,7 +30,7 @@ class ClientPortalUserEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

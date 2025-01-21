@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\WorkTypeModifiers;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents WorkTypeModifier entities.
  */
-class WorkTypeModifierEntity extends DataTransferObject
+class WorkTypeModifierEntity extends Data
 {
     public $id;
     public int $modifierType;
@@ -24,7 +24,7 @@ class WorkTypeModifierEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

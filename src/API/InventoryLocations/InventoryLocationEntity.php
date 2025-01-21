@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\InventoryLocations;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents InventoryLocation entities.
  */
-class InventoryLocationEntity extends DataTransferObject
+class InventoryLocationEntity extends Data
 {
     public $id;
     public ?int $impersonatorCreatorResourceID;
@@ -27,7 +27,7 @@ class InventoryLocationEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

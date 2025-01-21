@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\AdditionalInvoiceFieldValues;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents AdditionalInvoiceFieldValue entities.
  */
-class AdditionalInvoiceFieldValueEntity extends DataTransferObject
+class AdditionalInvoiceFieldValueEntity extends Data
 {
     public $additionalInvoiceFieldID;
     public string $fieldValue;
@@ -25,7 +25,7 @@ class AdditionalInvoiceFieldValueEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\Tags;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents Tag entities.
  */
-class TagEntity extends DataTransferObject
+class TagEntity extends Data
 {
     public ?Carbon $createDateTime;
     public $id;
@@ -38,7 +38,7 @@ class TagEntity extends DataTransferObject
             $array['lastModifiedDateTime'] = new Carbon($array['lastModifiedDateTime']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

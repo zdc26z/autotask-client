@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\BillingCodes;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents BillingCode entities.
  */
-class BillingCodeEntity extends DataTransferObject
+class BillingCodeEntity extends Data
 {
     public ?int $afterHoursWorkType;
     public ?int $billingCodeType;
@@ -36,7 +36,7 @@ class BillingCodeEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

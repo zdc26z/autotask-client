@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\ContractServices;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents ContractService entities.
  */
-class ContractServiceEntity extends DataTransferObject
+class ContractServiceEntity extends Data
 {
     public int $contractID;
     public $id;
@@ -31,7 +31,7 @@ class ContractServiceEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

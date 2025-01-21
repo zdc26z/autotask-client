@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\ArticleTicketAssociations;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents ArticleTicketAssociation entities.
  */
-class ArticleTicketAssociationEntity extends DataTransferObject
+class ArticleTicketAssociationEntity extends Data
 {
     public int $articleID;
     public $id;
@@ -24,7 +24,7 @@ class ArticleTicketAssociationEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

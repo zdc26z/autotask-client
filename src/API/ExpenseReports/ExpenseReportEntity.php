@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\ExpenseReports;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents ExpenseReport entities.
  */
-class ExpenseReportEntity extends DataTransferObject
+class ExpenseReportEntity extends Data
 {
     public ?float $amountDue;
     public ?Carbon $approvedDate;
@@ -53,7 +53,7 @@ class ExpenseReportEntity extends DataTransferObject
             $array['weekEnding'] = new Carbon($array['weekEnding']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

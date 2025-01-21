@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\InternalLocations;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents InternalLocation entities.
  */
-class InternalLocationEntity extends DataTransferObject
+class InternalLocationEntity extends Data
 {
     public ?string $additionalAddressInfo;
     public ?string $address1;
@@ -33,7 +33,7 @@ class InternalLocationEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

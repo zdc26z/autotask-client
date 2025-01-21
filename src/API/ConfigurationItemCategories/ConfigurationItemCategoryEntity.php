@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\ConfigurationItemCategories;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents ConfigurationItemCategory entities.
  */
-class ConfigurationItemCategoryEntity extends DataTransferObject
+class ConfigurationItemCategoryEntity extends Data
 {
     public int $displayColorRGB;
     public $id;
@@ -28,7 +28,7 @@ class ConfigurationItemCategoryEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

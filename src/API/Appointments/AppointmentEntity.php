@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\Appointments;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents Appointment entities.
  */
-class AppointmentEntity extends DataTransferObject
+class AppointmentEntity extends Data
 {
     public ?Carbon $createDateTime;
     public ?int $creatorResourceID;
@@ -47,7 +47,7 @@ class AppointmentEntity extends DataTransferObject
             $array['updateDateTime'] = new Carbon($array['updateDateTime']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

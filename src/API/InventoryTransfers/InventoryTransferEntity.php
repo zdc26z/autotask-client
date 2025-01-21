@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\InventoryTransfers;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents InventoryTransfer entities.
  */
-class InventoryTransferEntity extends DataTransferObject
+class InventoryTransferEntity extends Data
 {
     public $fromLocationID;
     public $id;
@@ -36,7 +36,7 @@ class InventoryTransferEntity extends DataTransferObject
             $array['transferDate'] = new Carbon($array['transferDate']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

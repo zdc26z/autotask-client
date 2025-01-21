@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\Phases;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents Phase entities.
  */
-class PhaseEntity extends DataTransferObject
+class PhaseEntity extends Data
 {
     public ?Carbon $createDate;
     public ?int $creatorResourceID;
@@ -52,7 +52,7 @@ class PhaseEntity extends DataTransferObject
             $array['startDate'] = new Carbon($array['startDate']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

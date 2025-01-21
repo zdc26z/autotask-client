@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\Holidays;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents Holiday entities.
  */
-class HolidayEntity extends DataTransferObject
+class HolidayEntity extends Data
 {
     public Carbon $holidayDate;
     public string $holidayName;
@@ -30,7 +30,7 @@ class HolidayEntity extends DataTransferObject
             $array['holidayDate'] = new Carbon($array['holidayDate']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

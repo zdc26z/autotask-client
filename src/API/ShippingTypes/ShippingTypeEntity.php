@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\ShippingTypes;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents ShippingType entities.
  */
-class ShippingTypeEntity extends DataTransferObject
+class ShippingTypeEntity extends Data
 {
     public ?int $billingCodeID;
     public ?string $description;
@@ -26,7 +26,7 @@ class ShippingTypeEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

@@ -4,12 +4,12 @@ namespace Anteris\Autotask\Support\EntityInformation;
 
 use Exception;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents an entity information response from Autotask.
  */
-class EntityInformationEntity extends DataTransferObject
+class EntityInformationEntity extends Data
 {
     public string $name;
     public bool $canCreate;

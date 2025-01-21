@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\TagGroups;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents TagGroup entities.
  */
-class TagGroupEntity extends DataTransferObject
+class TagGroupEntity extends Data
 {
     public ?int $displayColor;
     public $id;
@@ -26,7 +26,7 @@ class TagGroupEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

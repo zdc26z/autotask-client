@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\TicketCharges;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents TicketCharge entities.
  */
-class TicketChargeEntity extends DataTransferObject
+class TicketChargeEntity extends Data
 {
     public ?float $billableAmount;
     public $billingCodeID;
@@ -62,7 +62,7 @@ class TicketChargeEntity extends DataTransferObject
             $array['statusLastModifiedDate'] = new Carbon($array['statusLastModifiedDate']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

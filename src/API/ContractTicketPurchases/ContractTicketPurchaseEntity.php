@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\ContractTicketPurchases;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents ContractTicketPurchase entities.
  */
-class ContractTicketPurchaseEntity extends DataTransferObject
+class ContractTicketPurchaseEntity extends Data
 {
     public $contractID;
     public Carbon $datePurchased;
@@ -47,7 +47,7 @@ class ContractTicketPurchaseEntity extends DataTransferObject
             $array['startDate'] = new Carbon($array['startDate']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

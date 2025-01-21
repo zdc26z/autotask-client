@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\ContractMilestones;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents ContractMilestone entities.
  */
-class ContractMilestoneEntity extends DataTransferObject
+class ContractMilestoneEntity extends Data
 {
     public float $amount;
     public ?int $billingCodeID;
@@ -43,7 +43,7 @@ class ContractMilestoneEntity extends DataTransferObject
             $array['dateDue'] = new Carbon($array['dateDue']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

@@ -4,12 +4,12 @@ namespace Anteris\Autotask\Support\Pagination;
 
 use Exception;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents a page when paginating results from Autotask.
  */
-class PageEntity extends DataTransferObject
+class PageEntity extends Data
 {
     public int $count;
     public int $requestCount;

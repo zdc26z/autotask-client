@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\ExpenseItems;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents ExpenseItem entities.
  */
-class ExpenseItemEntity extends DataTransferObject
+class ExpenseItemEntity extends Data
 {
     public ?int $companyID;
     public string $description;
@@ -54,7 +54,7 @@ class ExpenseItemEntity extends DataTransferObject
             $array['expenseDate'] = new Carbon($array['expenseDate']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

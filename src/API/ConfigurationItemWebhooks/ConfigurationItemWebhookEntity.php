@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\ConfigurationItemWebhooks;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents ConfigurationItemWebhook entities.
  */
-class ConfigurationItemWebhookEntity extends DataTransferObject
+class ConfigurationItemWebhookEntity extends Data
 {
     public string $deactivationUrl;
     public $id;
@@ -35,7 +35,7 @@ class ConfigurationItemWebhookEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

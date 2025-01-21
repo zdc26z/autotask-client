@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\Contacts;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents Contact entities.
  */
-class ContactEntity extends DataTransferObject
+class ContactEntity extends Data
 {
     public ?string $additionalAddressInformation;
     public ?string $addressLine;
@@ -85,7 +85,7 @@ class ContactEntity extends DataTransferObject
             $array['solicitationOptOutTime'] = new Carbon($array['solicitationOptOutTime']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

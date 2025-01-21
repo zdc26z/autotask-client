@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\CompanyLocations;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents CompanyLocation entities.
  */
-class CompanyLocationEntity extends DataTransferObject
+class CompanyLocationEntity extends Data
 {
     public ?string $address1;
     public ?string $address2;
@@ -41,7 +41,7 @@ class CompanyLocationEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

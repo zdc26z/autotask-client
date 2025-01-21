@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\TaskNoteAttachments;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents TaskNoteAttachment entities.
  */
-class TaskNoteAttachmentEntity extends DataTransferObject
+class TaskNoteAttachmentEntity extends Data
 {
     public ?Carbon $attachDate;
     public $attachedByContactID;
@@ -43,7 +43,7 @@ class TaskNoteAttachmentEntity extends DataTransferObject
             $array['attachDate'] = new Carbon($array['attachDate']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

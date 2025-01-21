@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\PriceListServiceBundles;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents PriceListServiceBundle entities.
  */
-class PriceListServiceBundleEntity extends DataTransferObject
+class PriceListServiceBundleEntity extends Data
 {
     public int $currencyID;
     public $id;
@@ -26,7 +26,7 @@ class PriceListServiceBundleEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

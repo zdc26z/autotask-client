@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\IntegrationVendorWidgets;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents IntegrationVendorWidget entities.
  */
-class IntegrationVendorWidgetEntity extends DataTransferObject
+class IntegrationVendorWidgetEntity extends Data
 {
     public ?Carbon $createDateTime;
     public ?string $description;
@@ -41,7 +41,7 @@ class IntegrationVendorWidgetEntity extends DataTransferObject
             $array['lastModifiedDateTime'] = new Carbon($array['lastModifiedDateTime']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

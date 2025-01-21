@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\Invoices;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents Invoice entities.
  */
-class InvoiceEntity extends DataTransferObject
+class InvoiceEntity extends Data
 {
     public ?int $batchID;
     public ?string $comments;
@@ -77,7 +77,7 @@ class InvoiceEntity extends DataTransferObject
             $array['webServiceDate'] = new Carbon($array['webServiceDate']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

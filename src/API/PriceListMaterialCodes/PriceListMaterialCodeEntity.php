@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\PriceListMaterialCodes;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents PriceListMaterialCode entities.
  */
-class PriceListMaterialCodeEntity extends DataTransferObject
+class PriceListMaterialCodeEntity extends Data
 {
     public int $billingCodeID;
     public int $currencyID;
@@ -26,7 +26,7 @@ class PriceListMaterialCodeEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

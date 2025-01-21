@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\TicketTagAssociations;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents TicketTagAssociation entities.
  */
-class TicketTagAssociationEntity extends DataTransferObject
+class TicketTagAssociationEntity extends Data
 {
     public $id;
     public int $tagID;
@@ -24,7 +24,7 @@ class TicketTagAssociationEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

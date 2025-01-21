@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\Surveys;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents Survey entities.
  */
-class SurveyEntity extends DataTransferObject
+class SurveyEntity extends Data
 {
     public ?string $description;
     public ?string $displayName;
@@ -25,7 +25,7 @@ class SurveyEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

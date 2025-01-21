@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\PriceListWorkTypeModifiers;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents PriceListWorkTypeModifier entities.
  */
-class PriceListWorkTypeModifierEntity extends DataTransferObject
+class PriceListWorkTypeModifierEntity extends Data
 {
     public int $currencyID;
     public $id;
@@ -27,7 +27,7 @@ class PriceListWorkTypeModifierEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

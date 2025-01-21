@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\QuoteLocations;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents QuoteLocation entities.
  */
-class QuoteLocationEntity extends DataTransferObject
+class QuoteLocationEntity extends Data
 {
     public ?string $address1;
     public ?string $address2;
@@ -27,7 +27,7 @@ class QuoteLocationEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\ContractExclusionBillingCodes;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents ContractExclusionBillingCode entities.
  */
-class ContractExclusionBillingCodeEntity extends DataTransferObject
+class ContractExclusionBillingCodeEntity extends Data
 {
     public $billingCodeID;
     public $contractID;
@@ -24,7 +24,7 @@ class ContractExclusionBillingCodeEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

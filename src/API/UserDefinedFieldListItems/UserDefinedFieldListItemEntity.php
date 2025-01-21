@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\UserDefinedFieldListItems;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents UserDefinedFieldListItem entities.
  */
-class UserDefinedFieldListItemEntity extends DataTransferObject
+class UserDefinedFieldListItemEntity extends Data
 {
     public ?Carbon $createDate;
     public $id;
@@ -32,7 +32,7 @@ class UserDefinedFieldListItemEntity extends DataTransferObject
             $array['createDate'] = new Carbon($array['createDate']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

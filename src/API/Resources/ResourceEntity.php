@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\Resources;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents Resource entities.
  */
-class ResourceEntity extends DataTransferObject
+class ResourceEntity extends Data
 {
     public ?string $accountingReferenceID;
     public ?string $dateFormat;
@@ -61,7 +61,7 @@ class ResourceEntity extends DataTransferObject
             $array['hireDate'] = new Carbon($array['hireDate']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

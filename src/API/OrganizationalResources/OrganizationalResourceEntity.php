@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\OrganizationalResources;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents OrganizationalResource entities.
  */
-class OrganizationalResourceEntity extends DataTransferObject
+class OrganizationalResourceEntity extends Data
 {
     public $id;
     public int $organizationalLevelAssociationID;
@@ -24,7 +24,7 @@ class OrganizationalResourceEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

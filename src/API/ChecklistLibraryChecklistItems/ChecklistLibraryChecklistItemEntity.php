@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\ChecklistLibraryChecklistItems;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents ChecklistLibraryChecklistItem entities.
  */
-class ChecklistLibraryChecklistItemEntity extends DataTransferObject
+class ChecklistLibraryChecklistItemEntity extends Data
 {
     public int $checklistLibraryID;
     public $id;
@@ -27,7 +27,7 @@ class ChecklistLibraryChecklistItemEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

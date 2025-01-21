@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\KnowledgeBaseCategories;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents KnowledgeBaseCategory entities.
  */
-class KnowledgeBaseCategoryEntity extends DataTransferObject
+class KnowledgeBaseCategoryEntity extends Data
 {
     public ?string $description;
     public $id;
@@ -25,7 +25,7 @@ class KnowledgeBaseCategoryEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

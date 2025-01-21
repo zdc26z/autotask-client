@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\Projects;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents Project entities.
  */
-class ProjectEntity extends DataTransferObject
+class ProjectEntity extends Data
 {
     public ?float $actualBilledHours;
     public ?float $actualHours;
@@ -89,7 +89,7 @@ class ProjectEntity extends DataTransferObject
             $array['statusDateTime'] = new Carbon($array['statusDateTime']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

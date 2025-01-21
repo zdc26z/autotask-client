@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\ConfigurationItemNotes;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents ConfigurationItemNote entities.
  */
-class ConfigurationItemNoteEntity extends DataTransferObject
+class ConfigurationItemNoteEntity extends Data
 {
     public int $configurationItemID;
     public ?Carbon $createDateTime;
@@ -40,7 +40,7 @@ class ConfigurationItemNoteEntity extends DataTransferObject
             $array['lastActivityDate'] = new Carbon($array['lastActivityDate']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\OpportunityAttachments;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents OpportunityAttachment entities.
  */
-class OpportunityAttachmentEntity extends DataTransferObject
+class OpportunityAttachmentEntity extends Data
 {
     public ?Carbon $attachDate;
     public $attachedByContactID;
@@ -42,7 +42,7 @@ class OpportunityAttachmentEntity extends DataTransferObject
             $array['attachDate'] = new Carbon($array['attachDate']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

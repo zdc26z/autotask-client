@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\Countries;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents Country entities.
  */
-class CountryEntity extends DataTransferObject
+class CountryEntity extends Data
 {
     public $addressFormatID;
     public ?string $countryCode;
@@ -31,7 +31,7 @@ class CountryEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

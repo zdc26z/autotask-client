@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\TicketCategoryFieldDefaults;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents TicketCategoryFieldDefault entities.
  */
-class TicketCategoryFieldDefaultEntity extends DataTransferObject
+class TicketCategoryFieldDefaultEntity extends Data
 {
     public ?string $description;
     public ?float $estimatedHours;
@@ -38,7 +38,7 @@ class TicketCategoryFieldDefaultEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

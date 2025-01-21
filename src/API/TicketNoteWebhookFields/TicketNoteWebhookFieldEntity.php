@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\TicketNoteWebhookFields;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents TicketNoteWebhookField entities.
  */
-class TicketNoteWebhookFieldEntity extends DataTransferObject
+class TicketNoteWebhookFieldEntity extends Data
 {
     public int $fieldID;
     public $id;
@@ -26,7 +26,7 @@ class TicketNoteWebhookFieldEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

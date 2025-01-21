@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\BillingItems;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents BillingItem entities.
  */
-class BillingItemEntity extends DataTransferObject
+class BillingItemEntity extends Data
 {
     public ?int $accountManagerWhenApprovedID;
     public ?int $billingCodeID;
@@ -90,7 +90,7 @@ class BillingItemEntity extends DataTransferObject
             $array['webServiceDate'] = new Carbon($array['webServiceDate']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

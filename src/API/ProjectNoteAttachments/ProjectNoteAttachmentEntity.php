@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\ProjectNoteAttachments;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents ProjectNoteAttachment entities.
  */
-class ProjectNoteAttachmentEntity extends DataTransferObject
+class ProjectNoteAttachmentEntity extends Data
 {
     public ?Carbon $attachDate;
     public $attachedByContactID;
@@ -44,7 +44,7 @@ class ProjectNoteAttachmentEntity extends DataTransferObject
             $array['attachDate'] = new Carbon($array['attachDate']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

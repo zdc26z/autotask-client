@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\TicketChecklistItems;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents TicketChecklistItem entities.
  */
-class TicketChecklistItemEntity extends DataTransferObject
+class TicketChecklistItemEntity extends Data
 {
     public ?int $completedByResourceID;
     public ?Carbon $completedDateTime;
@@ -35,7 +35,7 @@ class TicketChecklistItemEntity extends DataTransferObject
             $array['completedDateTime'] = new Carbon($array['completedDateTime']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

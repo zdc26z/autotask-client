@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\ServiceCallTaskResources;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents ServiceCallTaskResource entities.
  */
-class ServiceCallTaskResourceEntity extends DataTransferObject
+class ServiceCallTaskResourceEntity extends Data
 {
     public $id;
     public int $resourceID;
@@ -24,7 +24,7 @@ class ServiceCallTaskResourceEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

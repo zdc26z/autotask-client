@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\TimeOffRequests;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents TimeOffRequest entities.
  */
-class TimeOffRequestEntity extends DataTransferObject
+class TimeOffRequestEntity extends Data
 {
     public ?Carbon $approvedDateTime;
     public ?int $approveRejectResourceID;
@@ -62,7 +62,7 @@ class TimeOffRequestEntity extends DataTransferObject
             $array['startTime'] = new Carbon($array['startTime']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

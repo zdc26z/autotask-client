@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\ConfigurationItemTypes;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents ConfigurationItemType entities.
  */
-class ConfigurationItemTypeEntity extends DataTransferObject
+class ConfigurationItemTypeEntity extends Data
 {
     public $id;
     public bool $isActive;
@@ -24,7 +24,7 @@ class ConfigurationItemTypeEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

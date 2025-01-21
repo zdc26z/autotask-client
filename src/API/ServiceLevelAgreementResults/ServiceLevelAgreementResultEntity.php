@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\ServiceLevelAgreementResults;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents ServiceLevelAgreementResult entities.
  */
-class ServiceLevelAgreementResultEntity extends DataTransferObject
+class ServiceLevelAgreementResultEntity extends Data
 {
     public ?float $firstResponseElapsedHours;
     public ?int $firstResponseInitiatingResourceID;
@@ -34,7 +34,7 @@ class ServiceLevelAgreementResultEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

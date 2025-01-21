@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\PaymentTerms;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents PaymentTerm entities.
  */
-class PaymentTermEntity extends DataTransferObject
+class PaymentTermEntity extends Data
 {
     public ?string $description;
     public $id;
@@ -26,7 +26,7 @@ class PaymentTermEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

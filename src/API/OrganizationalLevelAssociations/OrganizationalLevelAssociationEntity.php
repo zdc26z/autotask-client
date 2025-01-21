@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\OrganizationalLevelAssociations;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents OrganizationalLevelAssociation entities.
  */
-class OrganizationalLevelAssociationEntity extends DataTransferObject
+class OrganizationalLevelAssociationEntity extends Data
 {
     public $id;
     public ?bool $isActive;
@@ -25,7 +25,7 @@ class OrganizationalLevelAssociationEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\TaxRegions;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents TaxRegion entities.
  */
-class TaxRegionEntity extends DataTransferObject
+class TaxRegionEntity extends Data
 {
     public int $id;
     public ?bool $isActive;
@@ -24,7 +24,7 @@ class TaxRegionEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

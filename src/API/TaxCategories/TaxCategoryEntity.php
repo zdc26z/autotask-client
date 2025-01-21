@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\TaxCategories;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents TaxCategory entities.
  */
-class TaxCategoryEntity extends DataTransferObject
+class TaxCategoryEntity extends Data
 {
     public ?string $description;
     public int $id;
@@ -25,7 +25,7 @@ class TaxCategoryEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

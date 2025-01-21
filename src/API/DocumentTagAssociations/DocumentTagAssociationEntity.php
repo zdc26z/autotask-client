@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\DocumentTagAssociations;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents DocumentTagAssociation entities.
  */
-class DocumentTagAssociationEntity extends DataTransferObject
+class DocumentTagAssociationEntity extends Data
 {
     public ?Carbon $createDateTime;
     public ?int $createdByResourceID;
@@ -31,7 +31,7 @@ class DocumentTagAssociationEntity extends DataTransferObject
             $array['createDateTime'] = new Carbon($array['createDateTime']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

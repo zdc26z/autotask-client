@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\TaskPredecessors;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents TaskPredecessor entities.
  */
-class TaskPredecessorEntity extends DataTransferObject
+class TaskPredecessorEntity extends Data
 {
     public $id;
     public ?int $lagDays;
@@ -25,7 +25,7 @@ class TaskPredecessorEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

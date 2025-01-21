@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\DeletedTicketActivityLogs;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents DeletedTicketActivityLog entities.
  */
-class DeletedTicketActivityLogEntity extends DataTransferObject
+class DeletedTicketActivityLogEntity extends Data
 {
     public Carbon $activityDateTime;
     public int $createdByResourceID;
@@ -50,7 +50,7 @@ class DeletedTicketActivityLogEntity extends DataTransferObject
             $array['startDateTime'] = new Carbon($array['startDateTime']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

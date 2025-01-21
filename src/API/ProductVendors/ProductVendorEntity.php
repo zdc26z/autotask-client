@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\ProductVendors;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents ProductVendor entities.
  */
-class ProductVendorEntity extends DataTransferObject
+class ProductVendorEntity extends Data
 {
     public $id;
     public bool $isActive;
@@ -28,7 +28,7 @@ class ProductVendorEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

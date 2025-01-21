@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\ConfigurationItemSslSubjectAlternativeNames;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents ConfigurationItemSslSubjectAlternativeName entities.
  */
-class ConfigurationItemSslSubjectAlternativeNameEntity extends DataTransferObject
+class ConfigurationItemSslSubjectAlternativeNameEntity extends Data
 {
     public int $configurationItemID;
     public $id;
@@ -24,7 +24,7 @@ class ConfigurationItemSslSubjectAlternativeNameEntity extends DataTransferObjec
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

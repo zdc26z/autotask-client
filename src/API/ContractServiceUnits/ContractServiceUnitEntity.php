@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\ContractServiceUnits;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents ContractServiceUnit entities.
  */
-class ContractServiceUnitEntity extends DataTransferObject
+class ContractServiceUnitEntity extends Data
 {
     public ?Carbon $approveAndPostDate;
     public int $contractID;
@@ -47,7 +47,7 @@ class ContractServiceUnitEntity extends DataTransferObject
             $array['startDate'] = new Carbon($array['startDate']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

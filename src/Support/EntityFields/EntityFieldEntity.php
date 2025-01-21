@@ -2,12 +2,12 @@
 
 namespace Anteris\Autotask\Support\EntityFields;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents an entity field response from Autotask.
  */
-class EntityFieldEntity extends DataTransferObject
+class EntityFieldEntity extends Data
 {
     public string $name;
     public string $dataType;

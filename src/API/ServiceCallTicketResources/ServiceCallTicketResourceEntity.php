@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\ServiceCallTicketResources;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents ServiceCallTicketResource entities.
  */
-class ServiceCallTicketResourceEntity extends DataTransferObject
+class ServiceCallTicketResourceEntity extends Data
 {
     public $id;
     public int $resourceID;
@@ -24,7 +24,7 @@ class ServiceCallTicketResourceEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

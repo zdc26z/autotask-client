@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\DocumentNotes;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents DocumentNote entities.
  */
-class DocumentNoteEntity extends DataTransferObject
+class DocumentNoteEntity extends Data
 {
     public ?int $createdByResourceID;
     public ?Carbon $createdDateTime;
@@ -38,7 +38,7 @@ class DocumentNoteEntity extends DataTransferObject
             $array['lastModifiedDateTime'] = new Carbon($array['lastModifiedDateTime']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

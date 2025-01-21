@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\ContractRoleCosts;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents ContractRoleCost entities.
  */
-class ContractRoleCostEntity extends DataTransferObject
+class ContractRoleCostEntity extends Data
 {
     public int $contractID;
     public $id;
@@ -26,7 +26,7 @@ class ContractRoleCostEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

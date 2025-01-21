@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\Skills;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents Skill entities.
  */
-class SkillEntity extends DataTransferObject
+class SkillEntity extends Data
 {
     public $categoryID;
     public ?string $description;
@@ -26,7 +26,7 @@ class SkillEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

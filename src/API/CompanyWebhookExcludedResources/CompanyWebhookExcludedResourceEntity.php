@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\CompanyWebhookExcludedResources;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents CompanyWebhookExcludedResource entities.
  */
-class CompanyWebhookExcludedResourceEntity extends DataTransferObject
+class CompanyWebhookExcludedResourceEntity extends Data
 {
     public $id;
     public int $resourceID;
@@ -24,7 +24,7 @@ class CompanyWebhookExcludedResourceEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

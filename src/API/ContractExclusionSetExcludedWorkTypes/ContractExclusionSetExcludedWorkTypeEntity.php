@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\ContractExclusionSetExcludedWorkTypes;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents ContractExclusionSetExcludedWorkType entities.
  */
-class ContractExclusionSetExcludedWorkTypeEntity extends DataTransferObject
+class ContractExclusionSetExcludedWorkTypeEntity extends Data
 {
     public int $contractExclusionSetID;
     public int $excludedWorkTypeID;
@@ -24,7 +24,7 @@ class ContractExclusionSetExcludedWorkTypeEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

@@ -3,12 +3,12 @@
 namespace Anteris\Autotask\API\ComanagedAssociations;
 
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents ComanagedAssociation entities.
  */
-class ComanagedAssociationEntity extends DataTransferObject
+class ComanagedAssociationEntity extends Data
 {
     public int $companyID;
     public $id;
@@ -25,7 +25,7 @@ class ComanagedAssociationEntity extends DataTransferObject
      */
     public function __construct(array $array)
     {
-        parent::__construct($array);
+        
     }
 
     /**

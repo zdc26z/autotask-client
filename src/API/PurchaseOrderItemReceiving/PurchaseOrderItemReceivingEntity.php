@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\PurchaseOrderItemReceiving;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents PurchaseOrderItemReceiving entities.
  */
-class PurchaseOrderItemReceivingEntity extends DataTransferObject
+class PurchaseOrderItemReceivingEntity extends Data
 {
     public $id;
     public $purchaseOrderItemID;
@@ -35,7 +35,7 @@ class PurchaseOrderItemReceivingEntity extends DataTransferObject
             $array['receiveDate'] = new Carbon($array['receiveDate']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

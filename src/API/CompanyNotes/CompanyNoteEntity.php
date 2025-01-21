@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\CompanyNotes;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents CompanyNote entities.
  */
-class CompanyNoteEntity extends DataTransferObject
+class CompanyNoteEntity extends Data
 {
     public int $actionType;
     public int $assignedResourceID;
@@ -57,7 +57,7 @@ class CompanyNoteEntity extends DataTransferObject
             $array['startDateTime'] = new Carbon($array['startDateTime']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**

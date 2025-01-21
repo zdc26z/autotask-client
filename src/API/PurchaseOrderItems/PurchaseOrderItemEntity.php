@@ -4,12 +4,12 @@ namespace Anteris\Autotask\API\PurchaseOrderItems;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
 /**
  * Represents PurchaseOrderItem entities.
  */
-class PurchaseOrderItemEntity extends DataTransferObject
+class PurchaseOrderItemEntity extends Data
 {
     public ?int $chargeID;
     public $contractID;
@@ -40,7 +40,7 @@ class PurchaseOrderItemEntity extends DataTransferObject
             $array['estimatedArrivalDate'] = new Carbon($array['estimatedArrivalDate']);
         }
 
-        parent::__construct($array);
+        
     }
 
     /**
