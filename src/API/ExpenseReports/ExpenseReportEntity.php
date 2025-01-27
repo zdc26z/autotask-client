@@ -2,36 +2,21 @@
 
 namespace Anteris\Autotask\API\ExpenseReports;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Generator\Helpers\CastCarbon;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
 use Carbon\Carbon;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents ExpenseReport entities.
  */
-class ExpenseReportEntity extends Data
+class ExpenseReportEntity extends Entity
 {
-    public ?float $amountDue;
-    public ?Carbon $approvedDate;
-    public ?int $approverID;
-    public ?string $departmentNumber;
-    public $id;
-    public ?float $internalCurrencyCashAdvanceAmount;
-    public ?float $internalCurrencyExpenseTotal;
-    public string $name;
-    public ?int $organizationalLevelAssociationID;
-    public ?string $quickBooksReferenceNumber;
-    public ?float $reimbursementCurrencyAmountDue;
-    public ?float $reimbursementCurrencyCashAdvanceAmount;
-    public ?int $reimbursementCurrencyID;
-    public ?string $rejectionReason;
-    public ?int $status;
-    public ?bool $submit;
-    public ?Carbon $submitDate;
-    public int $submitterID;
-    public Carbon $weekEnding;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new ExpenseReport entity.
@@ -39,21 +24,33 @@ class ExpenseReportEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public float $amountDue = '', 
+        #[CastCarbon]
+                public Carbon $approvedDate = new Carbon(), 
+                public int $approverID = '', 
+                public string $departmentNumber = '', 
+                public int $id, 
+                public float $internalCurrencyCashAdvanceAmount = '', 
+                public float $internalCurrencyExpenseTotal = '', 
+                public string $name, 
+                public int $organizationalLevelAssociationID = '', 
+                public string $quickBooksReferenceNumber = '', 
+                public float $reimbursementCurrencyAmountDue = '', 
+                public float $reimbursementCurrencyCashAdvanceAmount = '', 
+                public int $reimbursementCurrencyID = '', 
+                public string $rejectionReason = '', 
+                public int $status = '', 
+                public bool $submit = false, 
+        #[CastCarbon]
+                public Carbon $submitDate = new Carbon(), 
+                public int $submitterID, 
+        #[CastCarbon]
+                public Carbon $weekEnding, 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        if (isset($array['approvedDate'])) {
-            $array['approvedDate'] = new Carbon($array['approvedDate']);
-        }
-
-        if (isset($array['submitDate'])) {
-            $array['submitDate'] = new Carbon($array['submitDate']);
-        }
-
-        if (isset($array['weekEnding'])) {
-            $array['weekEnding'] = new Carbon($array['weekEnding']);
-        }
-
-        
     }
 
     /**
@@ -71,6 +68,11 @@ class ExpenseReportEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

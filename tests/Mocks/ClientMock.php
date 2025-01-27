@@ -124,7 +124,7 @@ class ClientMock extends Client
                 }
             }
 
-            $results[$i] = new $entity($result);
+            $results[$i] = new $entity(...$result);
         }
 
         return $collection::make($results);

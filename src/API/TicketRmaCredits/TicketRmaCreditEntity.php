@@ -2,21 +2,19 @@
 
 namespace Anteris\Autotask\API\TicketRmaCredits;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents TicketRmaCredit entities.
  */
-class TicketRmaCreditEntity extends Data
+class TicketRmaCreditEntity extends Entity
 {
-    public float $creditAmount;
-    public ?string $creditDetails;
-    public $id;
-    public ?float $internalCurrencyCreditAmount;
-    public int $ticketID;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new TicketRmaCredit entity.
@@ -24,9 +22,16 @@ class TicketRmaCreditEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public float $creditAmount, 
+                public string $creditDetails = '', 
+                public int $id, 
+                public float $internalCurrencyCreditAmount = '', 
+                public int $ticketID, 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        
     }
 
     /**
@@ -44,6 +49,11 @@ class TicketRmaCreditEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

@@ -2,28 +2,19 @@
 
 namespace Anteris\Autotask\API\InternalLocations;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents InternalLocation entities.
  */
-class InternalLocationEntity extends Data
+class InternalLocationEntity extends Entity
 {
-    public ?string $additionalAddressInfo;
-    public ?string $address1;
-    public ?string $address2;
-    public ?string $city;
-    public ?string $country;
-    public $holidaySetId;
-    public $id;
-    public ?bool $isDefault;
-    public string $name;
-    public ?string $postalCode;
-    public ?string $state;
-    public ?string $timeZone;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new InternalLocation entity.
@@ -31,9 +22,23 @@ class InternalLocationEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public string $additionalAddressInfo = '', 
+                public string $address1 = '', 
+                public string $address2 = '', 
+                public string $city = '', 
+                public string $country = '', 
+                public int $holidaySetId = '', 
+                public int $id, 
+                public bool $isDefault = false, 
+                public string $name, 
+                public string $postalCode = '', 
+                public string $state = '', 
+                public string $timeZone = '', 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        
     }
 
     /**
@@ -51,6 +56,11 @@ class InternalLocationEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

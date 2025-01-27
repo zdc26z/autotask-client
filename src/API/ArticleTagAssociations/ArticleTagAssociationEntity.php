@@ -2,22 +2,21 @@
 
 namespace Anteris\Autotask\API\ArticleTagAssociations;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Generator\Helpers\CastCarbon;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
 use Carbon\Carbon;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents ArticleTagAssociation entities.
  */
-class ArticleTagAssociationEntity extends Data
+class ArticleTagAssociationEntity extends Entity
 {
-    public int $articleID;
-    public ?Carbon $createDateTime;
-    public ?int $createdByResourceID;
-    public $id;
-    public int $tagID;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new ArticleTagAssociation entity.
@@ -25,13 +24,17 @@ class ArticleTagAssociationEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public int $articleID, 
+        #[CastCarbon]
+                public Carbon $createDateTime = new Carbon(), 
+                public int $createdByResourceID = '', 
+                public int $id, 
+                public int $tagID, 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        if (isset($array['createDateTime'])) {
-            $array['createDateTime'] = new Carbon($array['createDateTime']);
-        }
-
-        
     }
 
     /**
@@ -49,6 +52,11 @@ class ArticleTagAssociationEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

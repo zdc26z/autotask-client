@@ -2,19 +2,19 @@
 
 namespace Anteris\Autotask\API\WorkTypeModifiers;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents WorkTypeModifier entities.
  */
-class WorkTypeModifierEntity extends Data
+class WorkTypeModifierEntity extends Entity
 {
-    public $id;
-    public int $modifierType;
-    public ?float $modifierValue;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new WorkTypeModifier entity.
@@ -22,9 +22,14 @@ class WorkTypeModifierEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public int $id, 
+                public int $modifierType, 
+                public float $modifierValue = '', 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        
     }
 
     /**
@@ -42,6 +47,11 @@ class WorkTypeModifierEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

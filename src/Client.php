@@ -169,6 +169,7 @@ use Anteris\Autotask\API\ResourceRoleQueues\ResourceRoleQueueService;
 use Anteris\Autotask\API\ResourceRoles\ResourceRoleService;
 use Anteris\Autotask\API\ResourceServiceDeskRoles\ResourceServiceDeskRoleService;
 use Anteris\Autotask\API\ResourceSkills\ResourceSkillService;
+use Anteris\Autotask\API\ResourceTimeOffApprovers\ResourceTimeOffApproverService;
 use Anteris\Autotask\API\Resources\ResourceService;
 use Anteris\Autotask\API\Roles\RoleService;
 use Anteris\Autotask\API\SalesOrderAttachments\SalesOrderAttachmentService;
@@ -184,6 +185,7 @@ use Anteris\Autotask\API\ServiceLevelAgreementResults\ServiceLevelAgreementResul
 use Anteris\Autotask\API\Services\ServiceService;
 use Anteris\Autotask\API\ShippingTypes\ShippingTypeService;
 use Anteris\Autotask\API\Skills\SkillService;
+use Anteris\Autotask\API\Subscribeds\SubscribedService;
 use Anteris\Autotask\API\SubscriptionPeriods\SubscriptionPeriodService;
 use Anteris\Autotask\API\Subscriptions\SubscriptionService;
 use Anteris\Autotask\API\SurveyResults\SurveyResultService;
@@ -2262,6 +2264,18 @@ class Client
     }
 
     /**
+     * Handles any interaction with the ResourceTimeOffApprovers endpoint.
+     */
+    public function resourceTimeOffApprovers(): ResourceTimeOffApproverService
+    {
+        if (! isset($this->classCache['ResourceTimeOffApprovers'])) {
+            $this->classCache['ResourceTimeOffApprovers'] = new ResourceTimeOffApproverService($this->client);
+        }
+
+        return $this->classCache['ResourceTimeOffApprovers'];
+    }
+
+    /**
      * Handles any interaction with the Resources endpoint.
      */
     public function resources(): ResourceService
@@ -2439,6 +2453,18 @@ class Client
         }
 
         return $this->classCache['Skills'];
+    }
+
+    /**
+     * Handles any interaction with the Subscribeds endpoint.
+     */
+    public function subscribeds(): SubscribedService
+    {
+        if (! isset($this->classCache['Subscribeds'])) {
+            $this->classCache['Subscribeds'] = new SubscribedService($this->client);
+        }
+
+        return $this->classCache['Subscribeds'];
     }
 
     /**

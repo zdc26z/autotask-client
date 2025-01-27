@@ -2,26 +2,19 @@
 
 namespace Anteris\Autotask\API\ContractServiceBundles;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents ContractServiceBundle entities.
  */
-class ContractServiceBundleEntity extends Data
+class ContractServiceBundleEntity extends Entity
 {
-    public ?float $adjustedPrice;
-    public int $contractID;
-    public $id;
-    public ?float $internalCurrencyAdjustedPrice;
-    public ?float $internalCurrencyUnitPrice;
-    public ?string $internalDescription;
-    public ?string $invoiceDescription;
-    public $quoteItemID;
-    public int $serviceBundleID;
-    public ?float $unitPrice;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new ContractServiceBundle entity.
@@ -29,9 +22,21 @@ class ContractServiceBundleEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public float $adjustedPrice = '', 
+                public int $contractID, 
+                public int $id, 
+                public float $internalCurrencyAdjustedPrice = '', 
+                public float $internalCurrencyUnitPrice = '', 
+                public string $internalDescription = '', 
+                public string $invoiceDescription = '', 
+                public int $quoteItemID = '', 
+                public int $serviceBundleID, 
+                public float $unitPrice = '', 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        
     }
 
     /**
@@ -49,6 +54,11 @@ class ContractServiceBundleEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

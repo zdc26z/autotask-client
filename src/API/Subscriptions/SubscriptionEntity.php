@@ -2,34 +2,21 @@
 
 namespace Anteris\Autotask\API\Subscriptions;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Generator\Helpers\CastCarbon;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
 use Carbon\Carbon;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents Subscription entities.
  */
-class SubscriptionEntity extends Data
+class SubscriptionEntity extends Entity
 {
-    public int $configurationItemID;
-    public ?string $description;
-    public Carbon $effectiveDate;
-    public Carbon $expirationDate;
-    public $id;
-    public ?int $impersonatorCreatorResourceID;
-    public int $materialCodeID;
-    public ?int $organizationalLevelAssociationID;
-    public ?float $periodCost;
-    public float $periodPrice;
-    public int $periodType;
-    public ?string $purchaseOrderNumber;
-    public int $status;
-    public string $subscriptionName;
-    public ?float $totalCost;
-    public ?float $totalPrice;
-    public ?int $vendorID;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new Subscription entity.
@@ -37,17 +24,30 @@ class SubscriptionEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public int $configurationItemID, 
+                public string $description = '', 
+        #[CastCarbon]
+                public Carbon $effectiveDate, 
+        #[CastCarbon]
+                public Carbon $expirationDate, 
+                public int $id, 
+                public int $impersonatorCreatorResourceID = '', 
+                public int $materialCodeID, 
+                public int $organizationalLevelAssociationID = '', 
+                public float $periodCost = '', 
+                public float $periodPrice, 
+                public int $periodType, 
+                public string $purchaseOrderNumber = '', 
+                public int $status, 
+                public string $subscriptionName, 
+                public float $totalCost = '', 
+                public float $totalPrice = '', 
+                public int $vendorID = '', 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        if (isset($array['effectiveDate'])) {
-            $array['effectiveDate'] = new Carbon($array['effectiveDate']);
-        }
-
-        if (isset($array['expirationDate'])) {
-            $array['expirationDate'] = new Carbon($array['expirationDate']);
-        }
-
-        
     }
 
     /**
@@ -65,6 +65,11 @@ class SubscriptionEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

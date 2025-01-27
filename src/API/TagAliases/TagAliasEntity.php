@@ -2,19 +2,19 @@
 
 namespace Anteris\Autotask\API\TagAliases;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents TagAlias entities.
  */
-class TagAliasEntity extends Data
+class TagAliasEntity extends Entity
 {
-    public string $alias;
-    public $id;
-    public int $tagID;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new TagAlias entity.
@@ -22,9 +22,14 @@ class TagAliasEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public string $alias, 
+                public int $id, 
+                public int $tagID, 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        
     }
 
     /**
@@ -42,6 +47,11 @@ class TagAliasEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

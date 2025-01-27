@@ -2,21 +2,19 @@
 
 namespace Anteris\Autotask\API\PriceListMaterialCodes;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents PriceListMaterialCode entities.
  */
-class PriceListMaterialCodeEntity extends Data
+class PriceListMaterialCodeEntity extends Entity
 {
-    public int $billingCodeID;
-    public int $currencyID;
-    public $id;
-    public ?float $unitPrice;
-    public bool $usesInternalCurrencyPrice;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new PriceListMaterialCode entity.
@@ -24,9 +22,16 @@ class PriceListMaterialCodeEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public int $billingCodeID, 
+                public int $currencyID, 
+                public int $id, 
+                public float $unitPrice = '', 
+                public bool $usesInternalCurrencyPrice, 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        
     }
 
     /**
@@ -44,6 +49,11 @@ class PriceListMaterialCodeEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

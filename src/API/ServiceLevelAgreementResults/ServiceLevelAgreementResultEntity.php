@@ -2,29 +2,19 @@
 
 namespace Anteris\Autotask\API\ServiceLevelAgreementResults;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents ServiceLevelAgreementResult entities.
  */
-class ServiceLevelAgreementResultEntity extends Data
+class ServiceLevelAgreementResultEntity extends Entity
 {
-    public ?float $firstResponseElapsedHours;
-    public ?int $firstResponseInitiatingResourceID;
-    public ?int $firstResponseResourceID;
-    public $id;
-    public ?bool $isFirstResponseMet;
-    public ?bool $isResolutionMet;
-    public ?bool $isResolutionPlanMet;
-    public ?float $resolutionElapsedHours;
-    public ?float $resolutionPlanElapsedHours;
-    public ?int $resolutionPlanResourceID;
-    public ?int $resolutionResourceID;
-    public ?string $serviceLevelAgreementName;
-    public ?int $ticketID;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new ServiceLevelAgreementResult entity.
@@ -32,9 +22,24 @@ class ServiceLevelAgreementResultEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public float $firstResponseElapsedHours = '', 
+                public int $firstResponseInitiatingResourceID = '', 
+                public int $firstResponseResourceID = '', 
+                public int $id, 
+                public bool $isFirstResponseMet = false, 
+                public bool $isResolutionMet = false, 
+                public bool $isResolutionPlanMet = false, 
+                public float $resolutionElapsedHours = '', 
+                public float $resolutionPlanElapsedHours = '', 
+                public int $resolutionPlanResourceID = '', 
+                public int $resolutionResourceID = '', 
+                public string $serviceLevelAgreementName = '', 
+                public int $ticketID = '', 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        
     }
 
     /**
@@ -52,6 +57,11 @@ class ServiceLevelAgreementResultEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

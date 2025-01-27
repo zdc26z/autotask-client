@@ -2,22 +2,19 @@
 
 namespace Anteris\Autotask\API\QuoteLocations;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents QuoteLocation entities.
  */
-class QuoteLocationEntity extends Data
+class QuoteLocationEntity extends Entity
 {
-    public ?string $address1;
-    public ?string $address2;
-    public ?string $city;
-    public $id;
-    public ?string $postalCode;
-    public ?string $state;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new QuoteLocation entity.
@@ -25,9 +22,17 @@ class QuoteLocationEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public string $address1 = '', 
+                public string $address2 = '', 
+                public string $city = '', 
+                public int $id, 
+                public string $postalCode = '', 
+                public string $state = '', 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        
     }
 
     /**
@@ -45,6 +50,11 @@ class QuoteLocationEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

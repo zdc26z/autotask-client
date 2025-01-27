@@ -2,29 +2,21 @@
 
 namespace Anteris\Autotask\API\KnowledgeBaseArticles;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Generator\Helpers\CastCarbon;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
 use Carbon\Carbon;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents KnowledgeBaseArticle entities.
  */
-class KnowledgeBaseArticleEntity extends Data
+class KnowledgeBaseArticleEntity extends Entity
 {
-    public int $articleCategoryID;
-    public ?int $createdByResourceID;
-    public ?Carbon $createdDateTime;
-    public ?string $errorCodes;
-    public $id;
-    public ?bool $isActive;
-    public ?string $keywords;
-    public ?int $lastModifiedByResourceID;
-    public ?Carbon $lastModifiedDateTime;
-    public int $publish;
-    public ?string $referenceLink;
-    public string $title;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new KnowledgeBaseArticle entity.
@@ -32,17 +24,25 @@ class KnowledgeBaseArticleEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public int $articleCategoryID, 
+                public int $createdByResourceID = '', 
+        #[CastCarbon]
+                public Carbon $createdDateTime = new Carbon(), 
+                public string $errorCodes = '', 
+                public int $id, 
+                public bool $isActive = false, 
+                public string $keywords = '', 
+                public int $lastModifiedByResourceID = '', 
+        #[CastCarbon]
+                public Carbon $lastModifiedDateTime = new Carbon(), 
+                public int $publish, 
+                public string $referenceLink = '', 
+                public string $title, 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        if (isset($array['createdDateTime'])) {
-            $array['createdDateTime'] = new Carbon($array['createdDateTime']);
-        }
-
-        if (isset($array['lastModifiedDateTime'])) {
-            $array['lastModifiedDateTime'] = new Carbon($array['lastModifiedDateTime']);
-        }
-
-        
     }
 
     /**
@@ -60,6 +60,11 @@ class KnowledgeBaseArticleEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

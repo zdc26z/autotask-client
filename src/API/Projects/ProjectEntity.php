@@ -2,60 +2,21 @@
 
 namespace Anteris\Autotask\API\Projects;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Generator\Helpers\CastCarbon;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
 use Carbon\Carbon;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents Project entities.
  */
-class ProjectEntity extends Data
+class ProjectEntity extends Entity
 {
-    public ?float $actualBilledHours;
-    public ?float $actualHours;
-    public ?float $changeOrdersBudget;
-    public ?float $changeOrdersRevenue;
-    public int $companyID;
-    public ?int $companyOwnerResourceID;
-    public ?Carbon $completedDateTime;
-    public ?int $completedPercentage;
-    public ?int $contractID;
-    public ?Carbon $createDateTime;
-    public ?int $creatorResourceID;
-    public ?int $department;
-    public ?string $description;
-    public ?int $duration;
-    public Carbon $endDateTime;
-    public ?float $estimatedSalesCost;
-    public ?float $estimatedTime;
-    public ?string $extProjectNumber;
-    public ?int $extProjectType;
-    public $id;
-    public ?int $impersonatorCreatorResourceID;
-    public ?float $laborEstimatedCosts;
-    public ?float $laborEstimatedMarginPercentage;
-    public ?float $laborEstimatedRevenue;
-    public ?Carbon $lastActivityDateTime;
-    public ?int $lastActivityPersonType;
-    public ?int $lastActivityResourceID;
-    public ?int $opportunityID;
-    public ?int $organizationalLevelAssociationID;
-    public ?float $originalEstimatedRevenue;
-    public ?float $projectCostEstimatedMarginPercentage;
-    public ?float $projectCostsBudget;
-    public ?float $projectCostsRevenue;
-    public ?int $projectLeadResourceID;
-    public string $projectName;
-    public ?string $projectNumber;
-    public int $projectType;
-    public ?string $purchaseOrderNumber;
-    public ?float $sgda;
-    public Carbon $startDateTime;
-    public int $status;
-    public ?Carbon $statusDateTime;
-    public ?string $statusDetail;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new Project entity.
@@ -63,33 +24,60 @@ class ProjectEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public float $actualBilledHours = '', 
+                public float $actualHours = '', 
+                public float $changeOrdersBudget = '', 
+                public float $changeOrdersRevenue = '', 
+                public int $companyID, 
+                public int $companyOwnerResourceID = '', 
+        #[CastCarbon]
+                public Carbon $completedDateTime = new Carbon(), 
+                public int $completedPercentage = '', 
+                public int $contractID = '', 
+        #[CastCarbon]
+                public Carbon $createDateTime = new Carbon(), 
+                public int $creatorResourceID = '', 
+                public int $department = '', 
+                public string $description = '', 
+                public int $duration = '', 
+        #[CastCarbon]
+                public Carbon $endDateTime, 
+                public float $estimatedSalesCost = '', 
+                public float $estimatedTime = '', 
+                public string $extProjectNumber = '', 
+                public int $extProjectType = '', 
+                public int $id, 
+                public int $impersonatorCreatorResourceID = '', 
+                public float $laborEstimatedCosts = '', 
+                public float $laborEstimatedMarginPercentage = '', 
+                public float $laborEstimatedRevenue = '', 
+        #[CastCarbon]
+                public Carbon $lastActivityDateTime = new Carbon(), 
+                public int $lastActivityPersonType = '', 
+                public int $lastActivityResourceID = '', 
+                public int $opportunityID = '', 
+                public int $organizationalLevelAssociationID = '', 
+                public float $originalEstimatedRevenue = '', 
+                public float $projectCostEstimatedMarginPercentage = '', 
+                public float $projectCostsBudget = '', 
+                public float $projectCostsRevenue = '', 
+                public int $projectLeadResourceID = '', 
+                public string $projectName, 
+                public string $projectNumber = '', 
+                public int $projectType, 
+                public string $purchaseOrderNumber = '', 
+                public float $sgda = '', 
+        #[CastCarbon]
+                public Carbon $startDateTime, 
+                public int $status, 
+        #[CastCarbon]
+                public Carbon $statusDateTime = new Carbon(), 
+                public string $statusDetail = '', 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        if (isset($array['completedDateTime'])) {
-            $array['completedDateTime'] = new Carbon($array['completedDateTime']);
-        }
-
-        if (isset($array['createDateTime'])) {
-            $array['createDateTime'] = new Carbon($array['createDateTime']);
-        }
-
-        if (isset($array['endDateTime'])) {
-            $array['endDateTime'] = new Carbon($array['endDateTime']);
-        }
-
-        if (isset($array['lastActivityDateTime'])) {
-            $array['lastActivityDateTime'] = new Carbon($array['lastActivityDateTime']);
-        }
-
-        if (isset($array['startDateTime'])) {
-            $array['startDateTime'] = new Carbon($array['startDateTime']);
-        }
-
-        if (isset($array['statusDateTime'])) {
-            $array['statusDateTime'] = new Carbon($array['statusDateTime']);
-        }
-
-        
     }
 
     /**
@@ -107,6 +95,11 @@ class ProjectEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

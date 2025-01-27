@@ -2,33 +2,21 @@
 
 namespace Anteris\Autotask\API\ContractBillingRules;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Generator\Helpers\CastCarbon;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
 use Carbon\Carbon;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents ContractBillingRule entities.
  */
-class ContractBillingRuleEntity extends Data
+class ContractBillingRuleEntity extends Entity
 {
-    public int $contractID;
-    public bool $createChargesAsBillable;
-    public ?float $dailyProratedCost;
-    public ?float $dailyProratedPrice;
-    public int $determineUnits;
-    public ?Carbon $endDate;
-    public ?int $executionMethod;
-    public $id;
-    public bool $includeItemsInChargeDescription;
-    public ?string $invoiceDescription;
-    public bool $isActive;
-    public bool $isDailyProrationEnabled;
-    public ?int $maximumUnits;
-    public ?int $minimumUnits;
-    public int $productID;
-    public Carbon $startDate;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new ContractBillingRule entity.
@@ -36,17 +24,29 @@ class ContractBillingRuleEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public int $contractID, 
+                public bool $createChargesAsBillable, 
+                public float $dailyProratedCost = '', 
+                public float $dailyProratedPrice = '', 
+                public int $determineUnits, 
+        #[CastCarbon]
+                public Carbon $endDate = new Carbon(), 
+                public int $executionMethod = '', 
+                public int $id, 
+                public bool $includeItemsInChargeDescription, 
+                public string $invoiceDescription = '', 
+                public bool $isActive, 
+                public bool $isDailyProrationEnabled, 
+                public int $maximumUnits = '', 
+                public int $minimumUnits = '', 
+                public int $productID, 
+        #[CastCarbon]
+                public Carbon $startDate, 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        if (isset($array['endDate'])) {
-            $array['endDate'] = new Carbon($array['endDate']);
-        }
-
-        if (isset($array['startDate'])) {
-            $array['startDate'] = new Carbon($array['startDate']);
-        }
-
-        
     }
 
     /**
@@ -64,6 +64,11 @@ class ContractBillingRuleEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

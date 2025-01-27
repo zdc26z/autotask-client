@@ -2,32 +2,21 @@
 
 namespace Anteris\Autotask\API\CompanyNotes;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Generator\Helpers\CastCarbon;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
 use Carbon\Carbon;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents CompanyNote entities.
  */
-class CompanyNoteEntity extends Data
+class CompanyNoteEntity extends Entity
 {
-    public int $actionType;
-    public int $assignedResourceID;
-    public int $companyID;
-    public ?Carbon $completedDateTime;
-    public ?int $contactID;
-    public ?Carbon $createDateTime;
-    public Carbon $endDateTime;
-    public $id;
-    public ?int $impersonatorCreatorResourceID;
-    public ?int $impersonatorUpdaterResourceID;
-    public ?Carbon $lastModifiedDate;
-    public ?string $name;
-    public ?string $note;
-    public ?int $opportunityID;
-    public Carbon $startDateTime;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new CompanyNote entity.
@@ -35,29 +24,31 @@ class CompanyNoteEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public int $actionType, 
+                public int $assignedResourceID, 
+                public int $companyID, 
+        #[CastCarbon]
+                public Carbon $completedDateTime = new Carbon(), 
+                public int $contactID = '', 
+        #[CastCarbon]
+                public Carbon $createDateTime = new Carbon(), 
+        #[CastCarbon]
+                public Carbon $endDateTime, 
+                public int $id, 
+                public int $impersonatorCreatorResourceID = '', 
+                public int $impersonatorUpdaterResourceID = '', 
+        #[CastCarbon]
+                public Carbon $lastModifiedDate = new Carbon(), 
+                public string $name = '', 
+                public string $note = '', 
+                public int $opportunityID = '', 
+        #[CastCarbon]
+                public Carbon $startDateTime, 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        if (isset($array['completedDateTime'])) {
-            $array['completedDateTime'] = new Carbon($array['completedDateTime']);
-        }
-
-        if (isset($array['createDateTime'])) {
-            $array['createDateTime'] = new Carbon($array['createDateTime']);
-        }
-
-        if (isset($array['endDateTime'])) {
-            $array['endDateTime'] = new Carbon($array['endDateTime']);
-        }
-
-        if (isset($array['lastModifiedDate'])) {
-            $array['lastModifiedDate'] = new Carbon($array['lastModifiedDate']);
-        }
-
-        if (isset($array['startDateTime'])) {
-            $array['startDateTime'] = new Carbon($array['startDateTime']);
-        }
-
-        
     }
 
     /**
@@ -75,6 +66,11 @@ class CompanyNoteEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

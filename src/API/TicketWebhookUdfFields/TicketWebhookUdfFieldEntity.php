@@ -2,21 +2,19 @@
 
 namespace Anteris\Autotask\API\TicketWebhookUdfFields;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents TicketWebhookUdfField entities.
  */
-class TicketWebhookUdfFieldEntity extends Data
+class TicketWebhookUdfFieldEntity extends Entity
 {
-    public $id;
-    public bool $isDisplayAlwaysField;
-    public bool $isSubscribedField;
-    public int $udfFieldID;
-    public int $webhookID;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new TicketWebhookUdfField entity.
@@ -24,9 +22,16 @@ class TicketWebhookUdfFieldEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public int $id, 
+                public bool $isDisplayAlwaysField, 
+                public bool $isSubscribedField, 
+                public int $udfFieldID, 
+                public int $webhookID, 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        
     }
 
     /**
@@ -44,6 +49,11 @@ class TicketWebhookUdfFieldEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

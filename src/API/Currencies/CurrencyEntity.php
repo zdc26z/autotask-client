@@ -2,28 +2,21 @@
 
 namespace Anteris\Autotask\API\Currencies;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Generator\Helpers\CastCarbon;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
 use Carbon\Carbon;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents Currency entities.
  */
-class CurrencyEntity extends Data
+class CurrencyEntity extends Entity
 {
-    public string $currencyNegativeFormat;
-    public string $currencyPositiveFormat;
-    public string $description;
-    public int $displaySymbol;
-    public float $exchangeRate;
-    public $id;
-    public bool $isActive;
-    public bool $isInternalCurrency;
-    public ?Carbon $lastModifiedDateTime;
-    public string $name;
-    public ?int $updateResourceId;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new Currency entity.
@@ -31,13 +24,23 @@ class CurrencyEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public string $currencyNegativeFormat, 
+                public string $currencyPositiveFormat, 
+                public string $description, 
+                public int $displaySymbol, 
+                public float $exchangeRate, 
+                public int $id, 
+                public bool $isActive, 
+                public bool $isInternalCurrency, 
+        #[CastCarbon]
+                public Carbon $lastModifiedDateTime = new Carbon(), 
+                public string $name, 
+                public int $updateResourceId = '', 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        if (isset($array['lastModifiedDateTime'])) {
-            $array['lastModifiedDateTime'] = new Carbon($array['lastModifiedDateTime']);
-        }
-
-        
     }
 
     /**
@@ -55,6 +58,11 @@ class CurrencyEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

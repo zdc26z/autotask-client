@@ -2,23 +2,21 @@
 
 namespace Anteris\Autotask\API\ConfigurationItemDnsRecords;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Generator\Helpers\CastCarbon;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
 use Carbon\Carbon;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents ConfigurationItemDnsRecord entities.
  */
-class ConfigurationItemDnsRecordEntity extends Data
+class ConfigurationItemDnsRecordEntity extends Entity
 {
-    public Carbon $createDateTime;
-    public string $data;
-    public string $dnsType;
-    public $id;
-    public int $installedProductID;
-    public int $timeToLiveSeconds;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new ConfigurationItemDnsRecord entity.
@@ -26,13 +24,18 @@ class ConfigurationItemDnsRecordEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+            #[CastCarbon]
+                public Carbon $createDateTime, 
+                public string $data, 
+                public string $dnsType, 
+                public int $id, 
+                public int $installedProductID, 
+                public int $timeToLiveSeconds, 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        if (isset($array['createDateTime'])) {
-            $array['createDateTime'] = new Carbon($array['createDateTime']);
-        }
-
-        
     }
 
     /**
@@ -50,6 +53,11 @@ class ConfigurationItemDnsRecordEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

@@ -2,23 +2,21 @@
 
 namespace Anteris\Autotask\API\DeletedTicketLogs;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Generator\Helpers\CastCarbon;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
 use Carbon\Carbon;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents DeletedTicketLog entities.
  */
-class DeletedTicketLogEntity extends Data
+class DeletedTicketLogEntity extends Entity
 {
-    public int $deletedByResourceID;
-    public Carbon $deletedDateTime;
-    public $id;
-    public int $ticketID;
-    public string $ticketNumber;
-    public string $ticketTitle;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new DeletedTicketLog entity.
@@ -26,13 +24,18 @@ class DeletedTicketLogEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public int $deletedByResourceID, 
+        #[CastCarbon]
+                public Carbon $deletedDateTime, 
+                public int $id, 
+                public int $ticketID, 
+                public string $ticketNumber, 
+                public string $ticketTitle, 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        if (isset($array['deletedDateTime'])) {
-            $array['deletedDateTime'] = new Carbon($array['deletedDateTime']);
-        }
-
-        
     }
 
     /**
@@ -50,6 +53,11 @@ class DeletedTicketLogEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

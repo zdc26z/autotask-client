@@ -2,14 +2,14 @@
 
 namespace Anteris\Autotask\Support\UserDefinedFields;
 
-use Spatie\LaravelData\Data;
-
 /**
  * Represents a user defined field from Autotask.
  * @see UserDefinedFieldCollection
  */
-class UserDefinedFieldEntity extends Data
+class UserDefinedFieldEntity
 {
-    public string $name;
-    public ?string $value;
+    public function __construct(
+        public string $name,
+        public ?string $value,
+    ) {}
 }

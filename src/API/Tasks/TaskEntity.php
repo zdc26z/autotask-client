@@ -2,52 +2,21 @@
 
 namespace Anteris\Autotask\API\Tasks;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Generator\Helpers\CastCarbon;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
 use Carbon\Carbon;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents Task entities.
  */
-class TaskEntity extends Data
+class TaskEntity extends Entity
 {
-    public ?int $assignedResourceID;
-    public ?int $assignedResourceRoleID;
-    public ?int $billingCodeID;
-    public ?bool $canClientPortalUserCompleteTask;
-    public ?int $companyLocationID;
-    public ?int $completedByResourceID;
-    public ?int $completedByType;
-    public ?Carbon $completedDateTime;
-    public ?Carbon $createDateTime;
-    public ?int $creatorResourceID;
-    public ?int $creatorType;
-    public ?int $departmentID;
-    public ?string $description;
-    public ?Carbon $endDateTime;
-    public ?float $estimatedHours;
-    public ?string $externalID;
-    public ?float $hoursToBeScheduled;
-    public $id;
-    public ?bool $isTaskBillable;
-    public ?bool $isVisibleInClientPortal;
-    public ?Carbon $lastActivityDateTime;
-    public ?int $lastActivityPersonType;
-    public ?int $lastActivityResourceID;
-    public ?int $phaseID;
-    public ?int $priority;
-    public ?int $priorityLabel;
-    public int $projectID;
-    public ?string $purchaseOrderNumber;
-    public ?float $remainingHours;
-    public ?Carbon $startDateTime;
-    public int $status;
-    public ?int $taskCategoryID;
-    public ?string $taskNumber;
-    public int $taskType;
-    public string $title;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new Task entity.
@@ -55,29 +24,51 @@ class TaskEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public int $assignedResourceID = '', 
+                public int $assignedResourceRoleID = '', 
+                public int $billingCodeID = '', 
+                public bool $canClientPortalUserCompleteTask = false, 
+                public int $companyLocationID = '', 
+                public int $completedByResourceID = '', 
+                public int $completedByType = '', 
+        #[CastCarbon]
+                public Carbon $completedDateTime = new Carbon(), 
+        #[CastCarbon]
+                public Carbon $createDateTime = new Carbon(), 
+                public int $creatorResourceID = '', 
+                public int $creatorType = '', 
+                public int $departmentID = '', 
+                public string $description = '', 
+        #[CastCarbon]
+                public Carbon $endDateTime = new Carbon(), 
+                public float $estimatedHours = '', 
+                public string $externalID = '', 
+                public float $hoursToBeScheduled = '', 
+                public int $id, 
+                public bool $isTaskBillable = false, 
+                public bool $isVisibleInClientPortal = false, 
+        #[CastCarbon]
+                public Carbon $lastActivityDateTime = new Carbon(), 
+                public int $lastActivityPersonType = '', 
+                public int $lastActivityResourceID = '', 
+                public int $phaseID = '', 
+                public int $priority = '', 
+                public int $priorityLabel = '', 
+                public int $projectID, 
+                public string $purchaseOrderNumber = '', 
+                public float $remainingHours = '', 
+        #[CastCarbon]
+                public Carbon $startDateTime = new Carbon(), 
+                public int $status, 
+                public int $taskCategoryID = '', 
+                public string $taskNumber = '', 
+                public int $taskType, 
+                public string $title, 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        if (isset($array['completedDateTime'])) {
-            $array['completedDateTime'] = new Carbon($array['completedDateTime']);
-        }
-
-        if (isset($array['createDateTime'])) {
-            $array['createDateTime'] = new Carbon($array['createDateTime']);
-        }
-
-        if (isset($array['endDateTime'])) {
-            $array['endDateTime'] = new Carbon($array['endDateTime']);
-        }
-
-        if (isset($array['lastActivityDateTime'])) {
-            $array['lastActivityDateTime'] = new Carbon($array['lastActivityDateTime']);
-        }
-
-        if (isset($array['startDateTime'])) {
-            $array['startDateTime'] = new Carbon($array['startDateTime']);
-        }
-
-        
     }
 
     /**
@@ -95,6 +86,11 @@ class TaskEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

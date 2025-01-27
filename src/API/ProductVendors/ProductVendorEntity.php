@@ -2,23 +2,19 @@
 
 namespace Anteris\Autotask\API\ProductVendors;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents ProductVendor entities.
  */
-class ProductVendorEntity extends Data
+class ProductVendorEntity extends Entity
 {
-    public $id;
-    public bool $isActive;
-    public bool $isDefault;
-    public int $productID;
-    public ?float $vendorCost;
-    public int $vendorID;
-    public ?string $vendorPartNumber;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new ProductVendor entity.
@@ -26,9 +22,18 @@ class ProductVendorEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public int $id, 
+                public bool $isActive, 
+                public bool $isDefault, 
+                public int $productID, 
+                public float $vendorCost = '', 
+                public int $vendorID, 
+                public string $vendorPartNumber = '', 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        
     }
 
     /**
@@ -46,6 +51,11 @@ class ProductVendorEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

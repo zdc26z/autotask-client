@@ -2,45 +2,21 @@
 
 namespace Anteris\Autotask\API\ExpenseItems;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Generator\Helpers\CastCarbon;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
 use Carbon\Carbon;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents ExpenseItem entities.
  */
-class ExpenseItemEntity extends Data
+class ExpenseItemEntity extends Entity
 {
-    public ?int $companyID;
-    public string $description;
-    public ?string $destination;
-    public ?string $entertainmentLocation;
-    public int $expenseCategory;
-    public ?float $expenseCurrencyExpenseAmount;
-    public ?int $expenseCurrencyID;
-    public Carbon $expenseDate;
-    public int $expenseReportID;
-    public ?string $gLCode;
-    public bool $haveReceipt;
-    public $id;
-    public ?float $internalCurrencyExpenseAmount;
-    public ?float $internalCurrencyReimbursementAmount;
-    public bool $isBillableToCompany;
-    public ?bool $isReimbursable;
-    public ?bool $isRejected;
-    public ?float $miles;
-    public ?float $odometerEnd;
-    public ?float $odometerStart;
-    public ?string $origin;
-    public int $paymentType;
-    public ?int $projectID;
-    public ?string $purchaseOrderNumber;
-    public ?float $reimbursementCurrencyReimbursementAmount;
-    public ?int $taskID;
-    public ?int $ticketID;
-    public ?int $workType;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new ExpenseItem entity.
@@ -48,13 +24,40 @@ class ExpenseItemEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public int $companyID = '', 
+                public string $description, 
+                public string $destination = '', 
+                public string $entertainmentLocation = '', 
+                public int $expenseCategory, 
+                public float $expenseCurrencyExpenseAmount = '', 
+                public int $expenseCurrencyID = '', 
+        #[CastCarbon]
+                public Carbon $expenseDate, 
+                public int $expenseReportID, 
+                public string $gLCode = '', 
+                public bool $haveReceipt, 
+                public int $id, 
+                public float $internalCurrencyExpenseAmount = '', 
+                public float $internalCurrencyReimbursementAmount = '', 
+                public bool $isBillableToCompany, 
+                public bool $isReimbursable = false, 
+                public bool $isRejected = false, 
+                public float $miles = '', 
+                public float $odometerEnd = '', 
+                public float $odometerStart = '', 
+                public string $origin = '', 
+                public int $paymentType, 
+                public int $projectID = '', 
+                public string $purchaseOrderNumber = '', 
+                public float $reimbursementCurrencyReimbursementAmount = '', 
+                public int $taskID = '', 
+                public int $ticketID = '', 
+                public int $workType = '', 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        if (isset($array['expenseDate'])) {
-            $array['expenseDate'] = new Carbon($array['expenseDate']);
-        }
-
-        
     }
 
     /**
@@ -72,6 +75,11 @@ class ExpenseItemEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

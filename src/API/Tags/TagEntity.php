@@ -2,25 +2,21 @@
 
 namespace Anteris\Autotask\API\Tags;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Generator\Helpers\CastCarbon;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
 use Carbon\Carbon;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents Tag entities.
  */
-class TagEntity extends Data
+class TagEntity extends Entity
 {
-    public ?Carbon $createDateTime;
-    public $id;
-    public ?bool $isActive;
-    public ?bool $isExcludedFromAutomaticTagging;
-    public ?bool $isSystem;
-    public string $label;
-    public ?Carbon $lastModifiedDateTime;
-    public ?int $tagGroupID;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new Tag entity.
@@ -28,17 +24,21 @@ class TagEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+            #[CastCarbon]
+                public Carbon $createDateTime = new Carbon(), 
+                public int $id, 
+                public bool $isActive = false, 
+                public bool $isExcludedFromAutomaticTagging = false, 
+                public bool $isSystem = false, 
+                public string $label, 
+        #[CastCarbon]
+                public Carbon $lastModifiedDateTime = new Carbon(), 
+                public int $tagGroupID = '', 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        if (isset($array['createDateTime'])) {
-            $array['createDateTime'] = new Carbon($array['createDateTime']);
-        }
-
-        if (isset($array['lastModifiedDateTime'])) {
-            $array['lastModifiedDateTime'] = new Carbon($array['lastModifiedDateTime']);
-        }
-
-        
     }
 
     /**
@@ -56,6 +56,11 @@ class TagEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

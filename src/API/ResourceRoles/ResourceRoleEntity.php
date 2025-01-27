@@ -2,22 +2,19 @@
 
 namespace Anteris\Autotask\API\ResourceRoles;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents ResourceRole entities.
  */
-class ResourceRoleEntity extends Data
+class ResourceRoleEntity extends Entity
 {
-    public $departmentID;
-    public $id;
-    public ?bool $isActive;
-    public $queueID;
-    public $resourceID;
-    public $roleID;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new ResourceRole entity.
@@ -25,9 +22,17 @@ class ResourceRoleEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public int $departmentID = '', 
+                public int $id, 
+                public bool $isActive = false, 
+                public int $queueID = '', 
+                public int $resourceID, 
+                public int $roleID, 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        
     }
 
     /**
@@ -45,6 +50,11 @@ class ResourceRoleEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

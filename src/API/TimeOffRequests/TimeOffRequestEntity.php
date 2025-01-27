@@ -2,33 +2,21 @@
 
 namespace Anteris\Autotask\API\TimeOffRequests;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Generator\Helpers\CastCarbon;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
 use Carbon\Carbon;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents TimeOffRequest entities.
  */
-class TimeOffRequestEntity extends Data
+class TimeOffRequestEntity extends Entity
 {
-    public ?Carbon $approvedDateTime;
-    public ?int $approveRejectResourceID;
-    public ?Carbon $createDateTime;
-    public ?int $createdByResourceID;
-    public ?Carbon $endTime;
-    public float $hours;
-    public $id;
-    public ?int $lastModifiedByResourceID;
-    public ?Carbon $lastModifiedDateTime;
-    public ?string $reason;
-    public ?string $rejectReason;
-    public Carbon $requestDate;
-    public int $resourceID;
-    public ?Carbon $startTime;
-    public int $status;
-    public int $timeOffRequestType;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new TimeOffRequest entity.
@@ -36,33 +24,35 @@ class TimeOffRequestEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+            #[CastCarbon]
+                public Carbon $approvedDateTime = new Carbon(), 
+                public int $approveRejectResourceID = '', 
+        #[CastCarbon]
+                public Carbon $createDateTime = new Carbon(), 
+                public int $createdByResourceID = '', 
+        #[CastCarbon]
+                public Carbon $endTime = new Carbon(), 
+                public float $hours, 
+                public int $id, 
+                public int $impersonatorApproveRejectResourceID = '', 
+                public int $lastApprovedLevel = '', 
+                public int $lastModifiedByResourceID = '', 
+        #[CastCarbon]
+                public Carbon $lastModifiedDateTime = new Carbon(), 
+                public string $reason = '', 
+                public string $rejectReason = '', 
+        #[CastCarbon]
+                public Carbon $requestDate, 
+                public int $resourceID, 
+        #[CastCarbon]
+                public Carbon $startTime = new Carbon(), 
+                public int $status, 
+                public int $timeOffRequestType, 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        if (isset($array['approvedDateTime'])) {
-            $array['approvedDateTime'] = new Carbon($array['approvedDateTime']);
-        }
-
-        if (isset($array['createDateTime'])) {
-            $array['createDateTime'] = new Carbon($array['createDateTime']);
-        }
-
-        if (isset($array['endTime'])) {
-            $array['endTime'] = new Carbon($array['endTime']);
-        }
-
-        if (isset($array['lastModifiedDateTime'])) {
-            $array['lastModifiedDateTime'] = new Carbon($array['lastModifiedDateTime']);
-        }
-
-        if (isset($array['requestDate'])) {
-            $array['requestDate'] = new Carbon($array['requestDate']);
-        }
-
-        if (isset($array['startTime'])) {
-            $array['startTime'] = new Carbon($array['startTime']);
-        }
-
-        
     }
 
     /**
@@ -80,6 +70,11 @@ class TimeOffRequestEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

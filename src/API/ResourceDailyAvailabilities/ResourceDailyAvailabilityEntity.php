@@ -2,27 +2,19 @@
 
 namespace Anteris\Autotask\API\ResourceDailyAvailabilities;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents ResourceDailyAvailability entities.
  */
-class ResourceDailyAvailabilityEntity extends Data
+class ResourceDailyAvailabilityEntity extends Entity
 {
-    public ?float $fridayAvailableHours;
-    public $id;
-    public ?float $mondayAvailableHours;
-    public int $resourceID;
-    public ?float $saturdayAvailableHours;
-    public ?float $sundayAvailableHours;
-    public ?float $thursdayAvailableHours;
-    public ?string $travelAvailability;
-    public ?float $tuesdayAvailableHours;
-    public ?float $wednesdayAvailableHours;
-    public ?float $weeklyBillableHoursGoal;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new ResourceDailyAvailability entity.
@@ -30,9 +22,22 @@ class ResourceDailyAvailabilityEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public float $fridayAvailableHours = '', 
+                public int $id, 
+                public float $mondayAvailableHours = '', 
+                public int $resourceID, 
+                public float $saturdayAvailableHours = '', 
+                public float $sundayAvailableHours = '', 
+                public float $thursdayAvailableHours = '', 
+                public string $travelAvailability = '', 
+                public float $tuesdayAvailableHours = '', 
+                public float $wednesdayAvailableHours = '', 
+                public float $weeklyBillableHoursGoal = '', 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        
     }
 
     /**
@@ -50,6 +55,11 @@ class ResourceDailyAvailabilityEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

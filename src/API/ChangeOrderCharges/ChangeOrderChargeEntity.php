@@ -2,46 +2,21 @@
 
 namespace Anteris\Autotask\API\ChangeOrderCharges;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Generator\Helpers\CastCarbon;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
 use Carbon\Carbon;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents ChangeOrderCharge entities.
  */
-class ChangeOrderChargeEntity extends Data
+class ChangeOrderChargeEntity extends Entity
 {
-    public ?float $billableAmount;
-    public ?int $billingCodeID;
-    public ?float $changeOrderHours;
-    public int $chargeType;
-    public ?int $contractServiceBundleID;
-    public ?int $contractServiceID;
-    public ?Carbon $createDate;
-    public ?int $creatorResourceID;
-    public Carbon $datePurchased;
-    public ?string $description;
-    public ?float $extendedCost;
-    public $id;
-    public ?float $internalCurrencyBillableAmount;
-    public ?float $internalCurrencyUnitPrice;
-    public ?string $internalPurchaseOrderNumber;
-    public ?bool $isBillableToCompany;
-    public ?bool $isBilled;
-    public string $name;
-    public ?string $notes;
-    public ?int $organizationalLevelAssociationID;
-    public ?int $productID;
-    public ?string $purchaseOrderNumber;
-    public ?int $status;
-    public ?int $statusLastModifiedBy;
-    public ?Carbon $statusLastModifiedDate;
-    public int $taskID;
-    public ?float $unitCost;
-    public ?float $unitPrice;
-    public ?float $unitQuantity;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new ChangeOrderCharge entity.
@@ -49,21 +24,43 @@ class ChangeOrderChargeEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public float $billableAmount = '', 
+                public int $billingCodeID = '', 
+                public float $changeOrderHours = '', 
+                public int $chargeType, 
+                public int $contractServiceBundleID = '', 
+                public int $contractServiceID = '', 
+        #[CastCarbon]
+                public Carbon $createDate = new Carbon(), 
+                public int $creatorResourceID = '', 
+        #[CastCarbon]
+                public Carbon $datePurchased, 
+                public string $description = '', 
+                public float $extendedCost = '', 
+                public int $id, 
+                public float $internalCurrencyBillableAmount = '', 
+                public float $internalCurrencyUnitPrice = '', 
+                public string $internalPurchaseOrderNumber = '', 
+                public bool $isBillableToCompany = false, 
+                public bool $isBilled = false, 
+                public string $name, 
+                public string $notes = '', 
+                public int $organizationalLevelAssociationID = '', 
+                public int $productID = '', 
+                public string $purchaseOrderNumber = '', 
+                public int $status = '', 
+                public int $statusLastModifiedBy = '', 
+        #[CastCarbon]
+                public Carbon $statusLastModifiedDate = new Carbon(), 
+                public int $taskID, 
+                public float $unitCost = '', 
+                public float $unitPrice = '', 
+                public float $unitQuantity = '', 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        if (isset($array['createDate'])) {
-            $array['createDate'] = new Carbon($array['createDate']);
-        }
-
-        if (isset($array['datePurchased'])) {
-            $array['datePurchased'] = new Carbon($array['datePurchased']);
-        }
-
-        if (isset($array['statusLastModifiedDate'])) {
-            $array['statusLastModifiedDate'] = new Carbon($array['statusLastModifiedDate']);
-        }
-
-        
     }
 
     /**
@@ -81,6 +78,11 @@ class ChangeOrderChargeEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

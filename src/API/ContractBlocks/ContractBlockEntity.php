@@ -2,30 +2,21 @@
 
 namespace Anteris\Autotask\API\ContractBlocks;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Generator\Helpers\CastCarbon;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
 use Carbon\Carbon;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents ContractBlock entities.
  */
-class ContractBlockEntity extends Data
+class ContractBlockEntity extends Entity
 {
-    public int $contractID;
-    public Carbon $datePurchased;
-    public Carbon $endDate;
-    public float $hourlyRate;
-    public float $hours;
-    public ?float $hoursApproved;
-    public $id;
-    public ?string $invoiceNumber;
-    public ?bool $isPaid;
-    public ?string $paymentNumber;
-    public ?int $paymentType;
-    public Carbon $startDate;
-    public ?int $status;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new ContractBlock entity.
@@ -33,21 +24,27 @@ class ContractBlockEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public int $contractID, 
+        #[CastCarbon]
+                public Carbon $datePurchased, 
+        #[CastCarbon]
+                public Carbon $endDate, 
+                public float $hourlyRate, 
+                public float $hours, 
+                public float $hoursApproved = '', 
+                public int $id, 
+                public string $invoiceNumber = '', 
+                public bool $isPaid = false, 
+                public string $paymentNumber = '', 
+                public int $paymentType = '', 
+        #[CastCarbon]
+                public Carbon $startDate, 
+                public int $status = '', 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        if (isset($array['datePurchased'])) {
-            $array['datePurchased'] = new Carbon($array['datePurchased']);
-        }
-
-        if (isset($array['endDate'])) {
-            $array['endDate'] = new Carbon($array['endDate']);
-        }
-
-        if (isset($array['startDate'])) {
-            $array['startDate'] = new Carbon($array['startDate']);
-        }
-
-        
     }
 
     /**
@@ -65,6 +62,11 @@ class ContractBlockEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

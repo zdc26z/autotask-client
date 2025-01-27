@@ -2,33 +2,19 @@
 
 namespace Anteris\Autotask\API\TicketCategoryFieldDefaults;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents TicketCategoryFieldDefault entities.
  */
-class TicketCategoryFieldDefaultEntity extends Data
+class TicketCategoryFieldDefaultEntity extends Entity
 {
-    public ?string $description;
-    public ?float $estimatedHours;
-    public $id;
-    public ?int $issueTypeID;
-    public ?int $organizationalLevelAssociationID;
-    public ?int $priority;
-    public ?string $purchaseOrderNumber;
-    public ?int $queueID;
-    public ?string $resolution;
-    public ?int $serviceLevelAgreementID;
-    public ?int $sourceID;
-    public ?int $status;
-    public ?int $subIssueTypeID;
-    public int $ticketCategoryID;
-    public ?int $ticketTypeID;
-    public ?string $title;
-    public ?int $workTypeID;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new TicketCategoryFieldDefault entity.
@@ -36,9 +22,28 @@ class TicketCategoryFieldDefaultEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public string $description = '', 
+                public float $estimatedHours = '', 
+                public int $id, 
+                public int $issueTypeID = '', 
+                public int $organizationalLevelAssociationID = '', 
+                public int $priority = '', 
+                public string $purchaseOrderNumber = '', 
+                public int $queueID = '', 
+                public string $resolution = '', 
+                public int $serviceLevelAgreementID = '', 
+                public int $sourceID = '', 
+                public int $status = '', 
+                public int $subIssueTypeID = '', 
+                public int $ticketCategoryID, 
+                public int $ticketTypeID = '', 
+                public string $title = '', 
+                public int $workTypeID = '', 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        
     }
 
     /**
@@ -56,6 +61,11 @@ class TicketCategoryFieldDefaultEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

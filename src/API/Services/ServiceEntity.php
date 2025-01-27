@@ -2,33 +2,21 @@
 
 namespace Anteris\Autotask\API\Services;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Generator\Helpers\CastCarbon;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
 use Carbon\Carbon;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents Service entities.
  */
-class ServiceEntity extends Data
+class ServiceEntity extends Entity
 {
-    public int $billingCodeID;
-    public ?Carbon $createDate;
-    public ?int $creatorResourceID;
-    public ?string $description;
-    public $id;
-    public ?string $invoiceDescription;
-    public ?bool $isActive;
-    public ?Carbon $lastModifiedDate;
-    public ?float $markupRate;
-    public string $name;
-    public int $periodType;
-    public $serviceLevelAgreementID;
-    public ?float $unitCost;
-    public float $unitPrice;
-    public ?int $updateResourceID;
-    public ?int $vendorCompanyID;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new Service entity.
@@ -36,17 +24,36 @@ class ServiceEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public int $billingCodeID, 
+                public string $catalogNumberPartNumber = '', 
+        #[CastCarbon]
+                public Carbon $createDate = new Carbon(), 
+                public int $creatorResourceID = '', 
+                public string $description = '', 
+                public string $externalID = '', 
+                public int $id, 
+                public string $internalID = '', 
+                public string $invoiceDescription = '', 
+                public bool $isActive = false, 
+        #[CastCarbon]
+                public Carbon $lastModifiedDate = new Carbon(), 
+                public string $manufacturerServiceProvider = '', 
+                public string $manufacturerServiceProviderProductNumber = '', 
+                public float $markupRate = '', 
+                public string $name, 
+                public int $periodType, 
+                public int $serviceLevelAgreementID = '', 
+                public string $sku = '', 
+                public float $unitCost = '', 
+                public float $unitPrice, 
+                public int $updateResourceID = '', 
+                public string $url = '', 
+                public int $vendorCompanyID = '', 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        if (isset($array['createDate'])) {
-            $array['createDate'] = new Carbon($array['createDate']);
-        }
-
-        if (isset($array['lastModifiedDate'])) {
-            $array['lastModifiedDate'] = new Carbon($array['lastModifiedDate']);
-        }
-
-        
     }
 
     /**
@@ -64,6 +71,11 @@ class ServiceEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

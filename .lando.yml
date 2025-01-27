@@ -5,5 +5,8 @@ services:
 tooling:
   phpunit:
     service: appserver
+  autotask:
+    service: appserver
+    cmd: /app/vendor/anteris-dev/autotask-client-generator/bin/autotask
   composer:
     service: appserver

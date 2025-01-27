@@ -2,31 +2,21 @@
 
 namespace Anteris\Autotask\API\Phases;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Generator\Helpers\CastCarbon;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
 use Carbon\Carbon;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents Phase entities.
  */
-class PhaseEntity extends Data
+class PhaseEntity extends Entity
 {
-    public ?Carbon $createDate;
-    public ?int $creatorResourceID;
-    public ?string $description;
-    public ?Carbon $dueDate;
-    public ?float $estimatedHours;
-    public ?string $externalID;
-    public $id;
-    public ?bool $isScheduled;
-    public ?Carbon $lastActivityDateTime;
-    public ?int $parentPhaseID;
-    public ?string $phaseNumber;
-    public int $projectID;
-    public ?Carbon $startDate;
-    public string $title;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new Phase entity.
@@ -34,25 +24,29 @@ class PhaseEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+            #[CastCarbon]
+                public Carbon $createDate = new Carbon(), 
+                public int $creatorResourceID = '', 
+                public string $description = '', 
+        #[CastCarbon]
+                public Carbon $dueDate = new Carbon(), 
+                public float $estimatedHours = '', 
+                public string $externalID = '', 
+                public int $id, 
+                public bool $isScheduled = false, 
+        #[CastCarbon]
+                public Carbon $lastActivityDateTime = new Carbon(), 
+                public int $parentPhaseID = '', 
+                public string $phaseNumber = '', 
+                public int $projectID, 
+        #[CastCarbon]
+                public Carbon $startDate = new Carbon(), 
+                public string $title, 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        if (isset($array['createDate'])) {
-            $array['createDate'] = new Carbon($array['createDate']);
-        }
-
-        if (isset($array['dueDate'])) {
-            $array['dueDate'] = new Carbon($array['dueDate']);
-        }
-
-        if (isset($array['lastActivityDateTime'])) {
-            $array['lastActivityDateTime'] = new Carbon($array['lastActivityDateTime']);
-        }
-
-        if (isset($array['startDate'])) {
-            $array['startDate'] = new Carbon($array['startDate']);
-        }
-
-        
     }
 
     /**
@@ -70,6 +64,11 @@ class PhaseEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

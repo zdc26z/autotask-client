@@ -2,26 +2,21 @@
 
 namespace Anteris\Autotask\API\Appointments;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Generator\Helpers\CastCarbon;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
 use Carbon\Carbon;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents Appointment entities.
  */
-class AppointmentEntity extends Data
+class AppointmentEntity extends Entity
 {
-    public ?Carbon $createDateTime;
-    public ?int $creatorResourceID;
-    public ?string $description;
-    public Carbon $endDateTime;
-    public $id;
-    public int $resourceID;
-    public Carbon $startDateTime;
-    public string $title;
-    public ?Carbon $updateDateTime;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new Appointment entity.
@@ -29,25 +24,24 @@ class AppointmentEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+            #[CastCarbon]
+                public Carbon $createDateTime = new Carbon(), 
+                public int $creatorResourceID = '', 
+                public string $description = '', 
+        #[CastCarbon]
+                public Carbon $endDateTime, 
+                public int $id, 
+                public int $resourceID, 
+        #[CastCarbon]
+                public Carbon $startDateTime, 
+                public string $title, 
+        #[CastCarbon]
+                public Carbon $updateDateTime = new Carbon(), 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        if (isset($array['createDateTime'])) {
-            $array['createDateTime'] = new Carbon($array['createDateTime']);
-        }
-
-        if (isset($array['endDateTime'])) {
-            $array['endDateTime'] = new Carbon($array['endDateTime']);
-        }
-
-        if (isset($array['startDateTime'])) {
-            $array['startDateTime'] = new Carbon($array['startDateTime']);
-        }
-
-        if (isset($array['updateDateTime'])) {
-            $array['updateDateTime'] = new Carbon($array['updateDateTime']);
-        }
-
-        
     }
 
     /**
@@ -65,6 +59,11 @@ class AppointmentEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

@@ -2,8 +2,8 @@
 
 namespace Tests;
 
-use Tests\Mocks\ClientMock;
 use Anteris\Autotask\Client;
+use Tests\Mocks\ClientMock;
 use Dotenv\Dotenv;
 use Exception;
 use PHPUnit\Framework\TestCase;
@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 abstract class AbstractTest extends TestCase
 {
     /** @var Client The API client we are interacting with. */
-    protected Client|ClientMock $client;
+    protected Client $client;
 
     /**
      * Sets up the classes for interacting with the client.

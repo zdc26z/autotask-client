@@ -2,36 +2,19 @@
 
 namespace Anteris\Autotask\API\CompanyLocations;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents CompanyLocation entities.
  */
-class CompanyLocationEntity extends Data
+class CompanyLocationEntity extends Entity
 {
-    public ?string $address1;
-    public ?string $address2;
-    public ?string $alternatePhone1;
-    public ?string $alternatePhone2;
-    public ?string $city;
-    public int $companyID;
-    public ?int $countryID;
-    public ?string $description;
-    public ?string $fax;
-    public $id;
-    public ?bool $isActive;
-    public ?bool $isPrimary;
-    public ?bool $isTaxExempt;
-    public string $name;
-    public ?bool $overrideCompanyTaxSettings;
-    public ?string $phone;
-    public ?string $postalCode;
-    public ?float $roundtripDistance;
-    public ?string $state;
-    public ?int $taxRegionID;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new CompanyLocation entity.
@@ -39,9 +22,31 @@ class CompanyLocationEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public string $address1 = '', 
+                public string $address2 = '', 
+                public string $alternatePhone1 = '', 
+                public string $alternatePhone2 = '', 
+                public string $city = '', 
+                public int $companyID, 
+                public int $countryID = '', 
+                public string $description = '', 
+                public string $fax = '', 
+                public int $id, 
+                public bool $isActive = false, 
+                public bool $isPrimary = false, 
+                public bool $isTaxExempt = false, 
+                public string $name, 
+                public bool $overrideCompanyTaxSettings = false, 
+                public string $phone = '', 
+                public string $postalCode = '', 
+                public float $roundtripDistance = '', 
+                public string $state = '', 
+                public int $taxRegionID = '', 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        
     }
 
     /**
@@ -59,6 +64,11 @@ class CompanyLocationEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

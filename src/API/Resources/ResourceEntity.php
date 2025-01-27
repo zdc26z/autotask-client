@@ -2,52 +2,21 @@
 
 namespace Anteris\Autotask\API\Resources;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Generator\Helpers\CastCarbon;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
 use Carbon\Carbon;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents Resource entities.
  */
-class ResourceEntity extends Data
+class ResourceEntity extends Entity
 {
-    public ?string $accountingReferenceID;
-    public ?string $dateFormat;
-    public $defaultServiceDeskRoleID;
-    public string $email;
-    public ?string $email2;
-    public ?string $email3;
-    public string $emailTypeCode;
-    public ?string $emailTypeCode2;
-    public ?string $emailTypeCode3;
-    public string $firstName;
-    public ?string $gender;
-    public ?int $greeting;
-    public Carbon $hireDate;
-    public ?string $homePhone;
-    public $id;
-    public ?string $initials;
-    public ?float $internalCost;
-    public bool $isActive;
-    public string $lastName;
-    public int $licenseType;
-    public int $locationID;
-    public ?string $middleName;
-    public ?string $mobilePhone;
-    public string $numberFormat;
-    public ?string $officeExtension;
-    public ?string $officePhone;
-    public int $payrollType;
-    public string $resourceType;
-    public ?int $suffix;
-    public ?float $surveyResourceRating;
-    public ?string $timeFormat;
-    public ?string $title;
-    public ?string $travelAvailabilityPct;
-    public string $userName;
-    public int $userType;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new Resource entity.
@@ -55,13 +24,48 @@ class ResourceEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public string $accountingReferenceID = '', 
+                public string $dateFormat = '', 
+                public int $defaultServiceDeskRoleID = '', 
+                public string $email, 
+                public string $email2 = '', 
+                public string $email3 = '', 
+                public string $emailTypeCode, 
+                public string $emailTypeCode2 = '', 
+                public string $emailTypeCode3 = '', 
+                public string $firstName, 
+                public string $gender = '', 
+                public int $greeting = '', 
+        #[CastCarbon]
+                public Carbon $hireDate, 
+                public string $homePhone = '', 
+                public int $id, 
+                public string $initials = '', 
+                public float $internalCost = '', 
+                public bool $isActive, 
+                public string $lastName, 
+                public int $licenseType, 
+                public int $locationID, 
+                public string $middleName = '', 
+                public string $mobilePhone = '', 
+                public string $numberFormat, 
+                public string $officeExtension = '', 
+                public string $officePhone = '', 
+                public string $payrollIdentifier = '', 
+                public int $payrollType, 
+                public string $resourceType, 
+                public int $suffix = '', 
+                public float $surveyResourceRating = '', 
+                public string $timeFormat = '', 
+                public string $title = '', 
+                public string $travelAvailabilityPct = '', 
+                public string $userName, 
+                public int $userType, 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        if (isset($array['hireDate'])) {
-            $array['hireDate'] = new Carbon($array['hireDate']);
-        }
-
-        
     }
 
     /**
@@ -79,6 +83,11 @@ class ResourceEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

@@ -2,33 +2,21 @@
 
 namespace Anteris\Autotask\API\CompanyToDos;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Generator\Helpers\CastCarbon;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
 use Carbon\Carbon;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents CompanyToDo entities.
  */
-class CompanyToDoEntity extends Data
+class CompanyToDoEntity extends Entity
 {
-    public int $actionType;
-    public ?string $activityDescription;
-    public $assignedToResourceID;
-    public $companyID;
-    public ?Carbon $completedDate;
-    public $contactID;
-    public $contractID;
-    public ?Carbon $createDateTime;
-    public $creatorResourceID;
-    public Carbon $endDateTime;
-    public $id;
-    public ?int $impersonatorCreatorResourceID;
-    public ?Carbon $lastModifiedDate;
-    public $opportunityID;
-    public Carbon $startDateTime;
-    public $ticketID;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new CompanyToDo entity.
@@ -36,29 +24,32 @@ class CompanyToDoEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public int $actionType, 
+                public string $activityDescription = '', 
+                public int $assignedToResourceID, 
+                public int $companyID, 
+        #[CastCarbon]
+                public Carbon $completedDate = new Carbon(), 
+                public int $contactID = '', 
+                public int $contractID = '', 
+        #[CastCarbon]
+                public Carbon $createDateTime = new Carbon(), 
+                public int $creatorResourceID = '', 
+        #[CastCarbon]
+                public Carbon $endDateTime, 
+                public int $id, 
+                public int $impersonatorCreatorResourceID = '', 
+        #[CastCarbon]
+                public Carbon $lastModifiedDate = new Carbon(), 
+                public int $opportunityID = '', 
+        #[CastCarbon]
+                public Carbon $startDateTime, 
+                public int $ticketID = '', 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        if (isset($array['completedDate'])) {
-            $array['completedDate'] = new Carbon($array['completedDate']);
-        }
-
-        if (isset($array['createDateTime'])) {
-            $array['createDateTime'] = new Carbon($array['createDateTime']);
-        }
-
-        if (isset($array['endDateTime'])) {
-            $array['endDateTime'] = new Carbon($array['endDateTime']);
-        }
-
-        if (isset($array['lastModifiedDate'])) {
-            $array['lastModifiedDate'] = new Carbon($array['lastModifiedDate']);
-        }
-
-        if (isset($array['startDateTime'])) {
-            $array['startDateTime'] = new Carbon($array['startDateTime']);
-        }
-
-        
     }
 
     /**
@@ -76,6 +67,11 @@ class CompanyToDoEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

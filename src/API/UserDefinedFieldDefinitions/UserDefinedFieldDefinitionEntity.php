@@ -2,36 +2,21 @@
 
 namespace Anteris\Autotask\API\UserDefinedFieldDefinitions;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Generator\Helpers\CastCarbon;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
 use Carbon\Carbon;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents UserDefinedFieldDefinition entities.
  */
-class UserDefinedFieldDefinitionEntity extends Data
+class UserDefinedFieldDefinitionEntity extends Entity
 {
-    public ?Carbon $createDate;
-    public $crmToProjectUdfId;
-    public int $dataType;
-    public ?string $defaultValue;
-    public ?string $description;
-    public ?int $displayFormat;
-    public $id;
-    public ?bool $isActive;
-    public ?bool $isEncrypted;
-    public ?bool $isFieldMapping;
-    public ?bool $isPrivate;
-    public ?bool $isProtected;
-    public ?bool $isRequired;
-    public ?bool $isVisibleToClientPortal;
-    public ?string $mergeVariableName;
-    public string $name;
-    public ?int $numberOfDecimalPlaces;
-    public ?int $sortOrder;
-    public int $udfType;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new UserDefinedFieldDefinition entity.
@@ -39,13 +24,31 @@ class UserDefinedFieldDefinitionEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+            #[CastCarbon]
+                public Carbon $createDate = new Carbon(), 
+                public int $crmToProjectUdfId = '', 
+                public int $dataType, 
+                public string $defaultValue = '', 
+                public string $description = '', 
+                public int $displayFormat = '', 
+                public int $id, 
+                public bool $isActive = false, 
+                public bool $isEncrypted = false, 
+                public bool $isFieldMapping = false, 
+                public bool $isPrivate = false, 
+                public bool $isProtected = false, 
+                public bool $isRequired = false, 
+                public bool $isVisibleToClientPortal = false, 
+                public string $mergeVariableName = '', 
+                public string $name, 
+                public int $numberOfDecimalPlaces = '', 
+                public int $sortOrder = '', 
+                public int $udfType, 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        if (isset($array['createDate'])) {
-            $array['createDate'] = new Carbon($array['createDate']);
-        }
-
-        
     }
 
     /**
@@ -63,6 +66,11 @@ class UserDefinedFieldDefinitionEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

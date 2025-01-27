@@ -2,24 +2,21 @@
 
 namespace Anteris\Autotask\API\SubscriptionPeriods;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Generator\Helpers\CastCarbon;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
 use Carbon\Carbon;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents SubscriptionPeriod entities.
  */
-class SubscriptionPeriodEntity extends Data
+class SubscriptionPeriodEntity extends Entity
 {
-    public $id;
-    public float $periodCost;
-    public Carbon $periodDate;
-    public float $periodPrice;
-    public ?Carbon $postedDate;
-    public ?string $purchaseOrderNumber;
-    public int $subscriptionID;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new SubscriptionPeriod entity.
@@ -27,17 +24,20 @@ class SubscriptionPeriodEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public int $id, 
+                public float $periodCost, 
+        #[CastCarbon]
+                public Carbon $periodDate, 
+                public float $periodPrice, 
+        #[CastCarbon]
+                public Carbon $postedDate = new Carbon(), 
+                public string $purchaseOrderNumber = '', 
+                public int $subscriptionID, 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        if (isset($array['periodDate'])) {
-            $array['periodDate'] = new Carbon($array['periodDate']);
-        }
-
-        if (isset($array['postedDate'])) {
-            $array['postedDate'] = new Carbon($array['postedDate']);
-        }
-
-        
     }
 
     /**
@@ -55,6 +55,11 @@ class SubscriptionPeriodEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

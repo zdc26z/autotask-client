@@ -2,27 +2,21 @@
 
 namespace Anteris\Autotask\API\InventoryTransfers;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Generator\Helpers\CastCarbon;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
 use Carbon\Carbon;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents InventoryTransfer entities.
  */
-class InventoryTransferEntity extends Data
+class InventoryTransferEntity extends Entity
 {
-    public $fromLocationID;
-    public $id;
-    public ?string $notes;
-    public $productID;
-    public int $quantityTransferred;
-    public ?string $serialNumber;
-    public $toLocationID;
-    public ?int $transferByResourceID;
-    public ?Carbon $transferDate;
-    public ?string $updateNote;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new InventoryTransfer entity.
@@ -30,13 +24,22 @@ class InventoryTransferEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public int $fromLocationID, 
+                public int $id, 
+                public string $notes = '', 
+                public int $productID, 
+                public int $quantityTransferred, 
+                public string $serialNumber = '', 
+                public int $toLocationID, 
+                public int $transferByResourceID = '', 
+        #[CastCarbon]
+                public Carbon $transferDate = new Carbon(), 
+                public string $updateNote = '', 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        if (isset($array['transferDate'])) {
-            $array['transferDate'] = new Carbon($array['transferDate']);
-        }
-
-        
     }
 
     /**
@@ -54,6 +57,11 @@ class InventoryTransferEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

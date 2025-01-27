@@ -2,42 +2,19 @@
 
 namespace Anteris\Autotask\API\InvoiceTemplates;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents InvoiceTemplate entities.
  */
-class InvoiceTemplateEntity extends Data
+class InvoiceTemplateEntity extends Entity
 {
-    public ?string $coveredByBlockRetainerContractLabel;
-    public ?string $coveredByRecurringServiceFixedPricePerTicketContractLabel;
-    public string $currencyNegativeFormat;
-    public string $currencyPositiveFormat;
-    public int $dateFormat;
-    public bool $displayFixedPriceContractLabor;
-    public bool $displayRecurringServiceContractLabor;
-    public bool $displaySeparateLineItemForEachTax;
-    public bool $displayTaxCategory;
-    public bool $displayTaxCategorySuperscripts;
-    public bool $displayZeroAmountRecurringServicesAndBundles;
-    public int $groupBy;
-    public $id;
-    public int $itemizeItemsInEachGroup;
-    public bool $itemizeServicesAndBundles;
-    public string $name;
-    public ?string $nonBillableLaborLabel;
-    public int $numberFormat;
-    public int $pageLayout;
-    public int $pageNumberFormat;
-    public ?int $paymentTerms;
-    public ?string $rateCostExpression;
-    public bool $showGridHeader;
-    public bool $showVerticalGridLines;
-    public int $sortBy;
-    public int $timeFormat;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new InvoiceTemplate entity.
@@ -45,9 +22,37 @@ class InvoiceTemplateEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public string $coveredByBlockRetainerContractLabel = '', 
+                public string $coveredByRecurringServiceFixedPricePerTicketContractLabel = '', 
+                public string $currencyNegativeFormat, 
+                public string $currencyPositiveFormat, 
+                public int $dateFormat, 
+                public bool $displayFixedPriceContractLabor, 
+                public bool $displayRecurringServiceContractLabor, 
+                public bool $displaySeparateLineItemForEachTax, 
+                public bool $displayTaxCategory, 
+                public bool $displayTaxCategorySuperscripts, 
+                public bool $displayZeroAmountRecurringServicesAndBundles, 
+                public int $groupBy, 
+                public int $id, 
+                public int $itemizeItemsInEachGroup, 
+                public bool $itemizeServicesAndBundles, 
+                public string $name, 
+                public string $nonBillableLaborLabel = '', 
+                public int $numberFormat, 
+                public int $pageLayout, 
+                public int $pageNumberFormat, 
+                public int $paymentTerms = '', 
+                public string $rateCostExpression = '', 
+                public bool $showGridHeader, 
+                public bool $showVerticalGridLines, 
+                public int $sortBy, 
+                public int $timeFormat, 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        
     }
 
     /**
@@ -65,6 +70,11 @@ class InvoiceTemplateEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

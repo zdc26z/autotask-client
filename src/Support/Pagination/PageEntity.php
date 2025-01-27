@@ -4,17 +4,18 @@ namespace Anteris\Autotask\Support\Pagination;
 
 use Exception;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents a page when paginating results from Autotask.
  */
-class PageEntity extends Data
+class PageEntity
 {
-    public int $count;
-    public int $requestCount;
-    public ?string $prevPageUrl;
-    public ?string $nextPageUrl;
+    public function __contruct(
+        public int $count,
+        public int $requestCount,
+        public ?string $prevPageUrl,
+        public ?string $nextPageUrl,
+    ) {}
 
     /**
      * Creates a new PageEntity from an http response.

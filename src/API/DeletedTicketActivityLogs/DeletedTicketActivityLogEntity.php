@@ -2,29 +2,21 @@
 
 namespace Anteris\Autotask\API\DeletedTicketActivityLogs;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Generator\Helpers\CastCarbon;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
 use Carbon\Carbon;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents DeletedTicketActivityLog entities.
  */
-class DeletedTicketActivityLogEntity extends Data
+class DeletedTicketActivityLogEntity extends Entity
 {
-    public Carbon $activityDateTime;
-    public int $createdByResourceID;
-    public int $deletedByResourceID;
-    public Carbon $deletedDateTime;
-    public ?Carbon $endDateTime;
-    public ?float $hoursWorked;
-    public $id;
-    public string $noteOrAttachmentTitle;
-    public ?Carbon $startDateTime;
-    public int $ticketID;
-    public string $ticketNumber;
-    public int $typeID;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new DeletedTicketActivityLog entity.
@@ -32,25 +24,27 @@ class DeletedTicketActivityLogEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+            #[CastCarbon]
+                public Carbon $activityDateTime, 
+                public int $createdByResourceID, 
+                public int $deletedByResourceID, 
+        #[CastCarbon]
+                public Carbon $deletedDateTime, 
+        #[CastCarbon]
+                public Carbon $endDateTime, 
+                public float $hoursWorked, 
+                public int $id, 
+                public string $noteOrAttachmentTitle, 
+        #[CastCarbon]
+                public Carbon $startDateTime, 
+                public int $ticketID, 
+                public string $ticketNumber, 
+                public int $typeID, 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        if (isset($array['activityDateTime'])) {
-            $array['activityDateTime'] = new Carbon($array['activityDateTime']);
-        }
-
-        if (isset($array['deletedDateTime'])) {
-            $array['deletedDateTime'] = new Carbon($array['deletedDateTime']);
-        }
-
-        if (isset($array['endDateTime'])) {
-            $array['endDateTime'] = new Carbon($array['endDateTime']);
-        }
-
-        if (isset($array['startDateTime'])) {
-            $array['startDateTime'] = new Carbon($array['startDateTime']);
-        }
-
-        
     }
 
     /**
@@ -68,6 +62,11 @@ class DeletedTicketActivityLogEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

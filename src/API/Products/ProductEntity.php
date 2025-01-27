@@ -2,46 +2,21 @@
 
 namespace Anteris\Autotask\API\Products;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Generator\Helpers\CastCarbon;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
 use Carbon\Carbon;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents Product entities.
  */
-class ProductEntity extends Data
+class ProductEntity extends Entity
 {
-    public ?int $billingType;
-    public ?int $chargeBillingCodeID;
-    public ?int $createdByResourceID;
-    public ?Carbon $createdTime;
-    public ?int $defaultInstalledProductCategoryID;
-    public ?int $defaultVendorID;
-    public ?string $description;
-    public ?bool $doesNotRequireProcurement;
-    public ?string $externalProductID;
-    public $id;
-    public ?int $impersonatorCreatorResourceID;
-    public ?string $internalProductID;
-    public bool $isActive;
-    public ?bool $isEligibleForRma;
-    public bool $isSerialized;
-    public ?string $link;
-    public ?string $manufacturerName;
-    public ?string $manufacturerProductName;
-    public ?float $markupRate;
-    public ?float $msrp;
-    public string $name;
-    public ?int $periodType;
-    public ?int $priceCostMethod;
-    public int $productBillingCodeID;
-    public ?int $productCategory;
-    public ?string $sku;
-    public ?float $unitCost;
-    public ?float $unitPrice;
-    public ?string $vendorProductNumber;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new Product entity.
@@ -49,13 +24,41 @@ class ProductEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public int $billingType = '', 
+                public int $chargeBillingCodeID = '', 
+                public int $createdByResourceID = '', 
+        #[CastCarbon]
+                public Carbon $createdTime = new Carbon(), 
+                public int $defaultInstalledProductCategoryID = '', 
+                public int $defaultVendorID = '', 
+                public string $description = '', 
+                public bool $doesNotRequireProcurement = false, 
+                public string $externalProductID = '', 
+                public int $id, 
+                public int $impersonatorCreatorResourceID = '', 
+                public string $internalProductID = '', 
+                public bool $isActive, 
+                public bool $isEligibleForRma = false, 
+                public bool $isSerialized, 
+                public string $link = '', 
+                public string $manufacturerName = '', 
+                public string $manufacturerProductName = '', 
+                public float $markupRate = '', 
+                public float $msrp = '', 
+                public string $name, 
+                public int $periodType = '', 
+                public int $priceCostMethod = '', 
+                public int $productBillingCodeID, 
+                public int $productCategory = '', 
+                public string $sku = '', 
+                public float $unitCost = '', 
+                public float $unitPrice = '', 
+                public string $vendorProductNumber = '', 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        if (isset($array['createdTime'])) {
-            $array['createdTime'] = new Carbon($array['createdTime']);
-        }
-
-        
     }
 
     /**
@@ -73,6 +76,11 @@ class ProductEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

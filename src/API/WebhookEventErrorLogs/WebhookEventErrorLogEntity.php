@@ -2,24 +2,21 @@
 
 namespace Anteris\Autotask\API\WebhookEventErrorLogs;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Generator\Helpers\CastCarbon;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
 use Carbon\Carbon;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents WebhookEventErrorLog entities.
  */
-class WebhookEventErrorLogEntity extends Data
+class WebhookEventErrorLogEntity extends Entity
 {
-    public ?int $accountWebhookID;
-    public ?int $contactWebhookID;
-    public ?Carbon $createDateTime;
-    public ?string $errorMessage;
-    public $id;
-    public ?string $payload;
-    public ?int $sequenceNumber;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new WebhookEventErrorLog entity.
@@ -27,13 +24,19 @@ class WebhookEventErrorLogEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public int $accountWebhookID = '', 
+                public int $contactWebhookID = '', 
+        #[CastCarbon]
+                public Carbon $createDateTime = new Carbon(), 
+                public string $errorMessage = '', 
+                public int $id, 
+                public string $payload = '', 
+                public int $sequenceNumber = '', 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        if (isset($array['createDateTime'])) {
-            $array['createDateTime'] = new Carbon($array['createDateTime']);
-        }
-
-        
     }
 
     /**
@@ -51,6 +54,11 @@ class WebhookEventErrorLogEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

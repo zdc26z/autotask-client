@@ -5,6 +5,7 @@ namespace Anteris\Autotask\API\Contracts;
 use Anteris\Autotask\HttpClient;
 use Anteris\Autotask\Support\EntityFields\EntityFieldCollection;
 use Anteris\Autotask\Support\EntityInformation\EntityInformationEntity;
+use Anteris\Autotask\Support\EntityUserDefinedFields\EntityUserDefinedFieldCollection;
 use GuzzleHttp\Psr7\Response;
 
 /**
@@ -78,6 +79,20 @@ class ContractService
     {
         return EntityInformationEntity::fromResponse(
             $this->client->get("Contracts/entityInformation")
+        );
+    }
+
+    /**
+     * Returns information about what user defined fields an entity has.
+     *
+     * @see EntityUserDefinedFieldCollection
+     *
+     * @author Aidan Casey <aidan.casey@anteris.com>
+     */
+    public function getEntityUserDefinedFields(): EntityUserDefinedFieldCollection
+    {
+        return EntityUserDefinedFieldCollection::fromResponse(
+            $this->client->get("Contracts/entityInformation/userDefinedFields")
         );
     }
 

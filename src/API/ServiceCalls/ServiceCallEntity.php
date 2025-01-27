@@ -2,33 +2,21 @@
 
 namespace Anteris\Autotask\API\ServiceCalls;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Generator\Helpers\CastCarbon;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
 use Carbon\Carbon;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents ServiceCall entities.
  */
-class ServiceCallEntity extends Data
+class ServiceCallEntity extends Entity
 {
-    public ?float $cancelationNoticeHours;
-    public ?int $canceledByResourceID;
-    public ?Carbon $canceledDateTime;
-    public int $companyID;
-    public ?int $companyLocationID;
-    public ?Carbon $createDateTime;
-    public ?int $creatorResourceID;
-    public ?string $description;
-    public ?float $duration;
-    public Carbon $endDateTime;
-    public $id;
-    public ?int $impersonatorCreatorResourceID;
-    public $isComplete;
-    public ?Carbon $lastModifiedDateTime;
-    public Carbon $startDateTime;
-    public ?int $status;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new ServiceCall entity.
@@ -36,29 +24,32 @@ class ServiceCallEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public float $cancelationNoticeHours = '', 
+                public int $canceledByResourceID = '', 
+        #[CastCarbon]
+                public Carbon $canceledDateTime = new Carbon(), 
+                public int $companyID, 
+                public int $companyLocationID = '', 
+        #[CastCarbon]
+                public Carbon $createDateTime = new Carbon(), 
+                public int $creatorResourceID = '', 
+                public string $description = '', 
+                public float $duration = '', 
+        #[CastCarbon]
+                public Carbon $endDateTime, 
+                public int $id, 
+                public int $impersonatorCreatorResourceID = '', 
+                public  $isComplete = '', 
+        #[CastCarbon]
+                public Carbon $lastModifiedDateTime = new Carbon(), 
+        #[CastCarbon]
+                public Carbon $startDateTime, 
+                public int $status = '', 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        if (isset($array['canceledDateTime'])) {
-            $array['canceledDateTime'] = new Carbon($array['canceledDateTime']);
-        }
-
-        if (isset($array['createDateTime'])) {
-            $array['createDateTime'] = new Carbon($array['createDateTime']);
-        }
-
-        if (isset($array['endDateTime'])) {
-            $array['endDateTime'] = new Carbon($array['endDateTime']);
-        }
-
-        if (isset($array['lastModifiedDateTime'])) {
-            $array['lastModifiedDateTime'] = new Carbon($array['lastModifiedDateTime']);
-        }
-
-        if (isset($array['startDateTime'])) {
-            $array['startDateTime'] = new Carbon($array['startDateTime']);
-        }
-
-        
     }
 
     /**
@@ -76,6 +67,11 @@ class ServiceCallEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

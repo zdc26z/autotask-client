@@ -2,29 +2,21 @@
 
 namespace Anteris\Autotask\API\IntegrationVendorInsights;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Generator\Helpers\CastCarbon;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
 use Carbon\Carbon;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents IntegrationVendorInsight entities.
  */
-class IntegrationVendorInsightEntity extends Data
+class IntegrationVendorInsightEntity extends Entity
 {
-    public ?Carbon $createDateTime;
-    public ?string $description;
-    public ?int $height;
-    public $id;
-    public int $insightCategory;
-    public string $insightKey;
-    public ?bool $isActive;
-    public ?Carbon $lastModifiedDateTime;
-    public string $referenceUrl;
-    public string $secret;
-    public string $title;
-    public string $vendorSuppliedID;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new IntegrationVendorInsight entity.
@@ -32,17 +24,25 @@ class IntegrationVendorInsightEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+            #[CastCarbon]
+                public Carbon $createDateTime = new Carbon(), 
+                public string $description = '', 
+                public int $height = '', 
+                public int $id, 
+                public int $insightCategory, 
+                public string $insightKey, 
+                public bool $isActive = false, 
+        #[CastCarbon]
+                public Carbon $lastModifiedDateTime = new Carbon(), 
+                public string $referenceUrl, 
+                public string $secret, 
+                public string $title, 
+                public string $vendorSuppliedID, 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        if (isset($array['createDateTime'])) {
-            $array['createDateTime'] = new Carbon($array['createDateTime']);
-        }
-
-        if (isset($array['lastModifiedDateTime'])) {
-            $array['lastModifiedDateTime'] = new Carbon($array['lastModifiedDateTime']);
-        }
-
-        
     }
 
     /**
@@ -60,6 +60,11 @@ class IntegrationVendorInsightEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

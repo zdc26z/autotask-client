@@ -2,25 +2,19 @@
 
 namespace Anteris\Autotask\API\ClientPortalUsers;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents ClientPortalUser entities.
  */
-class ClientPortalUserEntity extends Data
+class ClientPortalUserEntity extends Entity
 {
-    public int $contactID;
-    public int $dateFormat;
-    public $id;
-    public bool $isClientPortalActive;
-    public int $numberFormat;
-    public ?string $password;
-    public int $securityLevel;
-    public int $timeFormat;
-    public string $userName;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new ClientPortalUser entity.
@@ -28,9 +22,20 @@ class ClientPortalUserEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public int $contactID, 
+                public int $dateFormat, 
+                public int $id, 
+                public bool $isClientPortalActive, 
+                public int $numberFormat, 
+                public string $password = '', 
+                public int $securityLevel, 
+                public int $timeFormat, 
+                public string $userName, 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        
     }
 
     /**
@@ -48,6 +53,11 @@ class ClientPortalUserEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

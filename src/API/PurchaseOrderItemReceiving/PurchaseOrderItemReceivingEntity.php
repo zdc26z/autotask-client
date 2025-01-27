@@ -2,26 +2,21 @@
 
 namespace Anteris\Autotask\API\PurchaseOrderItemReceiving;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Generator\Helpers\CastCarbon;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
 use Carbon\Carbon;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents PurchaseOrderItemReceiving entities.
  */
-class PurchaseOrderItemReceivingEntity extends Data
+class PurchaseOrderItemReceivingEntity extends Entity
 {
-    public $id;
-    public $purchaseOrderItemID;
-    public ?int $quantityBackOrdered;
-    public ?int $quantityNowReceiving;
-    public ?int $quantityPreviouslyReceived;
-    public ?Carbon $receiveDate;
-    public ?int $receivedByResourceID;
-    public ?string $serialNumber;
-    public ?string $vendorInvoiceNumber;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new PurchaseOrderItemReceiving entity.
@@ -29,13 +24,21 @@ class PurchaseOrderItemReceivingEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public int $id, 
+                public int $purchaseOrderItemID, 
+                public int $quantityBackOrdered = '', 
+                public int $quantityNowReceiving, 
+                public int $quantityPreviouslyReceived = '', 
+        #[CastCarbon]
+                public Carbon $receiveDate = new Carbon(), 
+                public int $receivedByResourceID = '', 
+                public string $serialNumber = '', 
+                public string $vendorInvoiceNumber = '', 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        if (isset($array['receiveDate'])) {
-            $array['receiveDate'] = new Carbon($array['receiveDate']);
-        }
-
-        
     }
 
     /**
@@ -53,6 +56,11 @@ class PurchaseOrderItemReceivingEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

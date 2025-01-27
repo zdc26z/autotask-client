@@ -2,32 +2,21 @@
 
 namespace Anteris\Autotask\API\InventoryProducts;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Generator\Helpers\CastCarbon;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
 use Carbon\Carbon;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents InventoryProduct entities.
  */
-class InventoryProductEntity extends Data
+class InventoryProductEntity extends Entity
 {
-    public int $availableUnits;
-    public ?int $backOrderQuantity;
-    public ?string $bin;
-    public ?Carbon $createDateTime;
-    public ?int $createdByResourceID;
-    public $id;
-    public int $inventoryLocationID;
-    public ?int $onHandUnits;
-    public ?int $pickedUnits;
-    public int $productID;
-    public int $quantityMaximum;
-    public int $quantityMinimum;
-    public ?string $referenceNumber;
-    public ?int $reservedUnits;
-    public ?int $unitsOnOrder;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new InventoryProduct entity.
@@ -35,13 +24,27 @@ class InventoryProductEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public int $availableUnits, 
+                public int $backOrderQuantity = '', 
+                public string $bin = '', 
+        #[CastCarbon]
+                public Carbon $createDateTime = new Carbon(), 
+                public int $createdByResourceID = '', 
+                public int $id, 
+                public int $inventoryLocationID, 
+                public int $onHandUnits = '', 
+                public int $pickedUnits = '', 
+                public int $productID, 
+                public int $quantityMaximum, 
+                public int $quantityMinimum, 
+                public string $referenceNumber = '', 
+                public int $reservedUnits = '', 
+                public int $unitsOnOrder = '', 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        if (isset($array['createDateTime'])) {
-            $array['createDateTime'] = new Carbon($array['createDateTime']);
-        }
-
-        
     }
 
     /**
@@ -59,6 +62,11 @@ class InventoryProductEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

@@ -2,22 +2,19 @@
 
 namespace Anteris\Autotask\API\InventoryLocations;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents InventoryLocation entities.
  */
-class InventoryLocationEntity extends Data
+class InventoryLocationEntity extends Entity
 {
-    public $id;
-    public ?int $impersonatorCreatorResourceID;
-    public bool $isActive;
-    public ?bool $isDefault;
-    public string $locationName;
-    public ?int $resourceID;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new InventoryLocation entity.
@@ -25,9 +22,17 @@ class InventoryLocationEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public int $id, 
+                public int $impersonatorCreatorResourceID = '', 
+                public bool $isActive, 
+                public bool $isDefault = false, 
+                public string $locationName, 
+                public int $resourceID = '', 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        
     }
 
     /**
@@ -45,6 +50,11 @@ class InventoryLocationEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

@@ -2,19 +2,19 @@
 
 namespace Anteris\Autotask\API\DocumentConfigurationItemCategoryAssociations;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents DocumentConfigurationItemCategoryAssociation entities.
  */
-class DocumentConfigurationItemCategoryAssociationEntity extends Data
+class DocumentConfigurationItemCategoryAssociationEntity extends Entity
 {
-    public int $documentID;
-    public $id;
-    public int $installedProductCategoryID;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new DocumentConfigurationItemCategoryAssociation entity.
@@ -22,9 +22,14 @@ class DocumentConfigurationItemCategoryAssociationEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public int $documentID, 
+                public int $id, 
+                public int $installedProductCategoryID, 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        
     }
 
     /**
@@ -42,6 +47,11 @@ class DocumentConfigurationItemCategoryAssociationEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

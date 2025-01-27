@@ -2,27 +2,21 @@
 
 namespace Anteris\Autotask\API\ConfigurationItemNotes;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Generator\Helpers\CastCarbon;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
 use Carbon\Carbon;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents ConfigurationItemNote entities.
  */
-class ConfigurationItemNoteEntity extends Data
+class ConfigurationItemNoteEntity extends Entity
 {
-    public int $configurationItemID;
-    public ?Carbon $createDateTime;
-    public ?int $creatorResourceID;
-    public string $description;
-    public $id;
-    public ?int $impersonatorCreatorResourceID;
-    public ?int $impersonatorUpdaterResourceID;
-    public ?Carbon $lastActivityDate;
-    public int $noteType;
-    public string $title;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new ConfigurationItemNote entity.
@@ -30,17 +24,23 @@ class ConfigurationItemNoteEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public int $configurationItemID, 
+        #[CastCarbon]
+                public Carbon $createDateTime = new Carbon(), 
+                public int $creatorResourceID = '', 
+                public string $description, 
+                public int $id, 
+                public int $impersonatorCreatorResourceID = '', 
+                public int $impersonatorUpdaterResourceID = '', 
+        #[CastCarbon]
+                public Carbon $lastActivityDate = new Carbon(), 
+                public int $noteType, 
+                public string $title, 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        if (isset($array['createDateTime'])) {
-            $array['createDateTime'] = new Carbon($array['createDateTime']);
-        }
-
-        if (isset($array['lastActivityDate'])) {
-            $array['lastActivityDate'] = new Carbon($array['lastActivityDate']);
-        }
-
-        
     }
 
     /**
@@ -58,6 +58,11 @@ class ConfigurationItemNoteEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

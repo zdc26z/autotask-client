@@ -2,46 +2,19 @@
 
 namespace Anteris\Autotask\API\QuoteItems;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents QuoteItem entities.
  */
-class QuoteItemEntity extends Data
+class QuoteItemEntity extends Entity
 {
-    public ?float $averageCost;
-    public ?int $chargeID;
-    public ?string $description;
-    public ?int $expenseID;
-    public ?float $highestCost;
-    public $id;
-    public ?float $internalCurrencyLineDiscount;
-    public ?float $internalCurrencyUnitDiscount;
-    public ?float $internalCurrencyUnitPrice;
-    public bool $isOptional;
-    public ?bool $isTaxable;
-    public ?int $laborID;
-    public float $lineDiscount;
-    public ?float $markupRate;
-    public ?string $name;
-    public float $percentageDiscount;
-    public ?int $periodType;
-    public ?int $productID;
-    public float $quantity;
-    public int $quoteID;
-    public int $quoteItemType;
-    public ?int $serviceBundleID;
-    public ?int $serviceID;
-    public ?int $shippingID;
-    public ?int $sortOrderID;
-    public ?int $taxCategoryID;
-    public ?float $totalEffectiveTax;
-    public ?float $unitCost;
-    public float $unitDiscount;
-    public ?float $unitPrice;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new QuoteItem entity.
@@ -49,9 +22,41 @@ class QuoteItemEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public float $averageCost = '', 
+                public int $chargeID = '', 
+                public string $description = '', 
+                public int $expenseID = '', 
+                public float $highestCost = '', 
+                public int $id, 
+                public float $internalCurrencyLineDiscount = '', 
+                public float $internalCurrencyUnitDiscount = '', 
+                public float $internalCurrencyUnitPrice = '', 
+                public bool $isOptional, 
+                public bool $isTaxable = false, 
+                public int $laborID = '', 
+                public float $lineDiscount, 
+                public float $markupRate = '', 
+                public string $name = '', 
+                public float $percentageDiscount, 
+                public int $periodType = '', 
+                public int $productID = '', 
+                public float $quantity, 
+                public int $quoteID, 
+                public int $quoteItemType, 
+                public int $serviceBundleID = '', 
+                public int $serviceID = '', 
+                public int $shippingID = '', 
+                public int $sortOrderID = '', 
+                public int $taxCategoryID = '', 
+                public float $totalEffectiveTax = '', 
+                public float $unitCost = '', 
+                public float $unitDiscount, 
+                public float $unitPrice = '', 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        
     }
 
     /**
@@ -69,6 +74,11 @@ class QuoteItemEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

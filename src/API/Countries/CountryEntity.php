@@ -2,26 +2,19 @@
 
 namespace Anteris\Autotask\API\Countries;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents Country entities.
  */
-class CountryEntity extends Data
+class CountryEntity extends Entity
 {
-    public $addressFormatID;
-    public ?string $countryCode;
-    public string $displayName;
-    public $id;
-    public ?int $invoiceTemplateID;
-    public ?bool $isActive;
-    public ?bool $isDefaultCountry;
-    public ?string $name;
-    public ?int $purchaseOrderTemplateID;
-    public ?int $quoteTemplateID;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new Country entity.
@@ -29,9 +22,21 @@ class CountryEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public int $addressFormatID, 
+                public string $countryCode = '', 
+                public string $displayName, 
+                public int $id, 
+                public int $invoiceTemplateID = '', 
+                public bool $isActive = false, 
+                public bool $isDefaultCountry = false, 
+                public string $name = '', 
+                public int $purchaseOrderTemplateID = '', 
+                public int $quoteTemplateID = '', 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        
     }
 
     /**
@@ -49,6 +54,11 @@ class CountryEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

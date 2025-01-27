@@ -2,29 +2,21 @@
 
 namespace Anteris\Autotask\API\TicketNotes;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Generator\Helpers\CastCarbon;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
 use Carbon\Carbon;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents TicketNote entities.
  */
-class TicketNoteEntity extends Data
+class TicketNoteEntity extends Entity
 {
-    public ?Carbon $createDateTime;
-    public ?int $createdByContactID;
-    public ?int $creatorResourceID;
-    public string $description;
-    public $id;
-    public ?int $impersonatorCreatorResourceID;
-    public ?int $impersonatorUpdaterResourceID;
-    public ?Carbon $lastActivityDate;
-    public int $noteType;
-    public int $publish;
-    public int $ticketID;
-    public ?string $title;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new TicketNote entity.
@@ -32,17 +24,25 @@ class TicketNoteEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+            #[CastCarbon]
+                public Carbon $createDateTime = new Carbon(), 
+                public int $createdByContactID = '', 
+                public int $creatorResourceID = '', 
+                public string $description, 
+                public int $id, 
+                public int $impersonatorCreatorResourceID = '', 
+                public int $impersonatorUpdaterResourceID = '', 
+        #[CastCarbon]
+                public Carbon $lastActivityDate = new Carbon(), 
+                public int $noteType, 
+                public int $publish, 
+                public int $ticketID, 
+                public string $title = '', 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        if (isset($array['createDateTime'])) {
-            $array['createDateTime'] = new Carbon($array['createDateTime']);
-        }
-
-        if (isset($array['lastActivityDate'])) {
-            $array['lastActivityDate'] = new Carbon($array['lastActivityDate']);
-        }
-
-        
     }
 
     /**
@@ -60,6 +60,11 @@ class TicketNoteEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

@@ -2,22 +2,19 @@
 
 namespace Anteris\Autotask\API\ContractBlockHourFactors;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents ContractBlockHourFactor entities.
  */
-class ContractBlockHourFactorEntity extends Data
+class ContractBlockHourFactorEntity extends Entity
 {
-    public float $blockHourMultiplier;
-    public ?float $contractHourlyRate;
-    public int $contractID;
-    public $id;
-    public ?float $internalCurrencyContractHourlyRate;
-    public int $roleID;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new ContractBlockHourFactor entity.
@@ -25,9 +22,17 @@ class ContractBlockHourFactorEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public float $blockHourMultiplier, 
+                public float $contractHourlyRate = '', 
+                public int $contractID, 
+                public int $id, 
+                public float $internalCurrencyContractHourlyRate = '', 
+                public int $roleID, 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        
     }
 
     /**
@@ -45,6 +50,11 @@ class ContractBlockHourFactorEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

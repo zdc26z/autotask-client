@@ -2,22 +2,21 @@
 
 namespace Anteris\Autotask\API\ContactBillingProductAssociations;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Generator\Helpers\CastCarbon;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
 use Carbon\Carbon;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents ContactBillingProductAssociation entities.
  */
-class ContactBillingProductAssociationEntity extends Data
+class ContactBillingProductAssociationEntity extends Entity
 {
-    public int $billingProductID;
-    public int $contactID;
-    public Carbon $effectiveDate;
-    public ?Carbon $expirationDate;
-    public $id;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new ContactBillingProductAssociation entity.
@@ -25,17 +24,18 @@ class ContactBillingProductAssociationEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public int $billingProductID, 
+                public int $contactID, 
+        #[CastCarbon]
+                public Carbon $effectiveDate, 
+        #[CastCarbon]
+                public Carbon $expirationDate = new Carbon(), 
+                public int $id, 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        if (isset($array['effectiveDate'])) {
-            $array['effectiveDate'] = new Carbon($array['effectiveDate']);
-        }
-
-        if (isset($array['expirationDate'])) {
-            $array['expirationDate'] = new Carbon($array['expirationDate']);
-        }
-
-        
     }
 
     /**
@@ -53,6 +53,11 @@ class ContactBillingProductAssociationEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

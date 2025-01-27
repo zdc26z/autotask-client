@@ -2,30 +2,21 @@
 
 namespace Anteris\Autotask\API\ContractServiceUnits;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Generator\Helpers\CastCarbon;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
 use Carbon\Carbon;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents ContractServiceUnit entities.
  */
-class ContractServiceUnitEntity extends Data
+class ContractServiceUnitEntity extends Entity
 {
-    public ?Carbon $approveAndPostDate;
-    public int $contractID;
-    public ?int $contractServiceID;
-    public ?float $cost;
-    public Carbon $endDate;
-    public $id;
-    public ?float $internalCurrencyPrice;
-    public ?int $organizationalLevelAssociationID;
-    public ?float $price;
-    public int $serviceID;
-    public Carbon $startDate;
-    public int $units;
-    public ?int $vendorCompanyID;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new ContractServiceUnit entity.
@@ -33,21 +24,27 @@ class ContractServiceUnitEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+            #[CastCarbon]
+                public Carbon $approveAndPostDate = new Carbon(), 
+                public int $contractID, 
+                public int $contractServiceID = '', 
+                public float $cost = '', 
+        #[CastCarbon]
+                public Carbon $endDate, 
+                public int $id, 
+                public float $internalCurrencyPrice = '', 
+                public int $organizationalLevelAssociationID = '', 
+                public float $price = '', 
+                public int $serviceID, 
+        #[CastCarbon]
+                public Carbon $startDate, 
+                public int $units, 
+                public int $vendorCompanyID = '', 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        if (isset($array['approveAndPostDate'])) {
-            $array['approveAndPostDate'] = new Carbon($array['approveAndPostDate']);
-        }
-
-        if (isset($array['endDate'])) {
-            $array['endDate'] = new Carbon($array['endDate']);
-        }
-
-        if (isset($array['startDate'])) {
-            $array['startDate'] = new Carbon($array['startDate']);
-        }
-
-        
     }
 
     /**
@@ -65,6 +62,11 @@ class ContractServiceUnitEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

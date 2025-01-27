@@ -2,31 +2,21 @@
 
 namespace Anteris\Autotask\API\PurchaseOrderItems;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Generator\Helpers\CastCarbon;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
 use Carbon\Carbon;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents PurchaseOrderItem entities.
  */
-class PurchaseOrderItemEntity extends Data
+class PurchaseOrderItemEntity extends Entity
 {
-    public ?int $chargeID;
-    public $contractID;
-    public ?Carbon $estimatedArrivalDate;
-    public $id;
-    public ?float $internalCurrencyUnitCost;
-    public int $inventoryLocationID;
-    public ?string $memo;
-    public int $orderID;
-    public ?int $productID;
-    public $projectID;
-    public int $quantity;
-    public $salesOrderID;
-    public $ticketID;
-    public float $unitCost;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new PurchaseOrderItem entity.
@@ -34,13 +24,26 @@ class PurchaseOrderItemEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public int $chargeID = '', 
+                public int $contractID = '', 
+        #[CastCarbon]
+                public Carbon $estimatedArrivalDate = new Carbon(), 
+                public int $id, 
+                public float $internalCurrencyUnitCost = '', 
+                public int $inventoryLocationID, 
+                public string $memo = '', 
+                public int $orderID, 
+                public int $productID = '', 
+                public int $projectID = '', 
+                public int $quantity, 
+                public int $salesOrderID = '', 
+                public int $ticketID = '', 
+                public float $unitCost, 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        if (isset($array['estimatedArrivalDate'])) {
-            $array['estimatedArrivalDate'] = new Carbon($array['estimatedArrivalDate']);
-        }
-
-        
     }
 
     /**
@@ -58,6 +61,11 @@ class PurchaseOrderItemEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

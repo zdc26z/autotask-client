@@ -2,48 +2,21 @@
 
 namespace Anteris\Autotask\API\TimeEntries;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Generator\Helpers\CastCarbon;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
 use Carbon\Carbon;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents TimeEntry entities.
  */
-class TimeEntryEntity extends Data
+class TimeEntryEntity extends Entity
 {
-    public ?Carbon $billingApprovalDateTime;
-    public ?int $billingApprovalLevelMostRecent;
-    public ?int $billingApprovalResourceID;
-    public ?int $billingCodeID;
-    public ?int $contractID;
-    public $contractServiceBundleID;
-    public $contractServiceID;
-    public ?Carbon $createDateTime;
-    public ?int $creatorUserID;
-    public ?Carbon $dateWorked;
-    public ?Carbon $endDateTime;
-    public ?float $hoursToBill;
-    public ?float $hoursWorked;
-    public $id;
-    public ?int $impersonatorCreatorResourceID;
-    public ?int $impersonatorUpdaterResourceID;
-    public ?int $internalBillingCodeID;
-    public ?string $internalNotes;
-    public ?bool $isInternalNotesVisibleToComanaged;
-    public ?bool $isNonBillable;
-    public ?Carbon $lastModifiedDateTime;
-    public ?int $lastModifiedUserID;
-    public ?float $offsetHours;
-    public int $resourceID;
-    public ?int $roleID;
-    public ?bool $showOnInvoice;
-    public ?Carbon $startDateTime;
-    public ?string $summaryNotes;
-    public ?int $taskID;
-    public ?int $ticketID;
-    public ?int $timeEntryType;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new TimeEntry entity.
@@ -51,33 +24,48 @@ class TimeEntryEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+            #[CastCarbon]
+                public Carbon $billingApprovalDateTime = new Carbon(), 
+                public int $billingApprovalLevelMostRecent = '', 
+                public int $billingApprovalResourceID = '', 
+                public int $billingCodeID = '', 
+                public int $contractID = '', 
+                public int $contractServiceBundleID = '', 
+                public int $contractServiceID = '', 
+        #[CastCarbon]
+                public Carbon $createDateTime = new Carbon(), 
+                public int $creatorUserID = '', 
+        #[CastCarbon]
+                public Carbon $dateWorked = new Carbon(), 
+        #[CastCarbon]
+                public Carbon $endDateTime = new Carbon(), 
+                public float $hoursToBill = '', 
+                public float $hoursWorked = '', 
+                public int $id, 
+                public int $impersonatorCreatorResourceID = '', 
+                public int $impersonatorUpdaterResourceID = '', 
+                public int $internalBillingCodeID = '', 
+                public string $internalNotes = '', 
+                public bool $isInternalNotesVisibleToComanaged = false, 
+                public bool $isNonBillable = false, 
+        #[CastCarbon]
+                public Carbon $lastModifiedDateTime = new Carbon(), 
+                public int $lastModifiedUserID = '', 
+                public float $offsetHours = '', 
+                public int $resourceID, 
+                public int $roleID = '', 
+                public bool $showOnInvoice = false, 
+        #[CastCarbon]
+                public Carbon $startDateTime = new Carbon(), 
+                public string $summaryNotes = '', 
+                public int $taskID = '', 
+                public int $ticketID = '', 
+                public int $timeEntryType = '', 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        if (isset($array['billingApprovalDateTime'])) {
-            $array['billingApprovalDateTime'] = new Carbon($array['billingApprovalDateTime']);
-        }
-
-        if (isset($array['createDateTime'])) {
-            $array['createDateTime'] = new Carbon($array['createDateTime']);
-        }
-
-        if (isset($array['dateWorked'])) {
-            $array['dateWorked'] = new Carbon($array['dateWorked']);
-        }
-
-        if (isset($array['endDateTime'])) {
-            $array['endDateTime'] = new Carbon($array['endDateTime']);
-        }
-
-        if (isset($array['lastModifiedDateTime'])) {
-            $array['lastModifiedDateTime'] = new Carbon($array['lastModifiedDateTime']);
-        }
-
-        if (isset($array['startDateTime'])) {
-            $array['startDateTime'] = new Carbon($array['startDateTime']);
-        }
-
-        
     }
 
     /**
@@ -95,6 +83,11 @@ class TimeEntryEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

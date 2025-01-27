@@ -2,20 +2,19 @@
 
 namespace Anteris\Autotask\API\ConfigurationItemRelatedItems;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents ConfigurationItemRelatedItem entities.
  */
-class ConfigurationItemRelatedItemEntity extends Data
+class ConfigurationItemRelatedItemEntity extends Entity
 {
-    public int $configurationItemID;
-    public $id;
-    public int $relatedConfigurationItemID;
-    public int $relationship;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new ConfigurationItemRelatedItem entity.
@@ -23,9 +22,15 @@ class ConfigurationItemRelatedItemEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public int $configurationItemID, 
+                public int $id, 
+                public int $relatedConfigurationItemID, 
+                public int $relationship, 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        
     }
 
     /**
@@ -43,6 +48,11 @@ class ConfigurationItemRelatedItemEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

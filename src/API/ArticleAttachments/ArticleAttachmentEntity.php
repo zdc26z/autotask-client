@@ -2,34 +2,21 @@
 
 namespace Anteris\Autotask\API\ArticleAttachments;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Generator\Helpers\CastCarbon;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
 use Carbon\Carbon;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents ArticleAttachment entities.
  */
-class ArticleAttachmentEntity extends Data
+class ArticleAttachmentEntity extends Entity
 {
-    public ?int $articleID;
-    public ?Carbon $attachDate;
-    public $attachedByContactID;
-    public $attachedByResourceID;
-    public string $attachmentType;
-    public ?string $contentType;
-    public ?int $creatorType;
-    public $data;
-    public $fileSize;
-    public string $fullPath;
-    public $id;
-    public ?int $impersonatorCreatorResourceID;
-    public $opportunityID;
-    public ?int $parentAttachmentID;
-    public $parentID;
-    public int $publish;
-    public string $title;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new ArticleAttachment entity.
@@ -37,13 +24,29 @@ class ArticleAttachmentEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public int $articleID = '', 
+        #[CastCarbon]
+                public Carbon $attachDate = new Carbon(), 
+                public int $attachedByContactID = '', 
+                public int $attachedByResourceID = '', 
+                public string $attachmentType, 
+                public string $contentType = '', 
+                public int $creatorType = '', 
+                public  $data = '', 
+                public int $fileSize = '', 
+                public string $fullPath, 
+                public int $id, 
+                public int $impersonatorCreatorResourceID = '', 
+                public int $opportunityID = '', 
+                public int $parentAttachmentID = '', 
+                public int $parentID = '', 
+                public int $publish, 
+                public string $title, 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        if (isset($array['attachDate'])) {
-            $array['attachDate'] = new Carbon($array['attachDate']);
-        }
-
-        
     }
 
     /**
@@ -61,6 +64,11 @@ class ArticleAttachmentEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

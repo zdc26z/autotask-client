@@ -2,26 +2,21 @@
 
 namespace Anteris\Autotask\API\ContractServiceBundleAdjustments;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Generator\Helpers\CastCarbon;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
 use Carbon\Carbon;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents ContractServiceBundleAdjustment entities.
  */
-class ContractServiceBundleAdjustmentEntity extends Data
+class ContractServiceBundleAdjustmentEntity extends Entity
 {
-    public ?float $adjustedUnitPrice;
-    public ?bool $allowRepeatServiceBundle;
-    public ?int $contractID;
-    public ?int $contractServiceBundleID;
-    public Carbon $effectiveDate;
-    public $id;
-    public ?int $quoteItemID;
-    public ?int $serviceBundleID;
-    public ?int $unitChange;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new ContractServiceBundleAdjustment entity.
@@ -29,13 +24,21 @@ class ContractServiceBundleAdjustmentEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public float $adjustedUnitPrice = '', 
+                public bool $allowRepeatServiceBundle = false, 
+                public int $contractID = '', 
+                public int $contractServiceBundleID = '', 
+        #[CastCarbon]
+                public Carbon $effectiveDate, 
+                public int $id, 
+                public int $quoteItemID = '', 
+                public int $serviceBundleID = '', 
+                public int $unitChange = '', 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        if (isset($array['effectiveDate'])) {
-            $array['effectiveDate'] = new Carbon($array['effectiveDate']);
-        }
-
-        
     }
 
     /**
@@ -53,6 +56,11 @@ class ContractServiceBundleAdjustmentEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

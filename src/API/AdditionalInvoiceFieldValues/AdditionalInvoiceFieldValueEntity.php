@@ -2,20 +2,19 @@
 
 namespace Anteris\Autotask\API\AdditionalInvoiceFieldValues;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents AdditionalInvoiceFieldValue entities.
  */
-class AdditionalInvoiceFieldValueEntity extends Data
+class AdditionalInvoiceFieldValueEntity extends Entity
 {
-    public $additionalInvoiceFieldID;
-    public string $fieldValue;
-    public $id;
-    public $invoiceBatchID;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new AdditionalInvoiceFieldValue entity.
@@ -23,9 +22,15 @@ class AdditionalInvoiceFieldValueEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public int $additionalInvoiceFieldID, 
+                public string $fieldValue, 
+                public int $id, 
+                public int $invoiceBatchID, 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        
     }
 
     /**
@@ -43,6 +48,11 @@ class AdditionalInvoiceFieldValueEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

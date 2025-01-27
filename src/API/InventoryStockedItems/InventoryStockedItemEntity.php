@@ -2,49 +2,21 @@
 
 namespace Anteris\Autotask\API\InventoryStockedItems;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Generator\Helpers\CastCarbon;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
 use Carbon\Carbon;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents InventoryStockedItem entities.
  */
-class InventoryStockedItemEntity extends Data
+class InventoryStockedItemEntity extends Entity
 {
-    public ?int $availableUnits;
-    public ?int $companyID;
-    public ?int $configurationItemID;
-    public ?int $contractChargeID;
-    public ?Carbon $createDateTime;
-    public ?int $createdByResourceID;
-    public ?int $currentInventoryLocationID;
-    public ?int $deliveredUnits;
-    public $id;
-    public int $inventoryProductID;
-    public ?int $onHandUnits;
-    public ?int $parentInventoryStockedItemID;
-    public ?int $parentStockedItemReceivedUnits;
-    public ?int $pickedRemovedByResourceID;
-    public ?Carbon $pickedRemovedDateTime;
-    public ?int $pickedUnits;
-    public ?int $projectChargeID;
-    public ?int $purchaseOrderID;
-    public ?int $purchaseOrderItemID;
-    public ?int $purchaseOrderItemReceivingID;
-    public ?int $quoteItemID;
-    public ?int $removedUnits;
-    public ?int $reservedUnits;
-    public ?float $returnPrice;
-    public ?int $returnTypeID;
-    public ?string $serialNumber;
-    public ?int $statusID;
-    public ?int $ticketChargeID;
-    public ?int $transferredUnits;
-    public float $unitCost;
-    public ?int $vendorID;
-    public ?string $vendorInvoiceNumber;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new InventoryStockedItem entity.
@@ -52,17 +24,45 @@ class InventoryStockedItemEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public int $availableUnits = '', 
+                public int $companyID = '', 
+                public int $configurationItemID = '', 
+                public int $contractChargeID = '', 
+        #[CastCarbon]
+                public Carbon $createDateTime = new Carbon(), 
+                public int $createdByResourceID = '', 
+                public int $currentInventoryLocationID = '', 
+                public int $deliveredUnits = '', 
+                public int $id, 
+                public int $inventoryProductID, 
+                public int $onHandUnits = '', 
+                public int $parentInventoryStockedItemID = '', 
+                public int $parentStockedItemReceivedUnits = '', 
+                public int $pickedRemovedByResourceID = '', 
+        #[CastCarbon]
+                public Carbon $pickedRemovedDateTime = new Carbon(), 
+                public int $pickedUnits = '', 
+                public int $projectChargeID = '', 
+                public int $purchaseOrderID = '', 
+                public int $purchaseOrderItemID = '', 
+                public int $purchaseOrderItemReceivingID = '', 
+                public int $quoteItemID = '', 
+                public int $removedUnits = '', 
+                public int $reservedUnits = '', 
+                public float $returnPrice = '', 
+                public int $returnTypeID = '', 
+                public string $serialNumber = '', 
+                public int $statusID = '', 
+                public int $ticketChargeID = '', 
+                public int $transferredUnits = '', 
+                public float $unitCost, 
+                public int $vendorID = '', 
+                public string $vendorInvoiceNumber = '', 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        if (isset($array['createDateTime'])) {
-            $array['createDateTime'] = new Carbon($array['createDateTime']);
-        }
-
-        if (isset($array['pickedRemovedDateTime'])) {
-            $array['pickedRemovedDateTime'] = new Carbon($array['pickedRemovedDateTime']);
-        }
-
-        
     }
 
     /**
@@ -80,6 +80,11 @@ class InventoryStockedItemEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }

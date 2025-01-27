@@ -2,52 +2,21 @@
 
 namespace Anteris\Autotask\API\AttachmentInfo;
 
+use Anteris\Autotask\API\Entity;
+use Anteris\Autotask\Generator\Helpers\CastCarbon;
+use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
 use Carbon\Carbon;
+use EventSauce\ObjectHydrator\DefinitionProvider;
+use EventSauce\ObjectHydrator\KeyFormatterWithoutConversion;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use GuzzleHttp\Psr7\Response;
-use Spatie\LaravelData\Data;
 
 /**
  * Represents AttachmentInfo entities.
  */
-class AttachmentInfoEntity extends Data
+class AttachmentInfoEntity extends Entity
 {
-    public ?int $articleID;
-    public ?Carbon $attachDate;
-    public $attachedByContactID;
-    public $attachedByResourceID;
-    public string $attachmentType;
-    public ?int $companyID;
-    public ?int $companyNoteID;
-    public ?int $configurationItemID;
-    public ?int $configurationItemNoteID;
-    public ?string $contentType;
-    public ?int $contractID;
-    public ?int $contractNoteID;
-    public ?int $creatorType;
-    public ?int $documentID;
-    public ?int $expenseItemID;
-    public ?int $expenseReportID;
-    public $fileSize;
-    public string $fullPath;
-    public $id;
-    public ?int $impersonatorCreatorResourceID;
-    public $opportunityID;
-    public ?int $parentAttachmentID;
-    public $parentID;
-    public int $parentType;
-    public ?int $projectID;
-    public ?int $projectNoteID;
-    public int $publish;
-    public ?int $resourceID;
-    public ?int $salesOrderID;
-    public ?int $taskID;
-    public ?int $taskNoteID;
-    public ?int $ticketID;
-    public ?int $ticketNoteID;
-    public ?int $timeEntryID;
-    public string $title;
-    /** @var \Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity[]|null */
-    public ?array $userDefinedFields;
 
     /**
      * Creates a new AttachmentInfo entity.
@@ -55,13 +24,47 @@ class AttachmentInfoEntity extends Data
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
-    public function __construct(array $array)
+    public function __construct(
+                    public int $articleID = '', 
+        #[CastCarbon]
+                public Carbon $attachDate = new Carbon(), 
+                public int $attachedByContactID = '', 
+                public int $attachedByResourceID = '', 
+                public string $attachmentType, 
+                public int $companyID = '', 
+                public int $companyNoteID = '', 
+                public int $configurationItemID = '', 
+                public int $configurationItemNoteID = '', 
+                public string $contentType = '', 
+                public int $contractID = '', 
+                public int $contractNoteID = '', 
+                public int $creatorType = '', 
+                public int $documentID = '', 
+                public int $expenseItemID = '', 
+                public int $expenseReportID = '', 
+                public int $fileSize = '', 
+                public string $fullPath, 
+                public int $id, 
+                public int $impersonatorCreatorResourceID = '', 
+                public int $opportunityID = '', 
+                public int $parentAttachmentID = '', 
+                public int $parentID = '', 
+                public int $parentType, 
+                public int $projectID = '', 
+                public int $projectNoteID = '', 
+                public int $publish, 
+                public int $resourceID = '', 
+                public int $salesOrderID = '', 
+                public int $taskID = '', 
+                public int $taskNoteID = '', 
+                public int $ticketID = '', 
+                public int $ticketNoteID = '', 
+                public int $timeEntryID = '', 
+                public string $title, 
+        #[CastListToType(UserDefinedFieldEntity::class)]
+        public array $userDefinedFields = [],
+    )
     {
-        if (isset($array['attachDate'])) {
-            $array['attachDate'] = new Carbon($array['attachDate']);
-        }
-
-        
     }
 
     /**
@@ -79,6 +82,11 @@ class AttachmentInfoEntity extends Data
             throw new \Exception('Missing item key in response.');
         }
 
-        return new self($responseArray['item']);
+        $mapper = new ObjectMapperUsingReflection(
+            new DefinitionProvider(
+                keyFormatter: new KeyFormatterWithoutConversion(),
+            ),
+        );
+        return $mapper->hydrateObject(self::class, $responseArray['item']);
     }
 }
