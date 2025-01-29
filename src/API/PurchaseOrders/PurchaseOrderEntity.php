@@ -25,44 +25,44 @@ class PurchaseOrderEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public string $additionalVendorInvoiceNumbers = '', 
-        #[CastCarbon]
-                public Carbon $cancelDateTime = new Carbon(), 
-        #[CastCarbon]
-                public Carbon $createDateTime = new Carbon(), 
-                public int $creatorResourceID = '', 
-                public string $externalPONumber = '', 
-                public string $fax = '', 
-                public float $freight = '', 
-                public string $generalMemo = '', 
-                public int $id, 
-                public int $impersonatorCreatorResourceID = '', 
-                public float $internalCurrencyFreight = '', 
-        #[CastCarbon]
-                public Carbon $latestEstimatedArrivalDate = new Carbon(), 
-                public int $paymentTerm = '', 
-                public string $phone = '', 
-                public int $purchaseForCompanyID = '', 
-                public string $purchaseOrderNumber = '', 
-                public int $purchaseOrderTemplateID = '', 
-        #[CastCarbon]
-                public Carbon $shippingDate = new Carbon(), 
-                public int $shippingType = '', 
-                public string $shipToAddress1, 
-                public string $shipToAddress2 = '', 
-                public string $shipToCity = '', 
-                public string $shipToName, 
-                public string $shipToPostalCode = '', 
-                public string $shipToState = '', 
-                public bool $showEachTaxInGroup = false, 
-                public bool $showTaxCategory = false, 
-                public int $status, 
-        #[CastCarbon]
-                public Carbon $submitDateTime = new Carbon(), 
-                public int $taxRegionID = '', 
-                public int $useItemDescriptionsFrom = '', 
-                public int $vendorID, 
-                public string $vendorInvoiceNumber = '', 
+        public ?float $id, 
+public ?string $shipToAddress1, 
+public ?string $shipToName, 
+public ?int $status, 
+public ?int $vendorID, 
+public ?string $additionalVendorInvoiceNumbers, 
+#[CastCarbon]
+        public ?Carbon $cancelDateTime, 
+#[CastCarbon]
+        public ?Carbon $createDateTime, 
+public ?int $creatorResourceID, 
+public ?string $externalPONumber, 
+public ?string $fax, 
+public ?float $freight, 
+public ?string $generalMemo, 
+public ?int $impersonatorCreatorResourceID, 
+public ?float $internalCurrencyFreight, 
+#[CastCarbon]
+        public ?Carbon $latestEstimatedArrivalDate, 
+public ?int $paymentTerm, 
+public ?string $phone, 
+public ?int $purchaseForCompanyID, 
+public ?string $purchaseOrderNumber, 
+public ?int $purchaseOrderTemplateID, 
+#[CastCarbon]
+        public ?Carbon $shippingDate, 
+public ?int $shippingType, 
+public ?string $shipToAddress2, 
+public ?string $shipToCity, 
+public ?string $shipToPostalCode, 
+public ?string $shipToState, 
+public ?bool $showEachTaxInGroup, 
+public ?bool $showTaxCategory, 
+#[CastCarbon]
+        public ?Carbon $submitDateTime, 
+public ?int $taxRegionID, 
+public ?int $useItemDescriptionsFrom, 
+public ?string $vendorInvoiceNumber, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

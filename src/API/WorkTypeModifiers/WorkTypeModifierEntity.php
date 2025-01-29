@@ -23,9 +23,9 @@ class WorkTypeModifierEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public int $id, 
-                public int $modifierType, 
-                public float $modifierValue = '', 
+        public ?float $id, 
+public ?int $modifierType, 
+public ?float $modifierValue, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

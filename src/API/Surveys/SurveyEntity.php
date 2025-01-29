@@ -23,10 +23,10 @@ class SurveyEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public string $description = '', 
-                public string $displayName = '', 
-                public int $id, 
-                public string $name, 
+        public ?float $id, 
+public ?string $name, 
+public ?string $description, 
+public ?string $displayName, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

@@ -25,13 +25,13 @@ class TicketHistoryEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public string $action, 
-        #[CastCarbon]
-                public Carbon $date, 
-                public string $detail, 
-                public int $id, 
-                public int $resourceID, 
-                public int $ticketID, 
+        public ?string $action, 
+#[CastCarbon]
+        public ?Carbon $date, 
+public ?string $detail, 
+public ?float $id, 
+public ?int $resourceID, 
+public ?int $ticketID, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

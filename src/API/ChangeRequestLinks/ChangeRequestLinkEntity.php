@@ -23,9 +23,9 @@ class ChangeRequestLinkEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public int $changeRequestTicketID, 
-                public int $id, 
-                public int $problemOrIncidentTicketID, 
+        public ?int $changeRequestTicketID, 
+public ?int $id, 
+public ?int $problemOrIncidentTicketID, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

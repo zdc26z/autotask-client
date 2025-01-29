@@ -43,7 +43,6 @@ use Anteris\Autotask\API\ConfigurationItemBillingProductAssociations\Configurati
 use Anteris\Autotask\API\ConfigurationItemCategories\ConfigurationItemCategoryService;
 use Anteris\Autotask\API\ConfigurationItemCategoryUdfAssociations\ConfigurationItemCategoryUdfAssociationService;
 use Anteris\Autotask\API\ConfigurationItemDnsRecords\ConfigurationItemDnsRecordService;
-use Anteris\Autotask\API\ConfigurationItemExts\ConfigurationItemExtService;
 use Anteris\Autotask\API\ConfigurationItemNoteAttachments\ConfigurationItemNoteAttachmentService;
 use Anteris\Autotask\API\ConfigurationItemNotes\ConfigurationItemNoteService;
 use Anteris\Autotask\API\ConfigurationItemRelatedItems\ConfigurationItemRelatedItemService;
@@ -120,9 +119,6 @@ use Anteris\Autotask\API\InventoryItems\InventoryItemService;
 use Anteris\Autotask\API\InventoryLocations\InventoryLocationService;
 use Anteris\Autotask\API\InventoryProducts\InventoryProductService;
 use Anteris\Autotask\API\InventoryStockedItems\InventoryStockedItemService;
-use Anteris\Autotask\API\InventoryStockedItemsAdd\InventoryStockedItemsAddService;
-use Anteris\Autotask\API\InventoryStockedItemsRemove\InventoryStockedItemsRemoveService;
-use Anteris\Autotask\API\InventoryStockedItemsTransfer\InventoryStockedItemsTransferService;
 use Anteris\Autotask\API\InventoryTransfers\InventoryTransferService;
 use Anteris\Autotask\API\InvoiceTemplates\InvoiceTemplateService;
 use Anteris\Autotask\API\Invoices\InvoiceService;
@@ -185,7 +181,6 @@ use Anteris\Autotask\API\ServiceLevelAgreementResults\ServiceLevelAgreementResul
 use Anteris\Autotask\API\Services\ServiceService;
 use Anteris\Autotask\API\ShippingTypes\ShippingTypeService;
 use Anteris\Autotask\API\Skills\SkillService;
-use Anteris\Autotask\API\Subscribeds\SubscribedService;
 use Anteris\Autotask\API\SubscriptionPeriods\SubscriptionPeriodService;
 use Anteris\Autotask\API\Subscriptions\SubscriptionService;
 use Anteris\Autotask\API\SurveyResults\SurveyResultService;
@@ -749,18 +744,6 @@ class Client
         }
 
         return $this->classCache['ConfigurationItemDnsRecords'];
-    }
-
-    /**
-     * Handles any interaction with the ConfigurationItemExts endpoint.
-     */
-    public function configurationItemExts(): ConfigurationItemExtService
-    {
-        if (! isset($this->classCache['ConfigurationItemExts'])) {
-            $this->classCache['ConfigurationItemExts'] = new ConfigurationItemExtService($this->client);
-        }
-
-        return $this->classCache['ConfigurationItemExts'];
     }
 
     /**
@@ -1676,42 +1659,6 @@ class Client
     }
 
     /**
-     * Handles any interaction with the InventoryStockedItemsAdd endpoint.
-     */
-    public function inventoryStockedItemsAdd(): InventoryStockedItemsAddService
-    {
-        if (! isset($this->classCache['InventoryStockedItemsAdd'])) {
-            $this->classCache['InventoryStockedItemsAdd'] = new InventoryStockedItemsAddService($this->client);
-        }
-
-        return $this->classCache['InventoryStockedItemsAdd'];
-    }
-
-    /**
-     * Handles any interaction with the InventoryStockedItemsRemove endpoint.
-     */
-    public function inventoryStockedItemsRemove(): InventoryStockedItemsRemoveService
-    {
-        if (! isset($this->classCache['InventoryStockedItemsRemove'])) {
-            $this->classCache['InventoryStockedItemsRemove'] = new InventoryStockedItemsRemoveService($this->client);
-        }
-
-        return $this->classCache['InventoryStockedItemsRemove'];
-    }
-
-    /**
-     * Handles any interaction with the InventoryStockedItemsTransfer endpoint.
-     */
-    public function inventoryStockedItemsTransfer(): InventoryStockedItemsTransferService
-    {
-        if (! isset($this->classCache['InventoryStockedItemsTransfer'])) {
-            $this->classCache['InventoryStockedItemsTransfer'] = new InventoryStockedItemsTransferService($this->client);
-        }
-
-        return $this->classCache['InventoryStockedItemsTransfer'];
-    }
-
-    /**
      * Handles any interaction with the InventoryTransfers endpoint.
      */
     public function inventoryTransfers(): InventoryTransferService
@@ -2453,18 +2400,6 @@ class Client
         }
 
         return $this->classCache['Skills'];
-    }
-
-    /**
-     * Handles any interaction with the Subscribeds endpoint.
-     */
-    public function subscribeds(): SubscribedService
-    {
-        if (! isset($this->classCache['Subscribeds'])) {
-            $this->classCache['Subscribeds'] = new SubscribedService($this->client);
-        }
-
-        return $this->classCache['Subscribeds'];
     }
 
     /**

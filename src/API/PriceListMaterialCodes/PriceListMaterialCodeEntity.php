@@ -23,11 +23,11 @@ class PriceListMaterialCodeEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public int $billingCodeID, 
-                public int $currencyID, 
-                public int $id, 
-                public float $unitPrice = '', 
-                public bool $usesInternalCurrencyPrice, 
+        public ?int $billingCodeID, 
+public ?int $currencyID, 
+public ?float $id, 
+public ?bool $usesInternalCurrencyPrice, 
+public ?float $unitPrice, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

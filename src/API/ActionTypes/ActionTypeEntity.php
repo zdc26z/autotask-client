@@ -23,11 +23,11 @@ class ActionTypeEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public int $id, 
-                public bool $isActive, 
-                public bool $isSystemActionType = false, 
-                public string $name, 
-                public int $view, 
+        public ?float $id, 
+public ?bool $isActive, 
+public ?string $name, 
+public ?int $view, 
+public ?bool $isSystemActionType, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

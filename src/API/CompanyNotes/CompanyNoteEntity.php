@@ -25,26 +25,26 @@ class CompanyNoteEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public int $actionType, 
-                public int $assignedResourceID, 
-                public int $companyID, 
-        #[CastCarbon]
-                public Carbon $completedDateTime = new Carbon(), 
-                public int $contactID = '', 
-        #[CastCarbon]
-                public Carbon $createDateTime = new Carbon(), 
-        #[CastCarbon]
-                public Carbon $endDateTime, 
-                public int $id, 
-                public int $impersonatorCreatorResourceID = '', 
-                public int $impersonatorUpdaterResourceID = '', 
-        #[CastCarbon]
-                public Carbon $lastModifiedDate = new Carbon(), 
-                public string $name = '', 
-                public string $note = '', 
-                public int $opportunityID = '', 
-        #[CastCarbon]
-                public Carbon $startDateTime, 
+        public ?int $actionType, 
+public ?int $assignedResourceID, 
+public ?int $companyID, 
+#[CastCarbon]
+        public ?Carbon $endDateTime, 
+public ?float $id, 
+#[CastCarbon]
+        public ?Carbon $startDateTime, 
+#[CastCarbon]
+        public ?Carbon $completedDateTime, 
+public ?int $contactID, 
+#[CastCarbon]
+        public ?Carbon $createDateTime, 
+public ?int $impersonatorCreatorResourceID, 
+public ?int $impersonatorUpdaterResourceID, 
+#[CastCarbon]
+        public ?Carbon $lastModifiedDate, 
+public ?string $name, 
+public ?string $note, 
+public ?int $opportunityID, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

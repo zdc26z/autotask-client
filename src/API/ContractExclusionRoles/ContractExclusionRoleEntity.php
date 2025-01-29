@@ -23,9 +23,9 @@ class ContractExclusionRoleEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public int $contractID, 
-                public int $id, 
-                public int $roleID, 
+        public ?float $contractID, 
+public ?float $id, 
+public ?float $roleID, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

@@ -23,10 +23,10 @@ class ConfigurationItemCategoryUdfAssociationEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public int $configurationItemCategoryID, 
-                public int $id, 
-                public bool $isRequired, 
-                public int $userDefinedFieldDefinitionID, 
+        public ?int $configurationItemCategoryID, 
+public ?float $id, 
+public ?bool $isRequired, 
+public ?int $userDefinedFieldDefinitionID, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

@@ -23,19 +23,19 @@ class ServiceLevelAgreementResultEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public float $firstResponseElapsedHours = '', 
-                public int $firstResponseInitiatingResourceID = '', 
-                public int $firstResponseResourceID = '', 
-                public int $id, 
-                public bool $isFirstResponseMet = false, 
-                public bool $isResolutionMet = false, 
-                public bool $isResolutionPlanMet = false, 
-                public float $resolutionElapsedHours = '', 
-                public float $resolutionPlanElapsedHours = '', 
-                public int $resolutionPlanResourceID = '', 
-                public int $resolutionResourceID = '', 
-                public string $serviceLevelAgreementName = '', 
-                public int $ticketID = '', 
+        public ?float $id, 
+public ?float $firstResponseElapsedHours, 
+public ?int $firstResponseInitiatingResourceID, 
+public ?int $firstResponseResourceID, 
+public ?bool $isFirstResponseMet, 
+public ?bool $isResolutionMet, 
+public ?bool $isResolutionPlanMet, 
+public ?float $resolutionElapsedHours, 
+public ?float $resolutionPlanElapsedHours, 
+public ?int $resolutionPlanResourceID, 
+public ?int $resolutionResourceID, 
+public ?string $serviceLevelAgreementName, 
+public ?int $ticketID, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

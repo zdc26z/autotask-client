@@ -25,19 +25,19 @@ class AppointmentEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-            #[CastCarbon]
-                public Carbon $createDateTime = new Carbon(), 
-                public int $creatorResourceID = '', 
-                public string $description = '', 
         #[CastCarbon]
-                public Carbon $endDateTime, 
-                public int $id, 
-                public int $resourceID, 
-        #[CastCarbon]
-                public Carbon $startDateTime, 
-                public string $title, 
-        #[CastCarbon]
-                public Carbon $updateDateTime = new Carbon(), 
+        public ?Carbon $endDateTime, 
+public ?float $id, 
+public ?int $resourceID, 
+#[CastCarbon]
+        public ?Carbon $startDateTime, 
+public ?string $title, 
+#[CastCarbon]
+        public ?Carbon $createDateTime, 
+public ?int $creatorResourceID, 
+public ?string $description, 
+#[CastCarbon]
+        public ?Carbon $updateDateTime, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

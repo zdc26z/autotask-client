@@ -25,25 +25,25 @@ class SubscriptionEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public int $configurationItemID, 
-                public string $description = '', 
-        #[CastCarbon]
-                public Carbon $effectiveDate, 
-        #[CastCarbon]
-                public Carbon $expirationDate, 
-                public int $id, 
-                public int $impersonatorCreatorResourceID = '', 
-                public int $materialCodeID, 
-                public int $organizationalLevelAssociationID = '', 
-                public float $periodCost = '', 
-                public float $periodPrice, 
-                public int $periodType, 
-                public string $purchaseOrderNumber = '', 
-                public int $status, 
-                public string $subscriptionName, 
-                public float $totalCost = '', 
-                public float $totalPrice = '', 
-                public int $vendorID = '', 
+        public ?int $configurationItemID, 
+#[CastCarbon]
+        public ?Carbon $effectiveDate, 
+#[CastCarbon]
+        public ?Carbon $expirationDate, 
+public ?float $id, 
+public ?int $materialCodeID, 
+public ?float $periodPrice, 
+public ?int $periodType, 
+public ?int $status, 
+public ?string $subscriptionName, 
+public ?string $description, 
+public ?int $impersonatorCreatorResourceID, 
+public ?int $organizationalLevelAssociationID, 
+public ?float $periodCost, 
+public ?string $purchaseOrderNumber, 
+public ?float $totalCost, 
+public ?float $totalPrice, 
+public ?int $vendorID, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

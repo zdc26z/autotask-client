@@ -23,11 +23,11 @@ class TicketRmaCreditEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public float $creditAmount, 
-                public string $creditDetails = '', 
-                public int $id, 
-                public float $internalCurrencyCreditAmount = '', 
-                public int $ticketID, 
+        public ?float $creditAmount, 
+public ?float $id, 
+public ?int $ticketID, 
+public ?string $creditDetails, 
+public ?float $internalCurrencyCreditAmount, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

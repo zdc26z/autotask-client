@@ -23,9 +23,9 @@ class DocumentChecklistLibraryEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public int $checklistLibraryID, 
-                public int $documentID, 
-                public int $id = '', 
+        public ?int $checklistLibraryID, 
+public ?int $documentID, 
+public ?float $id, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

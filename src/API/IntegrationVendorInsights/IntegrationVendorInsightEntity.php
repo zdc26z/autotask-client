@@ -25,20 +25,20 @@ class IntegrationVendorInsightEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-            #[CastCarbon]
-                public Carbon $createDateTime = new Carbon(), 
-                public string $description = '', 
-                public int $height = '', 
-                public int $id, 
-                public int $insightCategory, 
-                public string $insightKey, 
-                public bool $isActive = false, 
-        #[CastCarbon]
-                public Carbon $lastModifiedDateTime = new Carbon(), 
-                public string $referenceUrl, 
-                public string $secret, 
-                public string $title, 
-                public string $vendorSuppliedID, 
+        public ?float $id, 
+public ?int $insightCategory, 
+public ?string $insightKey, 
+public ?string $referenceUrl, 
+public ?string $secret, 
+public ?string $title, 
+public ?string $vendorSuppliedID, 
+#[CastCarbon]
+        public ?Carbon $createDateTime, 
+public ?string $description, 
+public ?int $height, 
+public ?bool $isActive, 
+#[CastCarbon]
+        public ?Carbon $lastModifiedDateTime, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

@@ -23,12 +23,12 @@ class OpportunityCategoryEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public int $displayColorRgb, 
-                public int $id, 
-                public bool $isActive, 
-                public bool $isGlobalDefault = false, 
-                public string $name, 
-                public string $nickname = '', 
+        public ?int $displayColorRgb, 
+public ?float $id, 
+public ?bool $isActive, 
+public ?string $name, 
+public ?bool $isGlobalDefault, 
+public ?string $nickname, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

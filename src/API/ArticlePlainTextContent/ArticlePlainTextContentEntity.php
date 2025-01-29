@@ -23,8 +23,8 @@ class ArticlePlainTextContentEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public string $contentData, 
-                public int $id, 
+        public ?string $contentData, 
+public ?float $id, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

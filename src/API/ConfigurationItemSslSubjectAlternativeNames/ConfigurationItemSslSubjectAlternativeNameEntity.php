@@ -23,9 +23,9 @@ class ConfigurationItemSslSubjectAlternativeNameEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public int $configurationItemID, 
-                public int $id, 
-                public string $name, 
+        public ?int $configurationItemID, 
+public ?float $id, 
+public ?string $name, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

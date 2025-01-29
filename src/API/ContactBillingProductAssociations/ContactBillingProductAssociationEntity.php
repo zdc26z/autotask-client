@@ -25,13 +25,13 @@ class ContactBillingProductAssociationEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public int $billingProductID, 
-                public int $contactID, 
-        #[CastCarbon]
-                public Carbon $effectiveDate, 
-        #[CastCarbon]
-                public Carbon $expirationDate = new Carbon(), 
-                public int $id, 
+        public ?int $billingProductID, 
+public ?int $contactID, 
+#[CastCarbon]
+        public ?Carbon $effectiveDate, 
+public ?float $id, 
+#[CastCarbon]
+        public ?Carbon $expirationDate, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

@@ -23,10 +23,10 @@ class CompanyAlertEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public string $alertText, 
-                public int $alertTypeID, 
-                public int $companyID, 
-                public int $id, 
+        public ?string $alertText, 
+public ?int $alertTypeID, 
+public ?int $companyID, 
+public ?float $id, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

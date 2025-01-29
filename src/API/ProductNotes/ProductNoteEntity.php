@@ -25,17 +25,17 @@ class ProductNoteEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-            #[CastCarbon]
-                public Carbon $createDateTime = new Carbon(), 
-                public int $creatorResourceID = '', 
-                public string $description, 
-                public int $id, 
-                public int $impersonatorCreatorResourceID = '', 
-                public int $impersonatorUpdaterResourceID = '', 
-        #[CastCarbon]
-                public Carbon $lastActivityDate = new Carbon(), 
-                public int $productID, 
-                public string $title, 
+        public ?string $description, 
+public ?float $id, 
+public ?int $productID, 
+public ?string $title, 
+#[CastCarbon]
+        public ?Carbon $createDateTime, 
+public ?int $creatorResourceID, 
+public ?int $impersonatorCreatorResourceID, 
+public ?int $impersonatorUpdaterResourceID, 
+#[CastCarbon]
+        public ?Carbon $lastActivityDate, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

@@ -23,9 +23,9 @@ class ConfigurationItemWebhookExcludedResourceEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public int $id, 
-                public int $resourceID, 
-                public int $webhookID, 
+        public ?float $id, 
+public ?int $resourceID, 
+public ?int $webhookID, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

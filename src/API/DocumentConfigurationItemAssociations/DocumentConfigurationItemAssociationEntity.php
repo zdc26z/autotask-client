@@ -23,9 +23,9 @@ class DocumentConfigurationItemAssociationEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public int $configurationItemID, 
-                public int $documentID, 
-                public int $id, 
+        public ?int $configurationItemID, 
+public ?int $documentID, 
+public ?float $id, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

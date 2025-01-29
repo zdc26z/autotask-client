@@ -23,11 +23,11 @@ class TicketWebhookFieldEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public int $fieldID, 
-                public int $id, 
-                public bool $isDisplayAlwaysField, 
-                public bool $isSubscribedField, 
-                public int $webhookID, 
+        public ?int $fieldID, 
+public ?float $id, 
+public ?bool $isDisplayAlwaysField, 
+public ?bool $isSubscribedField, 
+public ?int $webhookID, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

@@ -25,19 +25,19 @@ class SurveyResultEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public int $companyID = '', 
-                public float $companyRating = '', 
-        #[CastCarbon]
-                public Carbon $completeDate = new Carbon(), 
-                public int $contactID = '', 
-                public float $contactRating = '', 
-                public int $id, 
-                public float $resourceRating = '', 
-        #[CastCarbon]
-                public Carbon $sendDate = new Carbon(), 
-                public int $surveyID, 
-                public float $surveyRating = '', 
-                public int $ticketID = '', 
+        public ?float $id, 
+public ?int $surveyID, 
+public ?int $companyID, 
+public ?float $companyRating, 
+#[CastCarbon]
+        public ?Carbon $completeDate, 
+public ?int $contactID, 
+public ?float $contactRating, 
+public ?float $resourceRating, 
+#[CastCarbon]
+        public ?Carbon $sendDate, 
+public ?float $surveyRating, 
+public ?int $ticketID, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

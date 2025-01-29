@@ -23,16 +23,16 @@ class ContractServiceEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public int $contractID, 
-                public int $id, 
-                public float $internalCurrencyAdjustedPrice = '', 
-                public float $internalCurrencyUnitPrice = '', 
-                public string $internalDescription = '', 
-                public string $invoiceDescription = '', 
-                public int $quoteItemID = '', 
-                public int $serviceID, 
-                public float $unitCost = '', 
-                public float $unitPrice = '', 
+        public ?int $contractID, 
+public ?float $id, 
+public ?int $serviceID, 
+public ?float $internalCurrencyAdjustedPrice, 
+public ?float $internalCurrencyUnitPrice, 
+public ?string $internalDescription, 
+public ?string $invoiceDescription, 
+public ?float $quoteItemID, 
+public ?float $unitCost, 
+public ?float $unitPrice, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

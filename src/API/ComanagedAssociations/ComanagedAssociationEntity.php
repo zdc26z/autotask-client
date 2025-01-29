@@ -23,10 +23,10 @@ class ComanagedAssociationEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public int $companyID, 
-                public int $id, 
-                public bool $isPrimaryComanagedResource = false, 
-                public int $resourceID, 
+        public ?int $companyID, 
+public ?float $id, 
+public ?int $resourceID, 
+public ?bool $isPrimaryComanagedResource, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

@@ -25,22 +25,22 @@ class InventoryProductEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public int $availableUnits, 
-                public int $backOrderQuantity = '', 
-                public string $bin = '', 
-        #[CastCarbon]
-                public Carbon $createDateTime = new Carbon(), 
-                public int $createdByResourceID = '', 
-                public int $id, 
-                public int $inventoryLocationID, 
-                public int $onHandUnits = '', 
-                public int $pickedUnits = '', 
-                public int $productID, 
-                public int $quantityMaximum, 
-                public int $quantityMinimum, 
-                public string $referenceNumber = '', 
-                public int $reservedUnits = '', 
-                public int $unitsOnOrder = '', 
+        public ?int $availableUnits, 
+public ?float $id, 
+public ?int $inventoryLocationID, 
+public ?int $productID, 
+public ?int $quantityMaximum, 
+public ?int $quantityMinimum, 
+public ?int $backOrderQuantity, 
+public ?string $bin, 
+#[CastCarbon]
+        public ?Carbon $createDateTime, 
+public ?int $createdByResourceID, 
+public ?int $onHandUnits, 
+public ?int $pickedUnits, 
+public ?string $referenceNumber, 
+public ?int $reservedUnits, 
+public ?int $unitsOnOrder, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

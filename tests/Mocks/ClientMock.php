@@ -116,6 +116,7 @@ class ClientMock extends Client
                                 break;
                             default:
                                 var_dump($type);
+                            case 'mixed':
                             case 'string':
                                 $result[$property->name] = $this->faker->word();
                                 break;

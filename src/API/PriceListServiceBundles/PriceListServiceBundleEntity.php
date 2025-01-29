@@ -23,11 +23,11 @@ class PriceListServiceBundleEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public int $currencyID, 
-                public int $id, 
-                public int $serviceBundleID, 
-                public float $unitPrice = '', 
-                public bool $usesInternalCurrencyPrice, 
+        public ?int $currencyID, 
+public ?float $id, 
+public ?int $serviceBundleID, 
+public ?bool $usesInternalCurrencyPrice, 
+public ?float $unitPrice, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

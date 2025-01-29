@@ -25,20 +25,20 @@ class KnowledgeBaseArticleEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public int $articleCategoryID, 
-                public int $createdByResourceID = '', 
-        #[CastCarbon]
-                public Carbon $createdDateTime = new Carbon(), 
-                public string $errorCodes = '', 
-                public int $id, 
-                public bool $isActive = false, 
-                public string $keywords = '', 
-                public int $lastModifiedByResourceID = '', 
-        #[CastCarbon]
-                public Carbon $lastModifiedDateTime = new Carbon(), 
-                public int $publish, 
-                public string $referenceLink = '', 
-                public string $title, 
+        public ?int $articleCategoryID, 
+public ?float $id, 
+public ?int $publish, 
+public ?string $title, 
+public ?int $createdByResourceID, 
+#[CastCarbon]
+        public ?Carbon $createdDateTime, 
+public ?string $errorCodes, 
+public ?bool $isActive, 
+public ?string $keywords, 
+public ?int $lastModifiedByResourceID, 
+#[CastCarbon]
+        public ?Carbon $lastModifiedDateTime, 
+public ?string $referenceLink, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

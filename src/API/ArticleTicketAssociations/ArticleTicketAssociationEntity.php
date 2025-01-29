@@ -23,9 +23,9 @@ class ArticleTicketAssociationEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public int $articleID, 
-                public int $id, 
-                public int $ticketID, 
+        public ?int $articleID, 
+public ?float $id, 
+public ?int $ticketID, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

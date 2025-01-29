@@ -25,24 +25,24 @@ class ContractBillingRuleEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public int $contractID, 
-                public bool $createChargesAsBillable, 
-                public float $dailyProratedCost = '', 
-                public float $dailyProratedPrice = '', 
-                public int $determineUnits, 
-        #[CastCarbon]
-                public Carbon $endDate = new Carbon(), 
-                public int $executionMethod = '', 
-                public int $id, 
-                public bool $includeItemsInChargeDescription, 
-                public string $invoiceDescription = '', 
-                public bool $isActive, 
-                public bool $isDailyProrationEnabled, 
-                public int $maximumUnits = '', 
-                public int $minimumUnits = '', 
-                public int $productID, 
-        #[CastCarbon]
-                public Carbon $startDate, 
+        public ?int $contractID, 
+public ?bool $createChargesAsBillable, 
+public ?int $determineUnits, 
+public ?float $id, 
+public ?bool $includeItemsInChargeDescription, 
+public ?bool $isActive, 
+public ?bool $isDailyProrationEnabled, 
+public ?int $productID, 
+#[CastCarbon]
+        public ?Carbon $startDate, 
+public ?float $dailyProratedCost, 
+public ?float $dailyProratedPrice, 
+#[CastCarbon]
+        public ?Carbon $endDate, 
+public ?int $executionMethod, 
+public ?string $invoiceDescription, 
+public ?int $maximumUnits, 
+public ?int $minimumUnits, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

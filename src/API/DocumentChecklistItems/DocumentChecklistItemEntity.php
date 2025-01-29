@@ -23,11 +23,11 @@ class DocumentChecklistItemEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public int $documentID, 
-                public int $id, 
-                public bool $isImportant = false, 
-                public string $itemName, 
-                public int $position = '', 
+        public ?int $documentID, 
+public ?float $id, 
+public ?string $itemName, 
+public ?bool $isImportant, 
+public ?int $position, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

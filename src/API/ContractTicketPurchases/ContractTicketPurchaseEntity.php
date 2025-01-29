@@ -25,22 +25,22 @@ class ContractTicketPurchaseEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public int $contractID, 
-        #[CastCarbon]
-                public Carbon $datePurchased, 
-        #[CastCarbon]
-                public Carbon $endDate, 
-                public int $id, 
-                public string $invoiceNumber = '', 
-                public bool $isPaid = false, 
-                public string $paymentNumber = '', 
-                public int $paymentType = '', 
-                public float $perTicketRate, 
-        #[CastCarbon]
-                public Carbon $startDate, 
-                public int $status = '', 
-                public float $ticketsPurchased, 
-                public float $ticketsUsed = '', 
+        public ?float $contractID, 
+#[CastCarbon]
+        public ?Carbon $datePurchased, 
+#[CastCarbon]
+        public ?Carbon $endDate, 
+public ?float $id, 
+public ?float $perTicketRate, 
+#[CastCarbon]
+        public ?Carbon $startDate, 
+public ?float $ticketsPurchased, 
+public ?string $invoiceNumber, 
+public ?bool $isPaid, 
+public ?string $paymentNumber, 
+public ?int $paymentType, 
+public ?int $status, 
+public ?float $ticketsUsed, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

@@ -25,16 +25,16 @@ class DocumentNoteEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public int $createdByResourceID = '', 
-        #[CastCarbon]
-                public Carbon $createdDateTime = new Carbon(), 
-                public string $description, 
-                public int $documentID, 
-                public int $id, 
-                public int $lastModifiedByResourceID = '', 
-        #[CastCarbon]
-                public Carbon $lastModifiedDateTime = new Carbon(), 
-                public string $title, 
+        public ?string $description, 
+public ?int $documentID, 
+public ?float $id, 
+public ?string $title, 
+public ?int $createdByResourceID, 
+#[CastCarbon]
+        public ?Carbon $createdDateTime, 
+public ?int $lastModifiedByResourceID, 
+#[CastCarbon]
+        public ?Carbon $lastModifiedDateTime, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

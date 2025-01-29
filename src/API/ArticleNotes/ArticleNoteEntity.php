@@ -25,16 +25,16 @@ class ArticleNoteEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public int $articleID, 
-                public int $createdByResourceID = '', 
-        #[CastCarbon]
-                public Carbon $createdDateTime = new Carbon(), 
-                public string $description, 
-                public int $id, 
-                public int $lastModifiedByResourceID = '', 
-        #[CastCarbon]
-                public Carbon $lastModifiedDateTime = new Carbon(), 
-                public string $title, 
+        public ?int $articleID, 
+public ?string $description, 
+public ?float $id, 
+public ?string $title, 
+public ?int $createdByResourceID, 
+#[CastCarbon]
+        public ?Carbon $createdDateTime, 
+public ?int $lastModifiedByResourceID, 
+#[CastCarbon]
+        public ?Carbon $lastModifiedDateTime, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

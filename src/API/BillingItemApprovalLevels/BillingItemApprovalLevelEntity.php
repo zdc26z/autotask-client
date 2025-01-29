@@ -25,12 +25,12 @@ class BillingItemApprovalLevelEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-            #[CastCarbon]
-                public Carbon $approvalDateTime, 
-                public int $approvalLevel, 
-                public int $approvalResourceID, 
-                public int $id, 
-                public int $timeEntryID, 
+        #[CastCarbon]
+        public ?Carbon $approvalDateTime, 
+public ?int $approvalLevel, 
+public ?int $approvalResourceID, 
+public ?int $id, 
+public ?int $timeEntryID, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

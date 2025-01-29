@@ -25,24 +25,24 @@ class ArticleAttachmentEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public int $articleID = '', 
-        #[CastCarbon]
-                public Carbon $attachDate = new Carbon(), 
-                public int $attachedByContactID = '', 
-                public int $attachedByResourceID = '', 
-                public string $attachmentType, 
-                public string $contentType = '', 
-                public int $creatorType = '', 
-                public  $data = '', 
-                public int $fileSize = '', 
-                public string $fullPath, 
-                public int $id, 
-                public int $impersonatorCreatorResourceID = '', 
-                public int $opportunityID = '', 
-                public int $parentAttachmentID = '', 
-                public int $parentID = '', 
-                public int $publish, 
-                public string $title, 
+        public ?string $attachmentType, 
+public ?string $fullPath, 
+public ?float $id, 
+public ?int $publish, 
+public ?string $title, 
+public ?int $articleID, 
+#[CastCarbon]
+        public ?Carbon $attachDate, 
+public ?float $attachedByContactID, 
+public ?float $attachedByResourceID, 
+public ?string $contentType, 
+public ?int $creatorType, 
+public mixed $data, 
+public ?float $fileSize, 
+public ?int $impersonatorCreatorResourceID, 
+public ?float $opportunityID, 
+public ?int $parentAttachmentID, 
+public ?float $parentID, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

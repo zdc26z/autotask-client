@@ -23,11 +23,11 @@ class ShippingTypeEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public int $billingCodeID = '', 
-                public string $description = '', 
-                public int $id, 
-                public bool $isActive = false, 
-                public string $name = '', 
+        public ?float $id, 
+public ?int $billingCodeID, 
+public ?string $description, 
+public ?bool $isActive, 
+public ?string $name, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

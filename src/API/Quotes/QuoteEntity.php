@@ -25,53 +25,53 @@ class QuoteEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public int $approvalStatus = '', 
-                public int $approvalStatusChangedByResourceID = '', 
-        #[CastCarbon]
-                public Carbon $approvalStatusChangedDate = new Carbon(), 
-                public int $billToLocationID, 
-                public bool $calculateTaxSeparately = false, 
-                public string $comment = '', 
-                public int $companyID = '', 
-                public int $contactID = '', 
-        #[CastCarbon]
-                public Carbon $createDate = new Carbon(), 
-                public int $creatorResourceID = '', 
-                public string $description = '', 
-        #[CastCarbon]
-                public Carbon $effectiveDate, 
-        #[CastCarbon]
-                public Carbon $expirationDate, 
-                public int $extApprovalContactResponse = '', 
-        #[CastCarbon]
-                public Carbon $extApprovalResponseDate = new Carbon(), 
-                public string $extApprovalResponseSignature = '', 
-                public string $externalQuoteNumber = '', 
-                public int $groupByID = '', 
-                public int $id, 
-                public int $impersonatorCreatorResourceID = '', 
-                public bool $isActive = false, 
-        #[CastCarbon]
-                public Carbon $lastActivityDate = new Carbon(), 
-                public int $lastModifiedBy = '', 
-                public int $lastPublishedByResourceID = '', 
-        #[CastCarbon]
-                public Carbon $lastPublishedDateTime = new Carbon(), 
-                public string $name, 
-                public int $opportunityID, 
-                public int $paymentTerm = '', 
-                public int $paymentType = '', 
-                public bool $primaryQuote = false, 
-                public int $proposalProjectID = '', 
-                public string $purchaseOrderNumber = '', 
-                public int $quoteNumber = '', 
-                public int $quoteTemplateID = '', 
-                public int $shippingType = '', 
-                public int $shipToLocationID, 
-                public bool $showEachTaxInGroup = false, 
-                public bool $showTaxCategory = false, 
-                public int $soldToLocationID, 
-                public int $taxRegionID = '', 
+        public ?int $billToLocationID, 
+#[CastCarbon]
+        public ?Carbon $effectiveDate, 
+#[CastCarbon]
+        public ?Carbon $expirationDate, 
+public ?float $id, 
+public ?string $name, 
+public ?int $opportunityID, 
+public ?int $shipToLocationID, 
+public ?int $soldToLocationID, 
+public ?int $approvalStatus, 
+public ?int $approvalStatusChangedByResourceID, 
+#[CastCarbon]
+        public ?Carbon $approvalStatusChangedDate, 
+public ?bool $calculateTaxSeparately, 
+public ?string $comment, 
+public ?int $companyID, 
+public ?int $contactID, 
+#[CastCarbon]
+        public ?Carbon $createDate, 
+public ?int $creatorResourceID, 
+public ?string $description, 
+public ?int $extApprovalContactResponse, 
+#[CastCarbon]
+        public ?Carbon $extApprovalResponseDate, 
+public ?string $extApprovalResponseSignature, 
+public ?string $externalQuoteNumber, 
+public ?int $groupByID, 
+public ?int $impersonatorCreatorResourceID, 
+public ?bool $isActive, 
+#[CastCarbon]
+        public ?Carbon $lastActivityDate, 
+public ?int $lastModifiedBy, 
+public ?int $lastPublishedByResourceID, 
+#[CastCarbon]
+        public ?Carbon $lastPublishedDateTime, 
+public ?int $paymentTerm, 
+public ?int $paymentType, 
+public ?bool $primaryQuote, 
+public ?int $proposalProjectID, 
+public ?string $purchaseOrderNumber, 
+public ?int $quoteNumber, 
+public ?int $quoteTemplateID, 
+public ?int $shippingType, 
+public ?bool $showEachTaxInGroup, 
+public ?bool $showTaxCategory, 
+public ?int $taxRegionID, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

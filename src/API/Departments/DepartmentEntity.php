@@ -23,11 +23,11 @@ class DepartmentEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public string $description = '', 
-                public int $id, 
-                public string $name, 
-                public string $number = '', 
-                public int $primaryLocationID, 
+        public ?float $id, 
+public ?string $name, 
+public ?int $primaryLocationID, 
+public ?string $description, 
+public ?string $number, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

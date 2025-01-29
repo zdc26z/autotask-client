@@ -25,17 +25,17 @@ class ContractNoteEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public int $contractID, 
-        #[CastCarbon]
-                public Carbon $createDateTime = new Carbon(), 
-                public int $creatorResourceID = '', 
-                public string $description, 
-                public int $id, 
-                public int $impersonatorCreatorResourceID = '', 
-                public int $impersonatorUpdaterResourceID = '', 
-        #[CastCarbon]
-                public Carbon $lastActivityDate = new Carbon(), 
-                public string $title, 
+        public ?int $contractID, 
+public ?string $description, 
+public ?int $id, 
+public ?string $title, 
+#[CastCarbon]
+        public ?Carbon $createDateTime, 
+public ?int $creatorResourceID, 
+public ?int $impersonatorCreatorResourceID, 
+public ?int $impersonatorUpdaterResourceID, 
+#[CastCarbon]
+        public ?Carbon $lastActivityDate, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

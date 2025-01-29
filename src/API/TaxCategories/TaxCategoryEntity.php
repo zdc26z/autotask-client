@@ -23,10 +23,10 @@ class TaxCategoryEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public string $description = '', 
-                public int $id, 
-                public bool $isActive = false, 
-                public string $name, 
+        public ?int $id, 
+public ?string $name, 
+public ?string $description, 
+public ?bool $isActive, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

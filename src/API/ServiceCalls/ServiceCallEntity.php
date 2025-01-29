@@ -25,27 +25,27 @@ class ServiceCallEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public float $cancelationNoticeHours = '', 
-                public int $canceledByResourceID = '', 
-        #[CastCarbon]
-                public Carbon $canceledDateTime = new Carbon(), 
-                public int $companyID, 
-                public int $companyLocationID = '', 
-        #[CastCarbon]
-                public Carbon $createDateTime = new Carbon(), 
-                public int $creatorResourceID = '', 
-                public string $description = '', 
-                public float $duration = '', 
-        #[CastCarbon]
-                public Carbon $endDateTime, 
-                public int $id, 
-                public int $impersonatorCreatorResourceID = '', 
-                public  $isComplete = '', 
-        #[CastCarbon]
-                public Carbon $lastModifiedDateTime = new Carbon(), 
-        #[CastCarbon]
-                public Carbon $startDateTime, 
-                public int $status = '', 
+        public ?int $companyID, 
+#[CastCarbon]
+        public ?Carbon $endDateTime, 
+public ?float $id, 
+#[CastCarbon]
+        public ?Carbon $startDateTime, 
+public ?float $cancelationNoticeHours, 
+public ?int $canceledByResourceID, 
+#[CastCarbon]
+        public ?Carbon $canceledDateTime, 
+public ?int $companyLocationID, 
+#[CastCarbon]
+        public ?Carbon $createDateTime, 
+public ?int $creatorResourceID, 
+public ?string $description, 
+public ?float $duration, 
+public ?int $impersonatorCreatorResourceID, 
+public mixed $isComplete, 
+#[CastCarbon]
+        public ?Carbon $lastModifiedDateTime, 
+public ?int $status, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

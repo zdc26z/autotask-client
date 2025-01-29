@@ -23,12 +23,12 @@ class QuoteLocationEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public string $address1 = '', 
-                public string $address2 = '', 
-                public string $city = '', 
-                public int $id, 
-                public string $postalCode = '', 
-                public string $state = '', 
+        public ?float $id, 
+public ?string $address1, 
+public ?string $address2, 
+public ?string $city, 
+public ?string $postalCode, 
+public ?string $state, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

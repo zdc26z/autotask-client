@@ -25,43 +25,43 @@ class TimeEntryEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-            #[CastCarbon]
-                public Carbon $billingApprovalDateTime = new Carbon(), 
-                public int $billingApprovalLevelMostRecent = '', 
-                public int $billingApprovalResourceID = '', 
-                public int $billingCodeID = '', 
-                public int $contractID = '', 
-                public int $contractServiceBundleID = '', 
-                public int $contractServiceID = '', 
-        #[CastCarbon]
-                public Carbon $createDateTime = new Carbon(), 
-                public int $creatorUserID = '', 
-        #[CastCarbon]
-                public Carbon $dateWorked = new Carbon(), 
-        #[CastCarbon]
-                public Carbon $endDateTime = new Carbon(), 
-                public float $hoursToBill = '', 
-                public float $hoursWorked = '', 
-                public int $id, 
-                public int $impersonatorCreatorResourceID = '', 
-                public int $impersonatorUpdaterResourceID = '', 
-                public int $internalBillingCodeID = '', 
-                public string $internalNotes = '', 
-                public bool $isInternalNotesVisibleToComanaged = false, 
-                public bool $isNonBillable = false, 
-        #[CastCarbon]
-                public Carbon $lastModifiedDateTime = new Carbon(), 
-                public int $lastModifiedUserID = '', 
-                public float $offsetHours = '', 
-                public int $resourceID, 
-                public int $roleID = '', 
-                public bool $showOnInvoice = false, 
-        #[CastCarbon]
-                public Carbon $startDateTime = new Carbon(), 
-                public string $summaryNotes = '', 
-                public int $taskID = '', 
-                public int $ticketID = '', 
-                public int $timeEntryType = '', 
+        public ?float $id, 
+public ?int $resourceID, 
+#[CastCarbon]
+        public ?Carbon $billingApprovalDateTime, 
+public ?int $billingApprovalLevelMostRecent, 
+public ?int $billingApprovalResourceID, 
+public ?int $billingCodeID, 
+public ?int $contractID, 
+public ?float $contractServiceBundleID, 
+public ?float $contractServiceID, 
+#[CastCarbon]
+        public ?Carbon $createDateTime, 
+public ?int $creatorUserID, 
+#[CastCarbon]
+        public ?Carbon $dateWorked, 
+#[CastCarbon]
+        public ?Carbon $endDateTime, 
+public ?float $hoursToBill, 
+public ?float $hoursWorked, 
+public ?int $impersonatorCreatorResourceID, 
+public ?int $impersonatorUpdaterResourceID, 
+public ?int $internalBillingCodeID, 
+public ?string $internalNotes, 
+public ?bool $isInternalNotesVisibleToComanaged, 
+public ?bool $isNonBillable, 
+#[CastCarbon]
+        public ?Carbon $lastModifiedDateTime, 
+public ?int $lastModifiedUserID, 
+public ?float $offsetHours, 
+public ?int $roleID, 
+public ?bool $showOnInvoice, 
+#[CastCarbon]
+        public ?Carbon $startDateTime, 
+public ?string $summaryNotes, 
+public ?int $taskID, 
+public ?int $ticketID, 
+public ?int $timeEntryType, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

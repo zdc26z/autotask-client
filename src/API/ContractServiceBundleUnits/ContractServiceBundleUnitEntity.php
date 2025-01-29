@@ -25,21 +25,21 @@ class ContractServiceBundleUnitEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-            #[CastCarbon]
-                public Carbon $approveAndPostDate = new Carbon(), 
-                public int $contractID, 
-                public int $contractServiceBundleID = '', 
-                public float $cost = '', 
-        #[CastCarbon]
-                public Carbon $endDate, 
-                public int $id, 
-                public float $internalCurrencyPrice = '', 
-                public int $organizationalLevelAssociationID = '', 
-                public float $price = '', 
-                public int $serviceBundleID, 
-        #[CastCarbon]
-                public Carbon $startDate, 
-                public int $units, 
+        public ?int $contractID, 
+#[CastCarbon]
+        public ?Carbon $endDate, 
+public ?int $id, 
+public ?int $serviceBundleID, 
+#[CastCarbon]
+        public ?Carbon $startDate, 
+public ?int $units, 
+#[CastCarbon]
+        public ?Carbon $approveAndPostDate, 
+public ?int $contractServiceBundleID, 
+public ?float $cost, 
+public ?float $internalCurrencyPrice, 
+public ?int $organizationalLevelAssociationID, 
+public ?float $price, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

@@ -23,10 +23,10 @@ class TicketSecondaryResourceEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public int $id, 
-                public int $resourceID, 
-                public int $roleID, 
-                public int $ticketID, 
+        public ?float $id, 
+public ?float $resourceID, 
+public ?float $roleID, 
+public ?float $ticketID, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

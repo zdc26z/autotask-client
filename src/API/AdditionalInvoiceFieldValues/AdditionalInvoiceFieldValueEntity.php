@@ -23,10 +23,10 @@ class AdditionalInvoiceFieldValueEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public int $additionalInvoiceFieldID, 
-                public string $fieldValue, 
-                public int $id, 
-                public int $invoiceBatchID, 
+        public ?float $additionalInvoiceFieldID, 
+public ?string $fieldValue, 
+public ?float $id, 
+public ?float $invoiceBatchID, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

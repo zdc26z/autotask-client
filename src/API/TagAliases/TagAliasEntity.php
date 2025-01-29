@@ -23,9 +23,9 @@ class TagAliasEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public string $alias, 
-                public int $id, 
-                public int $tagID, 
+        public ?string $alias, 
+public ?float $id, 
+public ?int $tagID, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

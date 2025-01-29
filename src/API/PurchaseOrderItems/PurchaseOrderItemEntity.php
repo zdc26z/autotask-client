@@ -25,21 +25,21 @@ class PurchaseOrderItemEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public int $chargeID = '', 
-                public int $contractID = '', 
-        #[CastCarbon]
-                public Carbon $estimatedArrivalDate = new Carbon(), 
-                public int $id, 
-                public float $internalCurrencyUnitCost = '', 
-                public int $inventoryLocationID, 
-                public string $memo = '', 
-                public int $orderID, 
-                public int $productID = '', 
-                public int $projectID = '', 
-                public int $quantity, 
-                public int $salesOrderID = '', 
-                public int $ticketID = '', 
-                public float $unitCost, 
+        public ?float $id, 
+public ?int $inventoryLocationID, 
+public ?int $orderID, 
+public ?int $quantity, 
+public ?float $unitCost, 
+public ?int $chargeID, 
+public ?float $contractID, 
+#[CastCarbon]
+        public ?Carbon $estimatedArrivalDate, 
+public ?float $internalCurrencyUnitCost, 
+public ?string $memo, 
+public ?int $productID, 
+public ?float $projectID, 
+public ?float $salesOrderID, 
+public ?float $ticketID, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

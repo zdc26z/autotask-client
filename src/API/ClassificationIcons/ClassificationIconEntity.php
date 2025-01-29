@@ -23,12 +23,12 @@ class ClassificationIconEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public string $description = '', 
-                public int $id, 
-                public bool $isActive, 
-                public bool $isSystem, 
-                public string $name, 
-                public string $relativeUrl, 
+        public ?float $id, 
+public ?bool $isActive, 
+public ?bool $isSystem, 
+public ?string $name, 
+public ?string $relativeUrl, 
+public ?string $description, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

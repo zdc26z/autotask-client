@@ -25,22 +25,22 @@ class ContractServiceUnitEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-            #[CastCarbon]
-                public Carbon $approveAndPostDate = new Carbon(), 
-                public int $contractID, 
-                public int $contractServiceID = '', 
-                public float $cost = '', 
-        #[CastCarbon]
-                public Carbon $endDate, 
-                public int $id, 
-                public float $internalCurrencyPrice = '', 
-                public int $organizationalLevelAssociationID = '', 
-                public float $price = '', 
-                public int $serviceID, 
-        #[CastCarbon]
-                public Carbon $startDate, 
-                public int $units, 
-                public int $vendorCompanyID = '', 
+        public ?int $contractID, 
+#[CastCarbon]
+        public ?Carbon $endDate, 
+public ?float $id, 
+public ?int $serviceID, 
+#[CastCarbon]
+        public ?Carbon $startDate, 
+public ?int $units, 
+#[CastCarbon]
+        public ?Carbon $approveAndPostDate, 
+public ?int $contractServiceID, 
+public ?float $cost, 
+public ?float $internalCurrencyPrice, 
+public ?int $organizationalLevelAssociationID, 
+public ?float $price, 
+public ?int $vendorCompanyID, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

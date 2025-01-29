@@ -23,11 +23,11 @@ class SkillEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public int $categoryID, 
-                public string $description = '', 
-                public int $id, 
-                public bool $isActive, 
-                public string $name, 
+        public ?float $categoryID, 
+public ?float $id, 
+public ?bool $isActive, 
+public ?string $name, 
+public ?string $description, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

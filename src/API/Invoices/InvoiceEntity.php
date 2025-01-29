@@ -25,37 +25,37 @@ class InvoiceEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public int $batchID = '', 
-                public string $comments = '', 
-                public int $companyID = '', 
-        #[CastCarbon]
-                public Carbon $createDateTime = new Carbon(), 
-                public int $creatorResourceID = '', 
-        #[CastCarbon]
-                public Carbon $dueDate = new Carbon(), 
-        #[CastCarbon]
-                public Carbon $fromDate = new Carbon(), 
-                public int $id, 
-        #[CastCarbon]
-                public Carbon $invoiceDateTime, 
-                public int $invoiceEditorTemplateID = '', 
-                public string $invoiceNumber = '', 
-                public float $invoiceTotal = '', 
-                public bool $isVoided = false, 
-                public string $orderNumber = '', 
-        #[CastCarbon]
-                public Carbon $paidDate = new Carbon(), 
-                public int $paymentTerm = '', 
-                public int $taxGroup = '', 
-                public string $taxRegionName = '', 
-        #[CastCarbon]
-                public Carbon $toDate = new Carbon(), 
-                public float $totalTaxValue = '', 
-                public int $voidedByResourceID = '', 
-        #[CastCarbon]
-                public Carbon $voidedDate = new Carbon(), 
-        #[CastCarbon]
-                public Carbon $webServiceDate = new Carbon(), 
+        public ?float $id, 
+#[CastCarbon]
+        public ?Carbon $invoiceDateTime, 
+public ?int $batchID, 
+public ?string $comments, 
+public ?int $companyID, 
+#[CastCarbon]
+        public ?Carbon $createDateTime, 
+public ?int $creatorResourceID, 
+#[CastCarbon]
+        public ?Carbon $dueDate, 
+#[CastCarbon]
+        public ?Carbon $fromDate, 
+public ?int $invoiceEditorTemplateID, 
+public ?string $invoiceNumber, 
+public ?float $invoiceTotal, 
+public ?bool $isVoided, 
+public ?string $orderNumber, 
+#[CastCarbon]
+        public ?Carbon $paidDate, 
+public ?int $paymentTerm, 
+public ?int $taxGroup, 
+public ?string $taxRegionName, 
+#[CastCarbon]
+        public ?Carbon $toDate, 
+public ?float $totalTaxValue, 
+public ?int $voidedByResourceID, 
+#[CastCarbon]
+        public ?Carbon $voidedDate, 
+#[CastCarbon]
+        public ?Carbon $webServiceDate, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

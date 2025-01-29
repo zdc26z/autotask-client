@@ -23,10 +23,10 @@ class DocumentCategoryEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public string $description = '', 
-                public int $id, 
-                public string $name, 
-                public int $parentCategoryID, 
+        public ?float $id, 
+public ?string $name, 
+public ?int $parentCategoryID, 
+public ?string $description, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

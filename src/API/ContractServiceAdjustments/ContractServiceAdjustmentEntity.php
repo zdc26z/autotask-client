@@ -25,17 +25,17 @@ class ContractServiceAdjustmentEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public float $adjustedUnitCost = '', 
-                public float $adjustedUnitPrice = '', 
-                public bool $allowRepeatService = false, 
-                public int $contractID = '', 
-                public int $contractServiceID = '', 
         #[CastCarbon]
-                public Carbon $effectiveDate, 
-                public int $id, 
-                public int $quoteItemID = '', 
-                public int $serviceID = '', 
-                public int $unitChange = '', 
+        public ?Carbon $effectiveDate, 
+public ?float $id, 
+public ?float $adjustedUnitCost, 
+public ?float $adjustedUnitPrice, 
+public ?bool $allowRepeatService, 
+public ?int $contractID, 
+public ?int $contractServiceID, 
+public ?int $quoteItemID, 
+public ?int $serviceID, 
+public ?int $unitChange, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

@@ -23,11 +23,11 @@ class ConfigurationItemWebhookUdfFieldEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public int $id, 
-                public bool $isDisplayAlwaysField, 
-                public bool $isSubscribedField, 
-                public int $udfFieldID, 
-                public int $webhookID, 
+        public ?float $id, 
+public ?bool $isDisplayAlwaysField, 
+public ?bool $isSubscribedField, 
+public ?int $udfFieldID, 
+public ?int $webhookID, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

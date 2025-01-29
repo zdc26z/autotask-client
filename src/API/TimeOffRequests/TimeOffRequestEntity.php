@@ -25,30 +25,30 @@ class TimeOffRequestEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-            #[CastCarbon]
-                public Carbon $approvedDateTime = new Carbon(), 
-                public int $approveRejectResourceID = '', 
-        #[CastCarbon]
-                public Carbon $createDateTime = new Carbon(), 
-                public int $createdByResourceID = '', 
-        #[CastCarbon]
-                public Carbon $endTime = new Carbon(), 
-                public float $hours, 
-                public int $id, 
-                public int $impersonatorApproveRejectResourceID = '', 
-                public int $lastApprovedLevel = '', 
-                public int $lastModifiedByResourceID = '', 
-        #[CastCarbon]
-                public Carbon $lastModifiedDateTime = new Carbon(), 
-                public string $reason = '', 
-                public string $rejectReason = '', 
-        #[CastCarbon]
-                public Carbon $requestDate, 
-                public int $resourceID, 
-        #[CastCarbon]
-                public Carbon $startTime = new Carbon(), 
-                public int $status, 
-                public int $timeOffRequestType, 
+        public ?float $hours, 
+public ?float $id, 
+#[CastCarbon]
+        public ?Carbon $requestDate, 
+public ?int $resourceID, 
+public ?int $status, 
+public ?int $timeOffRequestType, 
+#[CastCarbon]
+        public ?Carbon $approvedDateTime, 
+public ?int $approveRejectResourceID, 
+#[CastCarbon]
+        public ?Carbon $createDateTime, 
+public ?int $createdByResourceID, 
+#[CastCarbon]
+        public ?Carbon $endTime, 
+public ?int $impersonatorApproveRejectResourceID, 
+public ?int $lastApprovedLevel, 
+public ?int $lastModifiedByResourceID, 
+#[CastCarbon]
+        public ?Carbon $lastModifiedDateTime, 
+public ?string $reason, 
+public ?string $rejectReason, 
+#[CastCarbon]
+        public ?Carbon $startTime, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

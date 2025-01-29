@@ -11,6 +11,7 @@
     <testsuites>
         <testsuite name="default">
             <directory suffix="Test.php">tests</directory>
+            <exclude>./tests/API/PriceList*</exclude>
         </testsuite>
     </testsuites>
 

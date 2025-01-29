@@ -23,9 +23,9 @@ class TicketAdditionalContactEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public int $contactID, 
-                public int $id, 
-                public int $ticketID, 
+        public ?int $contactID, 
+public ?float $id, 
+public ?int $ticketID, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

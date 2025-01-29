@@ -23,16 +23,16 @@ class CountryEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public int $addressFormatID, 
-                public string $countryCode = '', 
-                public string $displayName, 
-                public int $id, 
-                public int $invoiceTemplateID = '', 
-                public bool $isActive = false, 
-                public bool $isDefaultCountry = false, 
-                public string $name = '', 
-                public int $purchaseOrderTemplateID = '', 
-                public int $quoteTemplateID = '', 
+        public ?float $addressFormatID, 
+public ?string $displayName, 
+public ?float $id, 
+public ?string $countryCode, 
+public ?int $invoiceTemplateID, 
+public ?bool $isActive, 
+public ?bool $isDefaultCountry, 
+public ?string $name, 
+public ?int $purchaseOrderTemplateID, 
+public ?int $quoteTemplateID, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

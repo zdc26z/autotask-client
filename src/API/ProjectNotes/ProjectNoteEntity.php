@@ -25,21 +25,21 @@ class ProjectNoteEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-            #[CastCarbon]
-                public Carbon $createDateTime = new Carbon(), 
-                public int $createdByContactID = '', 
-                public int $creatorResourceID = '', 
-                public string $description, 
-                public int $id, 
-                public int $impersonatorCreatorResourceID = '', 
-                public int $impersonatorUpdaterResourceID = '', 
-                public bool $isAnnouncement, 
-        #[CastCarbon]
-                public Carbon $lastActivityDate = new Carbon(), 
-                public int $noteType, 
-                public int $projectID, 
-                public int $publish, 
-                public string $title, 
+        public ?string $description, 
+public ?float $id, 
+public ?bool $isAnnouncement, 
+public ?int $noteType, 
+public ?int $projectID, 
+public ?int $publish, 
+public ?string $title, 
+#[CastCarbon]
+        public ?Carbon $createDateTime, 
+public ?int $createdByContactID, 
+public ?int $creatorResourceID, 
+public ?int $impersonatorCreatorResourceID, 
+public ?int $impersonatorUpdaterResourceID, 
+#[CastCarbon]
+        public ?Carbon $lastActivityDate, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

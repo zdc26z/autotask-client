@@ -25,28 +25,28 @@ class ExpenseReportEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public float $amountDue = '', 
-        #[CastCarbon]
-                public Carbon $approvedDate = new Carbon(), 
-                public int $approverID = '', 
-                public string $departmentNumber = '', 
-                public int $id, 
-                public float $internalCurrencyCashAdvanceAmount = '', 
-                public float $internalCurrencyExpenseTotal = '', 
-                public string $name, 
-                public int $organizationalLevelAssociationID = '', 
-                public string $quickBooksReferenceNumber = '', 
-                public float $reimbursementCurrencyAmountDue = '', 
-                public float $reimbursementCurrencyCashAdvanceAmount = '', 
-                public int $reimbursementCurrencyID = '', 
-                public string $rejectionReason = '', 
-                public int $status = '', 
-                public bool $submit = false, 
-        #[CastCarbon]
-                public Carbon $submitDate = new Carbon(), 
-                public int $submitterID, 
-        #[CastCarbon]
-                public Carbon $weekEnding, 
+        public ?float $id, 
+public ?string $name, 
+public ?int $submitterID, 
+#[CastCarbon]
+        public ?Carbon $weekEnding, 
+public ?float $amountDue, 
+#[CastCarbon]
+        public ?Carbon $approvedDate, 
+public ?int $approverID, 
+public ?string $departmentNumber, 
+public ?float $internalCurrencyCashAdvanceAmount, 
+public ?float $internalCurrencyExpenseTotal, 
+public ?int $organizationalLevelAssociationID, 
+public ?string $quickBooksReferenceNumber, 
+public ?float $reimbursementCurrencyAmountDue, 
+public ?float $reimbursementCurrencyCashAdvanceAmount, 
+public ?int $reimbursementCurrencyID, 
+public ?string $rejectionReason, 
+public ?int $status, 
+public ?bool $submit, 
+#[CastCarbon]
+        public ?Carbon $submitDate, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

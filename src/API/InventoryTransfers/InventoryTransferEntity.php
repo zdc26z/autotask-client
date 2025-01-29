@@ -25,17 +25,17 @@ class InventoryTransferEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                    public int $fromLocationID, 
-                public int $id, 
-                public string $notes = '', 
-                public int $productID, 
-                public int $quantityTransferred, 
-                public string $serialNumber = '', 
-                public int $toLocationID, 
-                public int $transferByResourceID = '', 
-        #[CastCarbon]
-                public Carbon $transferDate = new Carbon(), 
-                public string $updateNote = '', 
+        public ?float $fromLocationID, 
+public ?float $id, 
+public ?float $productID, 
+public ?int $quantityTransferred, 
+public ?float $toLocationID, 
+public ?string $notes, 
+public ?string $serialNumber, 
+public ?int $transferByResourceID, 
+#[CastCarbon]
+        public ?Carbon $transferDate, 
+public ?string $updateNote, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

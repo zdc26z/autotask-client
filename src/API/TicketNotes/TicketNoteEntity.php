@@ -25,20 +25,20 @@ class TicketNoteEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-            #[CastCarbon]
-                public Carbon $createDateTime = new Carbon(), 
-                public int $createdByContactID = '', 
-                public int $creatorResourceID = '', 
-                public string $description, 
-                public int $id, 
-                public int $impersonatorCreatorResourceID = '', 
-                public int $impersonatorUpdaterResourceID = '', 
-        #[CastCarbon]
-                public Carbon $lastActivityDate = new Carbon(), 
-                public int $noteType, 
-                public int $publish, 
-                public int $ticketID, 
-                public string $title = '', 
+        public ?string $description, 
+public ?float $id, 
+public ?int $noteType, 
+public ?int $publish, 
+public ?int $ticketID, 
+#[CastCarbon]
+        public ?Carbon $createDateTime, 
+public ?int $createdByContactID, 
+public ?int $creatorResourceID, 
+public ?int $impersonatorCreatorResourceID, 
+public ?int $impersonatorUpdaterResourceID, 
+#[CastCarbon]
+        public ?Carbon $lastActivityDate, 
+public ?string $title, 
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
