@@ -36,8 +36,8 @@ class ClientMock extends Client
                         $singular = substr($keyName, 0, -2);
                         break;
                     default:
-                        $singular = substr($keyName, 0, -1);
-                        break;
+                    $singular = substr($keyName, 0, -1);
+                    break;
                 }
             } else if ("s" === $keyName[-1]) {
                 $singular = substr($keyName, 0, -1);
@@ -48,7 +48,7 @@ class ClientMock extends Client
             $serviceName = $singular . 'Service';
             $qbName = $singular . 'QueryBuilder';
             $collectionName = $singular . 'Collection';
-            
+
             $namespace = 'Anteris\Autotask\API\\' . $keyName . '\\';
             $serviceClass = $namespace . $serviceName;
             $qbClass = $namespace . $qbName;
@@ -115,7 +115,7 @@ class ClientMock extends Client
                                 $result[$property->name] = new Carbon($this->faker->dateTime());
                                 break;
                             default:
-                                var_dump($type);
+                            var_dump($type);
                             case 'mixed':
                             case 'string':
                                 $result[$property->name] = $this->faker->word();
