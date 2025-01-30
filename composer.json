@@ -33,7 +33,7 @@
         "fakerphp/faker": "^1.24",
         "guzzlehttp/guzzle": "^6.3|^7.0",
         "illuminate/collections": "^11.40",
-        "nesbot/carbon": "^2.0",
+        "nesbot/carbon": "^3.8",
         "spatie/laravel-data": "^4.11"
     },
     "require-dev": {
