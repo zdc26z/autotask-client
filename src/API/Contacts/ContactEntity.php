@@ -3,7 +3,7 @@
 namespace Anteris\Autotask\API\Contacts;
 
 use Anteris\Autotask\API\Entity;
-use Anteris\Autotask\Generator\Helpers\CastCarbon;
+use Anteris\Autotask\Support\CastCarbon;
 use Anteris\Autotask\Support\UserDefinedFields\UserDefinedFieldEntity;
 use Carbon\Carbon;
 use EventSauce\ObjectHydrator\DefinitionProvider;
