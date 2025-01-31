@@ -30,6 +30,7 @@
     "require": {
         "php": "^7.4 | ^8.0 | ^8.1",
         "ext-json": "*",
+        "eventsauce/object-hydrator": "^1.6",
         "fakerphp/faker": "^1.24",
         "guzzlehttp/guzzle": "^6.3|^7.0",
         "illuminate/collections": "^11.40",
