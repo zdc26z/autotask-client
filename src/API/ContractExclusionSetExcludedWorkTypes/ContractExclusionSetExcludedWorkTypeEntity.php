@@ -23,9 +23,9 @@ class ContractExclusionSetExcludedWorkTypeEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?int $contractExclusionSetID, 
-public ?int $excludedWorkTypeID, 
-public ?float $id, 
+                public ?int $contractExclusionSetID = null,
+        public ?int $excludedWorkTypeID = null,
+        public ?float $id = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

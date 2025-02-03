@@ -23,11 +23,11 @@ class ProductTierEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?float $id, 
-public ?int $productID, 
-public ?float $unitCost, 
-public ?float $unitPrice, 
-public ?float $upToUnitCount, 
+                public ?float $id = null,
+        public ?int $productID = null,
+        public ?float $unitCost = null,
+        public ?float $unitPrice = null,
+        public ?float $upToUnitCount = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

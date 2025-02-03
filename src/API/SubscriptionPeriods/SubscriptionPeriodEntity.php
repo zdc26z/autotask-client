@@ -25,15 +25,15 @@ class SubscriptionPeriodEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?float $id, 
-public ?float $periodCost, 
-#[CastCarbon]
-        public ?Carbon $periodDate, 
-public ?float $periodPrice, 
-public ?int $subscriptionID, 
-#[CastCarbon]
-        public ?Carbon $postedDate, 
-public ?string $purchaseOrderNumber, 
+                public ?float $id = null,
+        public ?float $periodCost = null,
+        #[CastCarbon]
+        public ?Carbon $periodDate = null,
+        public ?float $periodPrice = null,
+        public ?int $subscriptionID = null,
+        #[CastCarbon]
+        public ?Carbon $postedDate = null,
+        public ?string $purchaseOrderNumber = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

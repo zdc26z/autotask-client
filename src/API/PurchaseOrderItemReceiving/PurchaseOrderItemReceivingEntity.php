@@ -25,16 +25,16 @@ class PurchaseOrderItemReceivingEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?float $id, 
-public ?float $purchaseOrderItemID, 
-public ?int $quantityNowReceiving, 
-public ?int $quantityBackOrdered, 
-public ?int $quantityPreviouslyReceived, 
-#[CastCarbon]
-        public ?Carbon $receiveDate, 
-public ?int $receivedByResourceID, 
-public ?string $serialNumber, 
-public ?string $vendorInvoiceNumber, 
+                public ?float $id = null,
+        public ?float $purchaseOrderItemID = null,
+        public ?int $quantityNowReceiving = null,
+        public ?int $quantityBackOrdered = null,
+        public ?int $quantityPreviouslyReceived = null,
+        #[CastCarbon]
+        public ?Carbon $receiveDate = null,
+        public ?int $receivedByResourceID = null,
+        public ?string $serialNumber = null,
+        public ?string $vendorInvoiceNumber = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

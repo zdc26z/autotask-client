@@ -25,30 +25,30 @@ class TimeOffRequestEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?float $hours, 
-public ?float $id, 
-#[CastCarbon]
-        public ?Carbon $requestDate, 
-public ?int $resourceID, 
-public ?int $status, 
-public ?int $timeOffRequestType, 
-#[CastCarbon]
-        public ?Carbon $approvedDateTime, 
-public ?int $approveRejectResourceID, 
-#[CastCarbon]
-        public ?Carbon $createDateTime, 
-public ?int $createdByResourceID, 
-#[CastCarbon]
-        public ?Carbon $endTime, 
-public ?int $impersonatorApproveRejectResourceID, 
-public ?int $lastApprovedLevel, 
-public ?int $lastModifiedByResourceID, 
-#[CastCarbon]
-        public ?Carbon $lastModifiedDateTime, 
-public ?string $reason, 
-public ?string $rejectReason, 
-#[CastCarbon]
-        public ?Carbon $startTime, 
+                public ?float $hours = null,
+        public ?float $id = null,
+        #[CastCarbon]
+        public ?Carbon $requestDate = null,
+        public ?int $resourceID = null,
+        public ?int $status = null,
+        public ?int $timeOffRequestType = null,
+        #[CastCarbon]
+        public ?Carbon $approvedDateTime = null,
+        public ?int $approveRejectResourceID = null,
+        #[CastCarbon]
+        public ?Carbon $createDateTime = null,
+        public ?int $createdByResourceID = null,
+        #[CastCarbon]
+        public ?Carbon $endTime = null,
+        public ?int $impersonatorApproveRejectResourceID = null,
+        public ?int $lastApprovedLevel = null,
+        public ?int $lastModifiedByResourceID = null,
+        #[CastCarbon]
+        public ?Carbon $lastModifiedDateTime = null,
+        public ?string $reason = null,
+        public ?string $rejectReason = null,
+        #[CastCarbon]
+        public ?Carbon $startTime = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

@@ -23,15 +23,15 @@ class ClientPortalUserEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?int $contactID, 
-public ?int $dateFormat, 
-public ?float $id, 
-public ?bool $isClientPortalActive, 
-public ?int $numberFormat, 
-public ?int $securityLevel, 
-public ?int $timeFormat, 
-public ?string $userName, 
-public ?string $password, 
+                public ?int $contactID = null,
+        public ?int $dateFormat = null,
+        public ?float $id = null,
+        public ?bool $isClientPortalActive = null,
+        public ?int $numberFormat = null,
+        public ?int $securityLevel = null,
+        public ?int $timeFormat = null,
+        public ?string $userName = null,
+        public ?string $password = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

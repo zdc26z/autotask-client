@@ -23,12 +23,12 @@ class TaxEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?int $id, 
-public ?int $taxCategoryID, 
-public ?string $taxName, 
-public ?float $taxRate, 
-public ?int $taxRegionID, 
-public ?bool $isCompounded, 
+                public ?int $id = null,
+        public ?int $taxCategoryID = null,
+        public ?string $taxName = null,
+        public ?float $taxRate = null,
+        public ?int $taxRegionID = null,
+        public ?bool $isCompounded = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

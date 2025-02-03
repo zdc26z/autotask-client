@@ -23,9 +23,9 @@ class ServiceCallTaskEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?float $id, 
-public ?int $serviceCallID, 
-public ?int $taskID, 
+                public ?float $id = null,
+        public ?int $serviceCallID = null,
+        public ?int $taskID = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

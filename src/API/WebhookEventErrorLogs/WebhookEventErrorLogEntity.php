@@ -25,14 +25,14 @@ class WebhookEventErrorLogEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?float $id, 
-public ?int $accountWebhookID, 
-public ?int $contactWebhookID, 
-#[CastCarbon]
-        public ?Carbon $createDateTime, 
-public ?string $errorMessage, 
-public ?string $payload, 
-public ?int $sequenceNumber, 
+                public ?float $id = null,
+        public ?int $accountWebhookID = null,
+        public ?int $contactWebhookID = null,
+        #[CastCarbon]
+        public ?Carbon $createDateTime = null,
+        public ?string $errorMessage = null,
+        public ?string $payload = null,
+        public ?int $sequenceNumber = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

@@ -25,21 +25,21 @@ class ContractMilestoneEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?float $amount, 
-public ?int $contractID, 
-#[CastCarbon]
-        public ?Carbon $dateDue, 
-public ?float $id, 
-public ?bool $isInitialPayment, 
-public ?int $status, 
-public ?string $title, 
-public ?int $billingCodeID, 
-#[CastCarbon]
-        public ?Carbon $createDate, 
-public ?int $creatorResourceID, 
-public ?string $description, 
-public ?float $internalCurrencyAmount, 
-public ?int $organizationalLevelAssociationID, 
+                public ?float $amount = null,
+        public ?int $contractID = null,
+        #[CastCarbon]
+        public ?Carbon $dateDue = null,
+        public ?float $id = null,
+        public ?bool $isInitialPayment = null,
+        public ?int $status = null,
+        public ?string $title = null,
+        public ?int $billingCodeID = null,
+        #[CastCarbon]
+        public ?Carbon $createDate = null,
+        public ?int $creatorResourceID = null,
+        public ?string $description = null,
+        public ?float $internalCurrencyAmount = null,
+        public ?int $organizationalLevelAssociationID = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

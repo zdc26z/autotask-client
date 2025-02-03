@@ -23,10 +23,10 @@ class TaskPredecessorEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?float $id, 
-public ?int $predecessorTaskID, 
-public ?int $successorTaskID, 
-public ?int $lagDays, 
+                public ?float $id = null,
+        public ?int $predecessorTaskID = null,
+        public ?int $successorTaskID = null,
+        public ?int $lagDays = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

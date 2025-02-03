@@ -23,9 +23,9 @@ class TicketAdditionalConfigurationItemEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?int $configurationItemID, 
-public ?float $id, 
-public ?int $ticketID, 
+                public ?int $configurationItemID = null,
+        public ?float $id = null,
+        public ?int $ticketID = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

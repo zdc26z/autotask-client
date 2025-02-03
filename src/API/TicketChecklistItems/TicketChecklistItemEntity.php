@@ -25,16 +25,16 @@ class TicketChecklistItemEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?float $id, 
-public ?string $itemName, 
-public ?int $ticketID, 
-public ?int $completedByResourceID, 
-#[CastCarbon]
-        public ?Carbon $completedDateTime, 
-public ?bool $isCompleted, 
-public ?bool $isImportant, 
-public ?int $knowledgebaseArticleID, 
-public ?int $position, 
+                public ?float $id = null,
+        public ?string $itemName = null,
+        public ?int $ticketID = null,
+        public ?int $completedByResourceID = null,
+        #[CastCarbon]
+        public ?Carbon $completedDateTime = null,
+        public ?bool $isCompleted = null,
+        public ?bool $isImportant = null,
+        public ?int $knowledgebaseArticleID = null,
+        public ?int $position = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

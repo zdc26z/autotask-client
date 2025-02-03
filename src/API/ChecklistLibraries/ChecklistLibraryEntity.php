@@ -23,11 +23,11 @@ class ChecklistLibraryEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?int $entityType, 
-public ?float $id, 
-public ?bool $isActive, 
-public ?string $name, 
-public ?string $description, 
+                public ?int $entityType = null,
+        public ?float $id = null,
+        public ?bool $isActive = null,
+        public ?string $name = null,
+        public ?string $description = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

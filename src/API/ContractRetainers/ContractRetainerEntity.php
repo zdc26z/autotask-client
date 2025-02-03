@@ -25,23 +25,23 @@ class ContractRetainerEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?float $amount, 
-public ?int $contractID, 
-#[CastCarbon]
-        public ?Carbon $datePurchased, 
-#[CastCarbon]
-        public ?Carbon $endDate, 
-public ?int $id, 
-#[CastCarbon]
-        public ?Carbon $startDate, 
-public ?int $status, 
-public ?float $amountApproved, 
-public ?float $internalCurrencyAmount, 
-public ?float $internalCurrencyAmountApproved, 
-public ?string $invoiceNumber, 
-public ?bool $isPaid, 
-public ?int $paymentID, 
-public ?string $paymentNumber, 
+                public ?float $amount = null,
+        public ?int $contractID = null,
+        #[CastCarbon]
+        public ?Carbon $datePurchased = null,
+        #[CastCarbon]
+        public ?Carbon $endDate = null,
+        public ?int $id = null,
+        #[CastCarbon]
+        public ?Carbon $startDate = null,
+        public ?int $status = null,
+        public ?float $amountApproved = null,
+        public ?float $internalCurrencyAmount = null,
+        public ?float $internalCurrencyAmountApproved = null,
+        public ?string $invoiceNumber = null,
+        public ?bool $isPaid = null,
+        public ?int $paymentID = null,
+        public ?string $paymentNumber = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

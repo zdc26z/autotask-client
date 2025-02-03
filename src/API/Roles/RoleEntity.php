@@ -23,16 +23,16 @@ class RoleEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?float $hourlyFactor, 
-public ?float $hourlyRate, 
-public ?float $id, 
-public ?bool $isActive, 
-public ?string $name, 
-public ?string $description, 
-public ?bool $isExcludedFromNewContracts, 
-public ?bool $isSystemRole, 
-public ?int $quoteItemDefaultTaxCategoryId, 
-public ?int $roleType, 
+                public ?float $hourlyFactor = null,
+        public ?float $hourlyRate = null,
+        public ?float $id = null,
+        public ?bool $isActive = null,
+        public ?string $name = null,
+        public ?string $description = null,
+        public ?bool $isExcludedFromNewContracts = null,
+        public ?bool $isSystemRole = null,
+        public ?int $quoteItemDefaultTaxCategoryId = null,
+        public ?int $roleType = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

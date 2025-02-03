@@ -23,9 +23,9 @@ class ContractExclusionBillingCodeEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?float $billingCodeID, 
-public ?float $contractID, 
-public ?float $id, 
+                public ?float $billingCodeID = null,
+        public ?float $contractID = null,
+        public ?float $id = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

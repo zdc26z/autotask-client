@@ -23,13 +23,13 @@ class ProductVendorEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?float $id, 
-public ?bool $isActive, 
-public ?bool $isDefault, 
-public ?int $productID, 
-public ?int $vendorID, 
-public ?float $vendorCost, 
-public ?string $vendorPartNumber, 
+                public ?float $id = null,
+        public ?bool $isActive = null,
+        public ?bool $isDefault = null,
+        public ?int $productID = null,
+        public ?int $vendorID = null,
+        public ?float $vendorCost = null,
+        public ?string $vendorPartNumber = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

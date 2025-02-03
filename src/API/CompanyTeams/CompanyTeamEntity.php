@@ -23,10 +23,10 @@ class CompanyTeamEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?float $companyID, 
-public ?float $id, 
-public ?float $resourceID, 
-public ?bool $isAssociatedAsComanaged, 
+                public ?float $companyID = null,
+        public ?float $id = null,
+        public ?float $resourceID = null,
+        public ?bool $isAssociatedAsComanaged = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

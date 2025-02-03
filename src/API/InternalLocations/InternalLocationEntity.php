@@ -23,18 +23,18 @@ class InternalLocationEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?float $id, 
-public ?string $name, 
-public ?string $additionalAddressInfo, 
-public ?string $address1, 
-public ?string $address2, 
-public ?string $city, 
-public ?string $country, 
-public ?float $holidaySetId, 
-public ?bool $isDefault, 
-public ?string $postalCode, 
-public ?string $state, 
-public ?string $timeZone, 
+                public ?float $id = null,
+        public ?string $name = null,
+        public ?string $additionalAddressInfo = null,
+        public ?string $address1 = null,
+        public ?string $address2 = null,
+        public ?string $city = null,
+        public ?string $country = null,
+        public ?float $holidaySetId = null,
+        public ?bool $isDefault = null,
+        public ?string $postalCode = null,
+        public ?string $state = null,
+        public ?string $timeZone = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

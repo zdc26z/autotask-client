@@ -23,13 +23,13 @@ class ConfigurationItemCategoryEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?int $displayColorRgb, 
-public ?float $id, 
-public ?bool $isActive, 
-public ?string $name, 
-public ?bool $isClientPortalDefault, 
-public ?bool $isGlobalDefault, 
-public ?string $nickname, 
+                public ?int $displayColorRgb = null,
+        public ?float $id = null,
+        public ?bool $isActive = null,
+        public ?string $name = null,
+        public ?bool $isClientPortalDefault = null,
+        public ?bool $isGlobalDefault = null,
+        public ?string $nickname = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

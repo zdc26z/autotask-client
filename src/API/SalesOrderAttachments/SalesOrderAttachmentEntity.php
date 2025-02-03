@@ -25,23 +25,23 @@ class SalesOrderAttachmentEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?string $attachmentType, 
-public ?string $fullPath, 
-public ?float $id, 
-public ?int $publish, 
-public ?string $title, 
-#[CastCarbon]
-        public ?Carbon $attachDate, 
-public ?float $attachedByContactID, 
-public ?float $attachedByResourceID, 
-public ?string $contentType, 
-public ?int $creatorType, 
-public mixed $data, 
-public ?float $fileSize, 
-public ?int $impersonatorCreatorResourceID, 
-public ?float $opportunityID, 
-public ?float $parentID, 
-public ?int $salesOrderID, 
+                public ?string $attachmentType = null,
+        public ?string $fullPath = null,
+        public ?float $id = null,
+        public ?int $publish = null,
+        public ?string $title = null,
+        #[CastCarbon]
+        public ?Carbon $attachDate = null,
+        public ?float $attachedByContactID = null,
+        public ?float $attachedByResourceID = null,
+        public ?string $contentType = null,
+        public ?int $creatorType = null,
+        public mixed $data = null,
+        public ?float $fileSize = null,
+        public ?int $impersonatorCreatorResourceID = null,
+        public ?float $opportunityID = null,
+        public ?float $parentID = null,
+        public ?int $salesOrderID = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

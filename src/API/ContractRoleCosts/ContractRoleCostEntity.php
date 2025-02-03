@@ -23,11 +23,11 @@ class ContractRoleCostEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?int $contractID, 
-public ?float $id, 
-public ?float $rate, 
-public ?int $resourceID, 
-public ?int $roleID, 
+                public ?int $contractID = null,
+        public ?float $id = null,
+        public ?float $rate = null,
+        public ?int $resourceID = null,
+        public ?int $roleID = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

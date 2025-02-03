@@ -23,11 +23,11 @@ class TagGroupEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?float $id, 
-public ?string $label, 
-public ?int $displayColor, 
-public ?bool $isActive, 
-public ?bool $isSystem, 
+                public ?float $id = null,
+        public ?string $label = null,
+        public ?int $displayColor = null,
+        public ?bool $isActive = null,
+        public ?bool $isSystem = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

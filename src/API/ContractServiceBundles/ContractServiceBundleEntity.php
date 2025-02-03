@@ -23,16 +23,16 @@ class ContractServiceBundleEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?int $contractID, 
-public ?float $id, 
-public ?int $serviceBundleID, 
-public ?float $adjustedPrice, 
-public ?float $internalCurrencyAdjustedPrice, 
-public ?float $internalCurrencyUnitPrice, 
-public ?string $internalDescription, 
-public ?string $invoiceDescription, 
-public ?float $quoteItemID, 
-public ?float $unitPrice, 
+                public ?int $contractID = null,
+        public ?float $id = null,
+        public ?int $serviceBundleID = null,
+        public ?float $adjustedPrice = null,
+        public ?float $internalCurrencyAdjustedPrice = null,
+        public ?float $internalCurrencyUnitPrice = null,
+        public ?string $internalDescription = null,
+        public ?string $invoiceDescription = null,
+        public ?float $quoteItemID = null,
+        public ?float $unitPrice = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

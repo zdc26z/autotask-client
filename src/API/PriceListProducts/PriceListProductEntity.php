@@ -23,11 +23,11 @@ class PriceListProductEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?int $currencyID, 
-public ?float $id, 
-public ?int $productID, 
-public ?bool $usesInternalCurrencyPrice, 
-public ?float $unitPrice, 
+                public ?int $currencyID = null,
+        public ?float $id = null,
+        public ?int $productID = null,
+        public ?bool $usesInternalCurrencyPrice = null,
+        public ?float $unitPrice = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

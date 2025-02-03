@@ -23,11 +23,11 @@ class PriceListRoleEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?int $currencyID, 
-public ?float $id, 
-public ?int $roleID, 
-public ?bool $usesInternalCurrencyPrice, 
-public ?float $hourlyRate, 
+                public ?int $currencyID = null,
+        public ?float $id = null,
+        public ?int $roleID = null,
+        public ?bool $usesInternalCurrencyPrice = null,
+        public ?float $hourlyRate = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

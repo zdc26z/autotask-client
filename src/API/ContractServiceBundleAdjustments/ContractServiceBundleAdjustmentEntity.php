@@ -25,16 +25,16 @@ class ContractServiceBundleAdjustmentEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        #[CastCarbon]
-        public ?Carbon $effectiveDate, 
-public ?float $id, 
-public ?float $adjustedUnitPrice, 
-public ?bool $allowRepeatServiceBundle, 
-public ?int $contractID, 
-public ?int $contractServiceBundleID, 
-public ?int $quoteItemID, 
-public ?int $serviceBundleID, 
-public ?int $unitChange, 
+                #[CastCarbon]
+        public ?Carbon $effectiveDate = null,
+        public ?float $id = null,
+        public ?float $adjustedUnitPrice = null,
+        public ?bool $allowRepeatServiceBundle = null,
+        public ?int $contractID = null,
+        public ?int $contractServiceBundleID = null,
+        public ?int $quoteItemID = null,
+        public ?int $serviceBundleID = null,
+        public ?int $unitChange = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

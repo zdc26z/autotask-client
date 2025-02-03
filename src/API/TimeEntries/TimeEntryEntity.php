@@ -25,43 +25,43 @@ class TimeEntryEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?float $id, 
-public ?int $resourceID, 
-#[CastCarbon]
-        public ?Carbon $billingApprovalDateTime, 
-public ?int $billingApprovalLevelMostRecent, 
-public ?int $billingApprovalResourceID, 
-public ?int $billingCodeID, 
-public ?int $contractID, 
-public ?float $contractServiceBundleID, 
-public ?float $contractServiceID, 
-#[CastCarbon]
-        public ?Carbon $createDateTime, 
-public ?int $creatorUserID, 
-#[CastCarbon]
-        public ?Carbon $dateWorked, 
-#[CastCarbon]
-        public ?Carbon $endDateTime, 
-public ?float $hoursToBill, 
-public ?float $hoursWorked, 
-public ?int $impersonatorCreatorResourceID, 
-public ?int $impersonatorUpdaterResourceID, 
-public ?int $internalBillingCodeID, 
-public ?string $internalNotes, 
-public ?bool $isInternalNotesVisibleToComanaged, 
-public ?bool $isNonBillable, 
-#[CastCarbon]
-        public ?Carbon $lastModifiedDateTime, 
-public ?int $lastModifiedUserID, 
-public ?float $offsetHours, 
-public ?int $roleID, 
-public ?bool $showOnInvoice, 
-#[CastCarbon]
-        public ?Carbon $startDateTime, 
-public ?string $summaryNotes, 
-public ?int $taskID, 
-public ?int $ticketID, 
-public ?int $timeEntryType, 
+                public ?float $id = null,
+        public ?int $resourceID = null,
+        #[CastCarbon]
+        public ?Carbon $billingApprovalDateTime = null,
+        public ?int $billingApprovalLevelMostRecent = null,
+        public ?int $billingApprovalResourceID = null,
+        public ?int $billingCodeID = null,
+        public ?int $contractID = null,
+        public ?float $contractServiceBundleID = null,
+        public ?float $contractServiceID = null,
+        #[CastCarbon]
+        public ?Carbon $createDateTime = null,
+        public ?int $creatorUserID = null,
+        #[CastCarbon]
+        public ?Carbon $dateWorked = null,
+        #[CastCarbon]
+        public ?Carbon $endDateTime = null,
+        public ?float $hoursToBill = null,
+        public ?float $hoursWorked = null,
+        public ?int $impersonatorCreatorResourceID = null,
+        public ?int $impersonatorUpdaterResourceID = null,
+        public ?int $internalBillingCodeID = null,
+        public ?string $internalNotes = null,
+        public ?bool $isInternalNotesVisibleToComanaged = null,
+        public ?bool $isNonBillable = null,
+        #[CastCarbon]
+        public ?Carbon $lastModifiedDateTime = null,
+        public ?int $lastModifiedUserID = null,
+        public ?float $offsetHours = null,
+        public ?int $roleID = null,
+        public ?bool $showOnInvoice = null,
+        #[CastCarbon]
+        public ?Carbon $startDateTime = null,
+        public ?string $summaryNotes = null,
+        public ?int $taskID = null,
+        public ?int $ticketID = null,
+        public ?int $timeEntryType = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

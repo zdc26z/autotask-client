@@ -23,19 +23,19 @@ class InventoryItemEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?float $id, 
-public ?int $inventoryLocationID, 
-public ?int $productID, 
-public ?int $quantityMaximum, 
-public ?int $quantityMinimum, 
-public ?int $quantityOnHand, 
-public ?int $backOrderQuantity, 
-public ?string $bin, 
-public ?int $impersonatorCreatorResourceID, 
-public ?int $quantityOnOrder, 
-public ?int $quantityPicked, 
-public ?int $quantityReserved, 
-public ?string $referenceNumber, 
+                public ?float $id = null,
+        public ?int $inventoryLocationID = null,
+        public ?int $productID = null,
+        public ?int $quantityMaximum = null,
+        public ?int $quantityMinimum = null,
+        public ?int $quantityOnHand = null,
+        public ?int $backOrderQuantity = null,
+        public ?string $bin = null,
+        public ?int $impersonatorCreatorResourceID = null,
+        public ?int $quantityOnOrder = null,
+        public ?int $quantityPicked = null,
+        public ?int $quantityReserved = null,
+        public ?string $referenceNumber = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

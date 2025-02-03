@@ -25,37 +25,37 @@ class InvoiceEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?float $id, 
-#[CastCarbon]
-        public ?Carbon $invoiceDateTime, 
-public ?int $batchID, 
-public ?string $comments, 
-public ?int $companyID, 
-#[CastCarbon]
-        public ?Carbon $createDateTime, 
-public ?int $creatorResourceID, 
-#[CastCarbon]
-        public ?Carbon $dueDate, 
-#[CastCarbon]
-        public ?Carbon $fromDate, 
-public ?int $invoiceEditorTemplateID, 
-public ?string $invoiceNumber, 
-public ?float $invoiceTotal, 
-public ?bool $isVoided, 
-public ?string $orderNumber, 
-#[CastCarbon]
-        public ?Carbon $paidDate, 
-public ?int $paymentTerm, 
-public ?int $taxGroup, 
-public ?string $taxRegionName, 
-#[CastCarbon]
-        public ?Carbon $toDate, 
-public ?float $totalTaxValue, 
-public ?int $voidedByResourceID, 
-#[CastCarbon]
-        public ?Carbon $voidedDate, 
-#[CastCarbon]
-        public ?Carbon $webServiceDate, 
+                public ?float $id = null,
+        #[CastCarbon]
+        public ?Carbon $invoiceDateTime = null,
+        public ?int $batchID = null,
+        public ?string $comments = null,
+        public ?int $companyID = null,
+        #[CastCarbon]
+        public ?Carbon $createDateTime = null,
+        public ?int $creatorResourceID = null,
+        #[CastCarbon]
+        public ?Carbon $dueDate = null,
+        #[CastCarbon]
+        public ?Carbon $fromDate = null,
+        public ?int $invoiceEditorTemplateID = null,
+        public ?string $invoiceNumber = null,
+        public ?float $invoiceTotal = null,
+        public ?bool $isVoided = null,
+        public ?string $orderNumber = null,
+        #[CastCarbon]
+        public ?Carbon $paidDate = null,
+        public ?int $paymentTerm = null,
+        public ?int $taxGroup = null,
+        public ?string $taxRegionName = null,
+        #[CastCarbon]
+        public ?Carbon $toDate = null,
+        public ?float $totalTaxValue = null,
+        public ?int $voidedByResourceID = null,
+        #[CastCarbon]
+        public ?Carbon $voidedDate = null,
+        #[CastCarbon]
+        public ?Carbon $webServiceDate = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

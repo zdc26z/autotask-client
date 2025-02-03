@@ -25,13 +25,13 @@ class DeletedTicketLogEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?int $deletedByResourceID, 
-#[CastCarbon]
-        public ?Carbon $deletedDateTime, 
-public ?float $id, 
-public ?int $ticketID, 
-public ?string $ticketNumber, 
-public ?string $ticketTitle, 
+                public ?int $deletedByResourceID = null,
+        #[CastCarbon]
+        public ?Carbon $deletedDateTime = null,
+        public ?float $id = null,
+        public ?int $ticketID = null,
+        public ?string $ticketNumber = null,
+        public ?string $ticketTitle = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

@@ -25,16 +25,16 @@ class TagEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?float $id, 
-public ?string $label, 
-#[CastCarbon]
-        public ?Carbon $createDateTime, 
-public ?bool $isActive, 
-public ?bool $isExcludedFromAutomaticTagging, 
-public ?bool $isSystem, 
-#[CastCarbon]
-        public ?Carbon $lastModifiedDateTime, 
-public ?int $tagGroupID, 
+                public ?float $id = null,
+        public ?string $label = null,
+        #[CastCarbon]
+        public ?Carbon $createDateTime = null,
+        public ?bool $isActive = null,
+        public ?bool $isExcludedFromAutomaticTagging = null,
+        public ?bool $isSystem = null,
+        #[CastCarbon]
+        public ?Carbon $lastModifiedDateTime = null,
+        public ?int $tagGroupID = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

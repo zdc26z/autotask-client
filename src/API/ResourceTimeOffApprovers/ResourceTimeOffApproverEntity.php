@@ -23,10 +23,10 @@ class ResourceTimeOffApproverEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?int $approvalLevel, 
-public ?int $approverResourceID, 
-public ?float $id, 
-public ?int $resourceID, 
+                public ?int $approvalLevel = null,
+        public ?int $approverResourceID = null,
+        public ?float $id = null,
+        public ?int $resourceID = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

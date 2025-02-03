@@ -25,11 +25,11 @@ class HolidayEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        #[CastCarbon]
-        public ?Carbon $holidayDate, 
-public ?string $holidayName, 
-public ?int $holidaySetID, 
-public ?float $id, 
+                #[CastCarbon]
+        public ?Carbon $holidayDate = null,
+        public ?string $holidayName = null,
+        public ?int $holidaySetID = null,
+        public ?float $id = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

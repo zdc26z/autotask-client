@@ -23,11 +23,11 @@ class ResourceSkillEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?float $id, 
-public ?float $resourceID, 
-public ?float $skillID, 
-public ?float $skillLevel, 
-public ?string $skillDescription, 
+                public ?float $id = null,
+        public ?float $resourceID = null,
+        public ?float $skillID = null,
+        public ?float $skillLevel = null,
+        public ?string $skillDescription = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

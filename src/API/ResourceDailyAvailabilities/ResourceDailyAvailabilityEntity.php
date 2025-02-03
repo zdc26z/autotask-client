@@ -23,17 +23,17 @@ class ResourceDailyAvailabilityEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?float $id, 
-public ?int $resourceID, 
-public ?float $fridayAvailableHours, 
-public ?float $mondayAvailableHours, 
-public ?float $saturdayAvailableHours, 
-public ?float $sundayAvailableHours, 
-public ?float $thursdayAvailableHours, 
-public ?string $travelAvailability, 
-public ?float $tuesdayAvailableHours, 
-public ?float $wednesdayAvailableHours, 
-public ?float $weeklyBillableHoursGoal, 
+                public ?float $id = null,
+        public ?int $resourceID = null,
+        public ?float $fridayAvailableHours = null,
+        public ?float $mondayAvailableHours = null,
+        public ?float $saturdayAvailableHours = null,
+        public ?float $sundayAvailableHours = null,
+        public ?float $thursdayAvailableHours = null,
+        public ?string $travelAvailability = null,
+        public ?float $tuesdayAvailableHours = null,
+        public ?float $wednesdayAvailableHours = null,
+        public ?float $weeklyBillableHoursGoal = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

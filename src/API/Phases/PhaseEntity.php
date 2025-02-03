@@ -25,24 +25,24 @@ class PhaseEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?float $id, 
-public ?int $projectID, 
-public ?string $title, 
-#[CastCarbon]
-        public ?Carbon $createDate, 
-public ?int $creatorResourceID, 
-public ?string $description, 
-#[CastCarbon]
-        public ?Carbon $dueDate, 
-public ?float $estimatedHours, 
-public ?string $externalID, 
-public ?bool $isScheduled, 
-#[CastCarbon]
-        public ?Carbon $lastActivityDateTime, 
-public ?int $parentPhaseID, 
-public ?string $phaseNumber, 
-#[CastCarbon]
-        public ?Carbon $startDate, 
+                public ?float $id = null,
+        public ?int $projectID = null,
+        public ?string $title = null,
+        #[CastCarbon]
+        public ?Carbon $createDate = null,
+        public ?int $creatorResourceID = null,
+        public ?string $description = null,
+        #[CastCarbon]
+        public ?Carbon $dueDate = null,
+        public ?float $estimatedHours = null,
+        public ?string $externalID = null,
+        public ?bool $isScheduled = null,
+        #[CastCarbon]
+        public ?Carbon $lastActivityDateTime = null,
+        public ?int $parentPhaseID = null,
+        public ?string $phaseNumber = null,
+        #[CastCarbon]
+        public ?Carbon $startDate = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

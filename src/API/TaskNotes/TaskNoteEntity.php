@@ -25,20 +25,20 @@ class TaskNoteEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?string $description, 
-public ?float $id, 
-public ?int $noteType, 
-public ?int $publish, 
-public ?int $taskID, 
-#[CastCarbon]
-        public ?Carbon $createDateTime, 
-public ?int $createdByContactID, 
-public ?int $creatorResourceID, 
-public ?int $impersonatorCreatorResourceID, 
-public ?int $impersonatorUpdaterResourceID, 
-#[CastCarbon]
-        public ?Carbon $lastActivityDate, 
-public ?string $title, 
+                public ?string $description = null,
+        public ?float $id = null,
+        public ?int $noteType = null,
+        public ?int $publish = null,
+        public ?int $taskID = null,
+        #[CastCarbon]
+        public ?Carbon $createDateTime = null,
+        public ?int $createdByContactID = null,
+        public ?int $creatorResourceID = null,
+        public ?int $impersonatorCreatorResourceID = null,
+        public ?int $impersonatorUpdaterResourceID = null,
+        #[CastCarbon]
+        public ?Carbon $lastActivityDate = null,
+        public ?string $title = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

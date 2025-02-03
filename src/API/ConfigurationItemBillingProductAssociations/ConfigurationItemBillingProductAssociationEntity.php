@@ -25,13 +25,13 @@ class ConfigurationItemBillingProductAssociationEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?int $billingProductID, 
-public ?int $configurationItemID, 
-#[CastCarbon]
-        public ?Carbon $effectiveDate, 
-public ?float $id, 
-#[CastCarbon]
-        public ?Carbon $expirationDate, 
+                public ?int $billingProductID = null,
+        public ?int $configurationItemID = null,
+        #[CastCarbon]
+        public ?Carbon $effectiveDate = null,
+        public ?float $id = null,
+        #[CastCarbon]
+        public ?Carbon $expirationDate = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

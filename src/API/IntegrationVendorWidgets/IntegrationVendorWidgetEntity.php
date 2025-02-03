@@ -25,19 +25,19 @@ class IntegrationVendorWidgetEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?float $id, 
-public ?string $referenceUrl, 
-public ?string $secret, 
-public ?string $title, 
-public ?string $vendorSuppliedID, 
-public ?string $widgetKey, 
-#[CastCarbon]
-        public ?Carbon $createDateTime, 
-public ?string $description, 
-public ?bool $isActive, 
-#[CastCarbon]
-        public ?Carbon $lastModifiedDateTime, 
-public ?int $width, 
+                public ?float $id = null,
+        public ?string $referenceUrl = null,
+        public ?string $secret = null,
+        public ?string $title = null,
+        public ?string $vendorSuppliedID = null,
+        public ?string $widgetKey = null,
+        #[CastCarbon]
+        public ?Carbon $createDateTime = null,
+        public ?string $description = null,
+        public ?bool $isActive = null,
+        #[CastCarbon]
+        public ?Carbon $lastModifiedDateTime = null,
+        public ?int $width = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

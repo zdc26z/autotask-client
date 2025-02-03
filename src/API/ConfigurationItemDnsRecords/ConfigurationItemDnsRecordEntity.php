@@ -25,13 +25,13 @@ class ConfigurationItemDnsRecordEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        #[CastCarbon]
-        public ?Carbon $createDateTime, 
-public ?string $data, 
-public ?string $dnsType, 
-public ?float $id, 
-public ?int $installedProductID, 
-public ?int $timeToLiveSeconds, 
+                #[CastCarbon]
+        public ?Carbon $createDateTime = null,
+        public ?string $data = null,
+        public ?string $dnsType = null,
+        public ?float $id = null,
+        public ?int $installedProductID = null,
+        public ?int $timeToLiveSeconds = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

@@ -25,27 +25,27 @@ class CompanyToDoEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?int $actionType, 
-public ?float $assignedToResourceID, 
-public ?float $companyID, 
-#[CastCarbon]
-        public ?Carbon $endDateTime, 
-public ?float $id, 
-#[CastCarbon]
-        public ?Carbon $startDateTime, 
-public ?string $activityDescription, 
-#[CastCarbon]
-        public ?Carbon $completedDate, 
-public ?float $contactID, 
-public ?float $contractID, 
-#[CastCarbon]
-        public ?Carbon $createDateTime, 
-public ?float $creatorResourceID, 
-public ?int $impersonatorCreatorResourceID, 
-#[CastCarbon]
-        public ?Carbon $lastModifiedDate, 
-public ?float $opportunityID, 
-public ?float $ticketID, 
+                public ?int $actionType = null,
+        public ?float $assignedToResourceID = null,
+        public ?float $companyID = null,
+        #[CastCarbon]
+        public ?Carbon $endDateTime = null,
+        public ?float $id = null,
+        #[CastCarbon]
+        public ?Carbon $startDateTime = null,
+        public ?string $activityDescription = null,
+        #[CastCarbon]
+        public ?Carbon $completedDate = null,
+        public ?float $contactID = null,
+        public ?float $contractID = null,
+        #[CastCarbon]
+        public ?Carbon $createDateTime = null,
+        public ?float $creatorResourceID = null,
+        public ?int $impersonatorCreatorResourceID = null,
+        #[CastCarbon]
+        public ?Carbon $lastModifiedDate = null,
+        public ?float $opportunityID = null,
+        public ?float $ticketID = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

@@ -25,18 +25,18 @@ class CurrencyEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?string $currencyNegativeFormat, 
-public ?string $currencyPositiveFormat, 
-public ?string $description, 
-public ?int $displaySymbol, 
-public ?float $exchangeRate, 
-public ?float $id, 
-public ?bool $isActive, 
-public ?bool $isInternalCurrency, 
-public ?string $name, 
-#[CastCarbon]
-        public ?Carbon $lastModifiedDateTime, 
-public ?int $updateResourceId, 
+                public ?string $currencyNegativeFormat = null,
+        public ?string $currencyPositiveFormat = null,
+        public ?string $description = null,
+        public ?int $displaySymbol = null,
+        public ?float $exchangeRate = null,
+        public ?float $id = null,
+        public ?bool $isActive = null,
+        public ?bool $isInternalCurrency = null,
+        public ?string $name = null,
+        #[CastCarbon]
+        public ?Carbon $lastModifiedDateTime = null,
+        public ?int $updateResourceId = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

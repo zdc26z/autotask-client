@@ -23,9 +23,9 @@ class HolidaySetEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?string $holidaySetName, 
-public ?float $id, 
-public ?string $holidaySetDescription, 
+                public ?string $holidaySetName = null,
+        public ?float $id = null,
+        public ?string $holidaySetDescription = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

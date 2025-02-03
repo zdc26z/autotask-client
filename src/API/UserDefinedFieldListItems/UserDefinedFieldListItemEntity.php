@@ -25,13 +25,13 @@ class UserDefinedFieldListItemEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?float $id, 
-public ?float $udfFieldId, 
-public ?string $valueForDisplay, 
-public ?string $valueForExport, 
-#[CastCarbon]
-        public ?Carbon $createDate, 
-public ?bool $isActive, 
+                public ?float $id = null,
+        public ?float $udfFieldId = null,
+        public ?string $valueForDisplay = null,
+        public ?string $valueForExport = null,
+        #[CastCarbon]
+        public ?Carbon $createDate = null,
+        public ?bool $isActive = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

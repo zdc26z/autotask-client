@@ -25,53 +25,53 @@ class QuoteEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?int $billToLocationID, 
-#[CastCarbon]
-        public ?Carbon $effectiveDate, 
-#[CastCarbon]
-        public ?Carbon $expirationDate, 
-public ?float $id, 
-public ?string $name, 
-public ?int $opportunityID, 
-public ?int $shipToLocationID, 
-public ?int $soldToLocationID, 
-public ?int $approvalStatus, 
-public ?int $approvalStatusChangedByResourceID, 
-#[CastCarbon]
-        public ?Carbon $approvalStatusChangedDate, 
-public ?bool $calculateTaxSeparately, 
-public ?string $comment, 
-public ?int $companyID, 
-public ?int $contactID, 
-#[CastCarbon]
-        public ?Carbon $createDate, 
-public ?int $creatorResourceID, 
-public ?string $description, 
-public ?int $extApprovalContactResponse, 
-#[CastCarbon]
-        public ?Carbon $extApprovalResponseDate, 
-public ?string $extApprovalResponseSignature, 
-public ?string $externalQuoteNumber, 
-public ?int $groupByID, 
-public ?int $impersonatorCreatorResourceID, 
-public ?bool $isActive, 
-#[CastCarbon]
-        public ?Carbon $lastActivityDate, 
-public ?int $lastModifiedBy, 
-public ?int $lastPublishedByResourceID, 
-#[CastCarbon]
-        public ?Carbon $lastPublishedDateTime, 
-public ?int $paymentTerm, 
-public ?int $paymentType, 
-public ?bool $primaryQuote, 
-public ?int $proposalProjectID, 
-public ?string $purchaseOrderNumber, 
-public ?int $quoteNumber, 
-public ?int $quoteTemplateID, 
-public ?int $shippingType, 
-public ?bool $showEachTaxInGroup, 
-public ?bool $showTaxCategory, 
-public ?int $taxRegionID, 
+                public ?int $billToLocationID = null,
+        #[CastCarbon]
+        public ?Carbon $effectiveDate = null,
+        #[CastCarbon]
+        public ?Carbon $expirationDate = null,
+        public ?float $id = null,
+        public ?string $name = null,
+        public ?int $opportunityID = null,
+        public ?int $shipToLocationID = null,
+        public ?int $soldToLocationID = null,
+        public ?int $approvalStatus = null,
+        public ?int $approvalStatusChangedByResourceID = null,
+        #[CastCarbon]
+        public ?Carbon $approvalStatusChangedDate = null,
+        public ?bool $calculateTaxSeparately = null,
+        public ?string $comment = null,
+        public ?int $companyID = null,
+        public ?int $contactID = null,
+        #[CastCarbon]
+        public ?Carbon $createDate = null,
+        public ?int $creatorResourceID = null,
+        public ?string $description = null,
+        public ?int $extApprovalContactResponse = null,
+        #[CastCarbon]
+        public ?Carbon $extApprovalResponseDate = null,
+        public ?string $extApprovalResponseSignature = null,
+        public ?string $externalQuoteNumber = null,
+        public ?int $groupByID = null,
+        public ?int $impersonatorCreatorResourceID = null,
+        public ?bool $isActive = null,
+        #[CastCarbon]
+        public ?Carbon $lastActivityDate = null,
+        public ?int $lastModifiedBy = null,
+        public ?int $lastPublishedByResourceID = null,
+        #[CastCarbon]
+        public ?Carbon $lastPublishedDateTime = null,
+        public ?int $paymentTerm = null,
+        public ?int $paymentType = null,
+        public ?bool $primaryQuote = null,
+        public ?int $proposalProjectID = null,
+        public ?string $purchaseOrderNumber = null,
+        public ?int $quoteNumber = null,
+        public ?int $quoteTemplateID = null,
+        public ?int $shippingType = null,
+        public ?bool $showEachTaxInGroup = null,
+        public ?bool $showTaxCategory = null,
+        public ?int $taxRegionID = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

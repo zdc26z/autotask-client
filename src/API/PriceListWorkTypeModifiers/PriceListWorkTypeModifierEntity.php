@@ -23,12 +23,12 @@ class PriceListWorkTypeModifierEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?int $currencyID, 
-public ?float $id, 
-public ?bool $usesInternalCurrencyPrice, 
-public ?int $workTypeModifierID, 
-public ?int $modifierType, 
-public ?float $modifierValue, 
+                public ?int $currencyID = null,
+        public ?float $id = null,
+        public ?bool $usesInternalCurrencyPrice = null,
+        public ?int $workTypeModifierID = null,
+        public ?int $modifierType = null,
+        public ?float $modifierValue = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

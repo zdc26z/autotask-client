@@ -25,44 +25,44 @@ class PurchaseOrderEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?float $id, 
-public ?string $shipToAddress1, 
-public ?string $shipToName, 
-public ?int $status, 
-public ?int $vendorID, 
-public ?string $additionalVendorInvoiceNumbers, 
-#[CastCarbon]
-        public ?Carbon $cancelDateTime, 
-#[CastCarbon]
-        public ?Carbon $createDateTime, 
-public ?int $creatorResourceID, 
-public ?string $externalPONumber, 
-public ?string $fax, 
-public ?float $freight, 
-public ?string $generalMemo, 
-public ?int $impersonatorCreatorResourceID, 
-public ?float $internalCurrencyFreight, 
-#[CastCarbon]
-        public ?Carbon $latestEstimatedArrivalDate, 
-public ?int $paymentTerm, 
-public ?string $phone, 
-public ?int $purchaseForCompanyID, 
-public ?string $purchaseOrderNumber, 
-public ?int $purchaseOrderTemplateID, 
-#[CastCarbon]
-        public ?Carbon $shippingDate, 
-public ?int $shippingType, 
-public ?string $shipToAddress2, 
-public ?string $shipToCity, 
-public ?string $shipToPostalCode, 
-public ?string $shipToState, 
-public ?bool $showEachTaxInGroup, 
-public ?bool $showTaxCategory, 
-#[CastCarbon]
-        public ?Carbon $submitDateTime, 
-public ?int $taxRegionID, 
-public ?int $useItemDescriptionsFrom, 
-public ?string $vendorInvoiceNumber, 
+                public ?float $id = null,
+        public ?string $shipToAddress1 = null,
+        public ?string $shipToName = null,
+        public ?int $status = null,
+        public ?int $vendorID = null,
+        public ?string $additionalVendorInvoiceNumbers = null,
+        #[CastCarbon]
+        public ?Carbon $cancelDateTime = null,
+        #[CastCarbon]
+        public ?Carbon $createDateTime = null,
+        public ?int $creatorResourceID = null,
+        public ?string $externalPONumber = null,
+        public ?string $fax = null,
+        public ?float $freight = null,
+        public ?string $generalMemo = null,
+        public ?int $impersonatorCreatorResourceID = null,
+        public ?float $internalCurrencyFreight = null,
+        #[CastCarbon]
+        public ?Carbon $latestEstimatedArrivalDate = null,
+        public ?int $paymentTerm = null,
+        public ?string $phone = null,
+        public ?int $purchaseForCompanyID = null,
+        public ?string $purchaseOrderNumber = null,
+        public ?int $purchaseOrderTemplateID = null,
+        #[CastCarbon]
+        public ?Carbon $shippingDate = null,
+        public ?int $shippingType = null,
+        public ?string $shipToAddress2 = null,
+        public ?string $shipToCity = null,
+        public ?string $shipToPostalCode = null,
+        public ?string $shipToState = null,
+        public ?bool $showEachTaxInGroup = null,
+        public ?bool $showTaxCategory = null,
+        #[CastCarbon]
+        public ?Carbon $submitDateTime = null,
+        public ?int $taxRegionID = null,
+        public ?int $useItemDescriptionsFrom = null,
+        public ?string $vendorInvoiceNumber = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

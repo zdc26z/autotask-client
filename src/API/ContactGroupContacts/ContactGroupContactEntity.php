@@ -23,9 +23,9 @@ class ContactGroupContactEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?int $contactGroupId, 
-public ?int $contactId, 
-public ?float $id, 
+                public ?int $contactGroupId = null,
+        public ?int $contactId = null,
+        public ?float $id = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

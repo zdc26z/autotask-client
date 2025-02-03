@@ -25,21 +25,21 @@ class DocumentEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?int $companyID, 
-public ?int $documentCategoryID, 
-public ?float $id, 
-public ?int $publish, 
-public ?string $title, 
-public ?int $createdByResourceID, 
-#[CastCarbon]
-        public ?Carbon $createdDateTime, 
-public ?string $errorCodes, 
-public ?bool $isActive, 
-public ?string $keywords, 
-public ?int $lastModifiedByResourceID, 
-#[CastCarbon]
-        public ?Carbon $lastModifiedDateTime, 
-public ?string $referenceLink, 
+                public ?int $companyID = null,
+        public ?int $documentCategoryID = null,
+        public ?float $id = null,
+        public ?int $publish = null,
+        public ?string $title = null,
+        public ?int $createdByResourceID = null,
+        #[CastCarbon]
+        public ?Carbon $createdDateTime = null,
+        public ?string $errorCodes = null,
+        public ?bool $isActive = null,
+        public ?string $keywords = null,
+        public ?int $lastModifiedByResourceID = null,
+        #[CastCarbon]
+        public ?Carbon $lastModifiedDateTime = null,
+        public ?string $referenceLink = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

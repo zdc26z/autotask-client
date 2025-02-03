@@ -25,88 +25,88 @@ class InternalLocationWithBusinessHourEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?string $dateFormat, 
-public ?float $id, 
-public ?string $name, 
-public ?string $numberFormat, 
-public ?string $timeFormat, 
-public ?int $timeZoneID, 
-public ?string $additionalAddressInfo, 
-public ?string $address1, 
-public ?string $address2, 
-public ?string $city, 
-public ?int $countryID, 
-public ?int $firstDayOfWeek, 
-#[CastCarbon]
-        public ?Carbon $fridayBusinessHoursEndTime, 
-#[CastCarbon]
-        public ?Carbon $fridayBusinessHoursStartTime, 
-#[CastCarbon]
-        public ?Carbon $fridayExtendedHoursEndTime, 
-#[CastCarbon]
-        public ?Carbon $fridayExtendedHoursStartTime, 
-#[CastCarbon]
-        public ?Carbon $holidayExtendedHoursEndTime, 
-#[CastCarbon]
-        public ?Carbon $holidayExtendedHoursStartTime, 
-#[CastCarbon]
-        public ?Carbon $holidayHoursEndTime, 
-#[CastCarbon]
-        public ?Carbon $holidayHoursStartTime, 
-public ?int $holidayHoursType, 
-public ?int $holidaySetID, 
-public ?bool $isDefault, 
-#[CastCarbon]
-        public ?Carbon $mondayBusinessHoursEndTime, 
-#[CastCarbon]
-        public ?Carbon $mondayBusinessHoursStartTime, 
-#[CastCarbon]
-        public ?Carbon $mondayExtendedHoursEndTime, 
-#[CastCarbon]
-        public ?Carbon $mondayExtendedHoursStartTime, 
-public ?bool $noHoursOnHolidays, 
-public ?string $postalCode, 
-#[CastCarbon]
-        public ?Carbon $saturdayBusinessHoursEndTime, 
-#[CastCarbon]
-        public ?Carbon $saturdayBusinessHoursStartTime, 
-#[CastCarbon]
-        public ?Carbon $saturdayExtendedHoursEndTime, 
-#[CastCarbon]
-        public ?Carbon $saturdayExtendedHoursStartTime, 
-public ?string $state, 
-#[CastCarbon]
-        public ?Carbon $sundayBusinessHoursEndTime, 
-#[CastCarbon]
-        public ?Carbon $sundayBusinessHoursStartTime, 
-#[CastCarbon]
-        public ?Carbon $sundayExtendedHoursEndTime, 
-#[CastCarbon]
-        public ?Carbon $sundayExtendedHoursStartTime, 
-#[CastCarbon]
-        public ?Carbon $thursdayBusinessHoursEndTime, 
-#[CastCarbon]
-        public ?Carbon $thursdayBusinessHoursStartTime, 
-#[CastCarbon]
-        public ?Carbon $thursdayExtendedHoursEndTime, 
-#[CastCarbon]
-        public ?Carbon $thursdayExtendedHoursStartTime, 
-#[CastCarbon]
-        public ?Carbon $tuesdayBusinessHoursEndTime, 
-#[CastCarbon]
-        public ?Carbon $tuesdayBusinessHoursStartTime, 
-#[CastCarbon]
-        public ?Carbon $tuesdayExtendedHoursEndTime, 
-#[CastCarbon]
-        public ?Carbon $tuesdayExtendedHoursStartTime, 
-#[CastCarbon]
-        public ?Carbon $wednesdayBusinessHoursEndTime, 
-#[CastCarbon]
-        public ?Carbon $wednesdayBusinessHoursStartTime, 
-#[CastCarbon]
-        public ?Carbon $wednesdayExtendedHoursEndTime, 
-#[CastCarbon]
-        public ?Carbon $wednesdayExtendedHoursStartTime, 
+                public ?string $dateFormat = null,
+        public ?float $id = null,
+        public ?string $name = null,
+        public ?string $numberFormat = null,
+        public ?string $timeFormat = null,
+        public ?int $timeZoneID = null,
+        public ?string $additionalAddressInfo = null,
+        public ?string $address1 = null,
+        public ?string $address2 = null,
+        public ?string $city = null,
+        public ?int $countryID = null,
+        public ?int $firstDayOfWeek = null,
+        #[CastCarbon]
+        public ?Carbon $fridayBusinessHoursEndTime = null,
+        #[CastCarbon]
+        public ?Carbon $fridayBusinessHoursStartTime = null,
+        #[CastCarbon]
+        public ?Carbon $fridayExtendedHoursEndTime = null,
+        #[CastCarbon]
+        public ?Carbon $fridayExtendedHoursStartTime = null,
+        #[CastCarbon]
+        public ?Carbon $holidayExtendedHoursEndTime = null,
+        #[CastCarbon]
+        public ?Carbon $holidayExtendedHoursStartTime = null,
+        #[CastCarbon]
+        public ?Carbon $holidayHoursEndTime = null,
+        #[CastCarbon]
+        public ?Carbon $holidayHoursStartTime = null,
+        public ?int $holidayHoursType = null,
+        public ?int $holidaySetID = null,
+        public ?bool $isDefault = null,
+        #[CastCarbon]
+        public ?Carbon $mondayBusinessHoursEndTime = null,
+        #[CastCarbon]
+        public ?Carbon $mondayBusinessHoursStartTime = null,
+        #[CastCarbon]
+        public ?Carbon $mondayExtendedHoursEndTime = null,
+        #[CastCarbon]
+        public ?Carbon $mondayExtendedHoursStartTime = null,
+        public ?bool $noHoursOnHolidays = null,
+        public ?string $postalCode = null,
+        #[CastCarbon]
+        public ?Carbon $saturdayBusinessHoursEndTime = null,
+        #[CastCarbon]
+        public ?Carbon $saturdayBusinessHoursStartTime = null,
+        #[CastCarbon]
+        public ?Carbon $saturdayExtendedHoursEndTime = null,
+        #[CastCarbon]
+        public ?Carbon $saturdayExtendedHoursStartTime = null,
+        public ?string $state = null,
+        #[CastCarbon]
+        public ?Carbon $sundayBusinessHoursEndTime = null,
+        #[CastCarbon]
+        public ?Carbon $sundayBusinessHoursStartTime = null,
+        #[CastCarbon]
+        public ?Carbon $sundayExtendedHoursEndTime = null,
+        #[CastCarbon]
+        public ?Carbon $sundayExtendedHoursStartTime = null,
+        #[CastCarbon]
+        public ?Carbon $thursdayBusinessHoursEndTime = null,
+        #[CastCarbon]
+        public ?Carbon $thursdayBusinessHoursStartTime = null,
+        #[CastCarbon]
+        public ?Carbon $thursdayExtendedHoursEndTime = null,
+        #[CastCarbon]
+        public ?Carbon $thursdayExtendedHoursStartTime = null,
+        #[CastCarbon]
+        public ?Carbon $tuesdayBusinessHoursEndTime = null,
+        #[CastCarbon]
+        public ?Carbon $tuesdayBusinessHoursStartTime = null,
+        #[CastCarbon]
+        public ?Carbon $tuesdayExtendedHoursEndTime = null,
+        #[CastCarbon]
+        public ?Carbon $tuesdayExtendedHoursStartTime = null,
+        #[CastCarbon]
+        public ?Carbon $wednesdayBusinessHoursEndTime = null,
+        #[CastCarbon]
+        public ?Carbon $wednesdayBusinessHoursStartTime = null,
+        #[CastCarbon]
+        public ?Carbon $wednesdayExtendedHoursEndTime = null,
+        #[CastCarbon]
+        public ?Carbon $wednesdayExtendedHoursStartTime = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

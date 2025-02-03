@@ -23,10 +23,10 @@ class ConfigurationItemRelatedItemEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?int $configurationItemID, 
-public ?float $id, 
-public ?int $relatedConfigurationItemID, 
-public ?int $relationship, 
+                public ?int $configurationItemID = null,
+        public ?float $id = null,
+        public ?int $relatedConfigurationItemID = null,
+        public ?int $relationship = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

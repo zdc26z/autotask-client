@@ -23,9 +23,9 @@ class OrganizationalResourceEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?float $id, 
-public ?int $organizationalLevelAssociationID, 
-public ?int $resourceID, 
+                public ?float $id = null,
+        public ?int $organizationalLevelAssociationID = null,
+        public ?int $resourceID = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

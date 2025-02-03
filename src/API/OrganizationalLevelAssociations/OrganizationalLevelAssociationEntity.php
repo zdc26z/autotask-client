@@ -23,10 +23,10 @@ class OrganizationalLevelAssociationEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?float $id, 
-public ?int $organizationalLevel1ID, 
-public ?int $organizationalLevel2ID, 
-public ?bool $isActive, 
+                public ?float $id = null,
+        public ?int $organizationalLevel1ID = null,
+        public ?int $organizationalLevel2ID = null,
+        public ?bool $isActive = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

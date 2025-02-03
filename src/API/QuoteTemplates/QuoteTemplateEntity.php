@@ -25,28 +25,28 @@ class QuoteTemplateEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?string $currencyNegativeFormat, 
-public ?string $currencyPositiveFormat, 
-public ?float $id, 
-public ?string $name, 
-public ?bool $calculateTaxSeparately, 
-#[CastCarbon]
-        public ?Carbon $createDate, 
-public ?int $createdBy, 
-public ?int $dateFormat, 
-public ?string $description, 
-public ?bool $displayTaxCategorySuperscripts, 
-public ?bool $isActive, 
-public ?int $lastActivityBy, 
-#[CastCarbon]
-        public ?Carbon $lastActivityDate, 
-public ?int $numberFormat, 
-public ?int $pageLayout, 
-public ?int $pageNumberFormat, 
-public ?bool $showEachTaxInGroup, 
-public ?bool $showGridHeader, 
-public ?bool $showTaxCategory, 
-public ?bool $showVerticalGridLines, 
+                public ?string $currencyNegativeFormat = null,
+        public ?string $currencyPositiveFormat = null,
+        public ?float $id = null,
+        public ?string $name = null,
+        public ?bool $calculateTaxSeparately = null,
+        #[CastCarbon]
+        public ?Carbon $createDate = null,
+        public ?int $createdBy = null,
+        public ?int $dateFormat = null,
+        public ?string $description = null,
+        public ?bool $displayTaxCategorySuperscripts = null,
+        public ?bool $isActive = null,
+        public ?int $lastActivityBy = null,
+        #[CastCarbon]
+        public ?Carbon $lastActivityDate = null,
+        public ?int $numberFormat = null,
+        public ?int $pageLayout = null,
+        public ?int $pageNumberFormat = null,
+        public ?bool $showEachTaxInGroup = null,
+        public ?bool $showGridHeader = null,
+        public ?bool $showTaxCategory = null,
+        public ?bool $showVerticalGridLines = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

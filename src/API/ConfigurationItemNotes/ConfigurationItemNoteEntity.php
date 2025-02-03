@@ -25,18 +25,18 @@ class ConfigurationItemNoteEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?int $configurationItemID, 
-public ?string $description, 
-public ?float $id, 
-public ?int $noteType, 
-public ?string $title, 
-#[CastCarbon]
-        public ?Carbon $createDateTime, 
-public ?int $creatorResourceID, 
-public ?int $impersonatorCreatorResourceID, 
-public ?int $impersonatorUpdaterResourceID, 
-#[CastCarbon]
-        public ?Carbon $lastActivityDate, 
+                public ?int $configurationItemID = null,
+        public ?string $description = null,
+        public ?float $id = null,
+        public ?int $noteType = null,
+        public ?string $title = null,
+        #[CastCarbon]
+        public ?Carbon $createDateTime = null,
+        public ?int $creatorResourceID = null,
+        public ?int $impersonatorCreatorResourceID = null,
+        public ?int $impersonatorUpdaterResourceID = null,
+        #[CastCarbon]
+        public ?Carbon $lastActivityDate = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

@@ -23,12 +23,12 @@ class ContractBlockHourFactorEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?float $blockHourMultiplier, 
-public ?int $contractID, 
-public ?float $id, 
-public ?int $roleID, 
-public ?float $contractHourlyRate, 
-public ?float $internalCurrencyContractHourlyRate, 
+                public ?float $blockHourMultiplier = null,
+        public ?int $contractID = null,
+        public ?float $id = null,
+        public ?int $roleID = null,
+        public ?float $contractHourlyRate = null,
+        public ?float $internalCurrencyContractHourlyRate = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

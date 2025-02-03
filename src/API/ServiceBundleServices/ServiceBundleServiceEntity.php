@@ -23,9 +23,9 @@ class ServiceBundleServiceEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?float $id, 
-public ?float $serviceBundleID, 
-public ?float $serviceID, 
+                public ?float $id = null,
+        public ?float $serviceBundleID = null,
+        public ?float $serviceID = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

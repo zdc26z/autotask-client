@@ -23,9 +23,9 @@ class TaxRegionEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?int $id, 
-public ?string $name, 
-public ?bool $isActive, 
+                public ?int $id = null,
+        public ?string $name = null,
+        public ?bool $isActive = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

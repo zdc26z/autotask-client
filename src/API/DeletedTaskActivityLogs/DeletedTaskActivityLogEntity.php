@@ -25,22 +25,22 @@ class DeletedTaskActivityLogEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
+                #[CastCarbon]
+        public ?Carbon $activityDateTime = null,
+        public ?int $createdByResourceID = null,
+        public ?int $deletedByResourceID = null,
         #[CastCarbon]
-        public ?Carbon $activityDateTime, 
-public ?int $createdByResourceID, 
-public ?int $deletedByResourceID, 
-#[CastCarbon]
-        public ?Carbon $deletedDateTime, 
-#[CastCarbon]
-        public ?Carbon $endDateTime, 
-public ?float $hoursWorked, 
-public ?float $id, 
-public ?string $noteOrAttachmentTitle, 
-#[CastCarbon]
-        public ?Carbon $startDateTime, 
-public ?int $taskID, 
-public ?string $taskNumber, 
-public ?int $typeID, 
+        public ?Carbon $deletedDateTime = null,
+        #[CastCarbon]
+        public ?Carbon $endDateTime = null,
+        public ?float $hoursWorked = null,
+        public ?float $id = null,
+        public ?string $noteOrAttachmentTitle = null,
+        #[CastCarbon]
+        public ?Carbon $startDateTime = null,
+        public ?int $taskID = null,
+        public ?string $taskNumber = null,
+        public ?int $typeID = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

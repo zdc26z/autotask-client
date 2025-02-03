@@ -23,9 +23,9 @@ class InventoryItemSerialNumberEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?float $id, 
-public ?int $inventoryItemID, 
-public ?string $serialNumber, 
+                public ?float $id = null,
+        public ?int $inventoryItemID = null,
+        public ?string $serialNumber = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

@@ -25,12 +25,12 @@ class DocumentTagAssociationEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?int $documentID, 
-public ?float $id, 
-public ?int $tagID, 
-#[CastCarbon]
-        public ?Carbon $createDateTime, 
-public ?int $createdByResourceID, 
+                public ?int $documentID = null,
+        public ?float $id = null,
+        public ?int $tagID = null,
+        #[CastCarbon]
+        public ?Carbon $createDateTime = null,
+        public ?int $createdByResourceID = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

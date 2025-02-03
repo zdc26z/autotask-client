@@ -23,11 +23,11 @@ class ResourceServiceDeskRoleEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?float $id, 
-public ?int $resourceID, 
-public ?int $roleID, 
-public ?bool $isActive, 
-public ?bool $isDefault, 
+                public ?float $id = null,
+        public ?int $resourceID = null,
+        public ?int $roleID = null,
+        public ?bool $isActive = null,
+        public ?bool $isDefault = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

@@ -25,22 +25,22 @@ class ContractBlockEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?int $contractID, 
-#[CastCarbon]
-        public ?Carbon $datePurchased, 
-#[CastCarbon]
-        public ?Carbon $endDate, 
-public ?float $hourlyRate, 
-public ?float $hours, 
-public ?float $id, 
-#[CastCarbon]
-        public ?Carbon $startDate, 
-public ?float $hoursApproved, 
-public ?string $invoiceNumber, 
-public ?bool $isPaid, 
-public ?string $paymentNumber, 
-public ?int $paymentType, 
-public ?int $status, 
+                public ?int $contractID = null,
+        #[CastCarbon]
+        public ?Carbon $datePurchased = null,
+        #[CastCarbon]
+        public ?Carbon $endDate = null,
+        public ?float $hourlyRate = null,
+        public ?float $hours = null,
+        public ?float $id = null,
+        #[CastCarbon]
+        public ?Carbon $startDate = null,
+        public ?float $hoursApproved = null,
+        public ?string $invoiceNumber = null,
+        public ?bool $isPaid = null,
+        public ?string $paymentNumber = null,
+        public ?int $paymentType = null,
+        public ?int $status = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

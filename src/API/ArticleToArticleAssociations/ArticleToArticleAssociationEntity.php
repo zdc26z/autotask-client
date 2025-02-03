@@ -23,9 +23,9 @@ class ArticleToArticleAssociationEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?int $articleID, 
-public ?int $associatedArticleID, 
-public ?float $id, 
+                public ?int $articleID = null,
+        public ?int $associatedArticleID = null,
+        public ?float $id = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

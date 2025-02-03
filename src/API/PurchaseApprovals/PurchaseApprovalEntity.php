@@ -23,10 +23,10 @@ class PurchaseApprovalEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?float $id, 
-public ?bool $isApproved, 
-public ?string $costType, 
-public ?string $rejectNote, 
+                public ?float $id = null,
+        public ?bool $isApproved = null,
+        public ?string $costType = null,
+        public ?string $rejectNote = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

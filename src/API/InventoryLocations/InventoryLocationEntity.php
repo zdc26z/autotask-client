@@ -23,12 +23,12 @@ class InventoryLocationEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?float $id, 
-public ?bool $isActive, 
-public ?string $locationName, 
-public ?int $impersonatorCreatorResourceID, 
-public ?bool $isDefault, 
-public ?int $resourceID, 
+                public ?float $id = null,
+        public ?bool $isActive = null,
+        public ?string $locationName = null,
+        public ?int $impersonatorCreatorResourceID = null,
+        public ?bool $isDefault = null,
+        public ?int $resourceID = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

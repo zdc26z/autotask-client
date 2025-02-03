@@ -23,9 +23,9 @@ class DomainRegistrarEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?float $id, 
-public ?string $name, 
-public ?string $url, 
+                public ?float $id = null,
+        public ?string $name = null,
+        public ?string $url = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

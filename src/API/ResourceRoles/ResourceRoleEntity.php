@@ -23,12 +23,12 @@ class ResourceRoleEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?float $id, 
-public ?float $resourceID, 
-public ?float $roleID, 
-public ?float $departmentID, 
-public ?bool $isActive, 
-public ?float $queueID, 
+                public ?float $id = null,
+        public ?float $resourceID = null,
+        public ?float $roleID = null,
+        public ?float $departmentID = null,
+        public ?bool $isActive = null,
+        public ?float $queueID = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

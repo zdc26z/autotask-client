@@ -25,14 +25,14 @@ class TicketChangeRequestApprovalEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?int $id, 
-public ?int $ticketID, 
-#[CastCarbon]
-        public ?Carbon $approveRejectDateTime, 
-public ?string $approveRejectNote, 
-public ?int $contactID, 
-public ?bool $isApproved, 
-public ?int $resourceID, 
+                public ?int $id = null,
+        public ?int $ticketID = null,
+        #[CastCarbon]
+        public ?Carbon $approveRejectDateTime = null,
+        public ?string $approveRejectNote = null,
+        public ?int $contactID = null,
+        public ?bool $isApproved = null,
+        public ?int $resourceID = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

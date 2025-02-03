@@ -23,9 +23,9 @@ class ServiceCallTicketResourceEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?float $id, 
-public ?int $resourceID, 
-public ?int $serviceCallTicketID, 
+                public ?float $id = null,
+        public ?int $resourceID = null,
+        public ?int $serviceCallTicketID = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )

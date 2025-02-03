@@ -23,9 +23,9 @@ class CompanySiteConfigurationEntity extends Entity
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-        public ?int $companyID, 
-public ?float $id, 
-public ?string $locationName, 
+                public ?int $companyID = null,
+        public ?float $id = null,
+        public ?string $locationName = null,
         #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
