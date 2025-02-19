@@ -16,21 +16,28 @@ use GuzzleHttp\Psr7\Response;
 class TicketSecondaryResourceEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new TicketSecondaryResource entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?float $id = null,
-        public ?float $resourceID = null,
-        public ?float $roleID = null,
-        public ?float $ticketID = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public float|array|null $id = null,
+                        public ?float $resourceID = null,
+                        public ?float $roleID = null,
+                        public ?float $ticketID = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($id)) {
+            foreach($id as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

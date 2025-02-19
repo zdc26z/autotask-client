@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\OrganizationalLevel1s\OrganizationalLevel1Collection;
-use Anteris\Autotask\API\OrganizationalLevel1s\OrganizationalLevel1Entity;
 use Anteris\Autotask\API\OrganizationalLevel1s\OrganizationalLevel1Service;
+use Anteris\Autotask\API\OrganizationalLevel1s\OrganizationalLevel1Entity;
+
 use Anteris\Autotask\API\OrganizationalLevel1s\OrganizationalLevel1QueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for OrganizationalLevel1Service.
@@ -63,5 +67,16 @@ class OrganizationalLevel1ServiceTest extends AbstractTest
             OrganizationalLevel1QueryBuilder::class,
             $this->client->organizationalLevel1s()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), OrganizationalLevel1Entity::class);
+
+        $entity = new OrganizationalLevel1Entity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

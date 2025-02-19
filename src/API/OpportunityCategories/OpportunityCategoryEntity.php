@@ -16,23 +16,30 @@ use GuzzleHttp\Psr7\Response;
 class OpportunityCategoryEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new OpportunityCategory entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?int $displayColorRgb = null,
-        public ?float $id = null,
-        public ?bool $isActive = null,
-        public ?string $name = null,
-        public ?bool $isGlobalDefault = null,
-        public ?string $nickname = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public int|array|null $displayColorRgb = null,
+                        public ?float $id = null,
+                        public ?bool $isActive = null,
+                        public ?string $name = null,
+                        public ?bool $isGlobalDefault = null,
+                        public ?string $nickname = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($displayColorRgb)) {
+            foreach($displayColorRgb as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

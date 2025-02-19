@@ -18,31 +18,38 @@ use GuzzleHttp\Psr7\Response;
 class KnowledgeBaseArticleEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new KnowledgeBaseArticle entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?int $articleCategoryID = null,
-        public ?float $id = null,
-        public ?int $publish = null,
-        public ?string $title = null,
-        public ?int $createdByResourceID = null,
-        #[CastCarbon]
-        public ?Carbon $createdDateTime = null,
-        public ?string $errorCodes = null,
-        public ?bool $isActive = null,
-        public ?string $keywords = null,
-        public ?int $lastModifiedByResourceID = null,
-        #[CastCarbon]
-        public ?Carbon $lastModifiedDateTime = null,
-        public ?string $referenceLink = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public int|array|null $articleCategoryID = null,
+                        public ?float $id = null,
+                        public ?int $publish = null,
+                        public ?string $title = null,
+                        public ?int $createdByResourceID = null,
+                #[CastCarbon]
+                public ?Carbon $createdDateTime = null,
+                        public ?string $errorCodes = null,
+                        public ?bool $isActive = null,
+                        public ?string $keywords = null,
+                        public ?int $lastModifiedByResourceID = null,
+                #[CastCarbon]
+                public ?Carbon $lastModifiedDateTime = null,
+                        public ?string $referenceLink = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($articleCategoryID)) {
+            foreach($articleCategoryID as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

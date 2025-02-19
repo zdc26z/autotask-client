@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\Tasks\TaskCollection;
-use Anteris\Autotask\API\Tasks\TaskEntity;
 use Anteris\Autotask\API\Tasks\TaskService;
+use Anteris\Autotask\API\Tasks\TaskEntity;
+
 use Anteris\Autotask\API\Tasks\TaskQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for TaskService.
@@ -63,5 +67,16 @@ class TaskServiceTest extends AbstractTest
             TaskQueryBuilder::class,
             $this->client->tasks()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), TaskEntity::class);
+
+        $entity = new TaskEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

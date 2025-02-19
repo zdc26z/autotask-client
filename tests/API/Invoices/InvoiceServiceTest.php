@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\Invoices\InvoiceCollection;
-use Anteris\Autotask\API\Invoices\InvoiceEntity;
 use Anteris\Autotask\API\Invoices\InvoiceService;
+use Anteris\Autotask\API\Invoices\InvoiceEntity;
+
 use Anteris\Autotask\API\Invoices\InvoiceQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for InvoiceService.
@@ -63,5 +67,16 @@ class InvoiceServiceTest extends AbstractTest
             InvoiceQueryBuilder::class,
             $this->client->invoices()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), InvoiceEntity::class);
+
+        $entity = new InvoiceEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

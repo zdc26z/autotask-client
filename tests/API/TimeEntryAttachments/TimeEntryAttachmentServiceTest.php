@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\TimeEntryAttachments\TimeEntryAttachmentCollection;
-use Anteris\Autotask\API\TimeEntryAttachments\TimeEntryAttachmentEntity;
 use Anteris\Autotask\API\TimeEntryAttachments\TimeEntryAttachmentService;
+use Anteris\Autotask\API\TimeEntryAttachments\TimeEntryAttachmentEntity;
+
 use Anteris\Autotask\API\TimeEntryAttachments\TimeEntryAttachmentQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for TimeEntryAttachmentService.
@@ -63,5 +67,16 @@ class TimeEntryAttachmentServiceTest extends AbstractTest
             TimeEntryAttachmentQueryBuilder::class,
             $this->client->timeEntryAttachments()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), TimeEntryAttachmentEntity::class);
+
+        $entity = new TimeEntryAttachmentEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

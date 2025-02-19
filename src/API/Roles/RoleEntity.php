@@ -16,27 +16,34 @@ use GuzzleHttp\Psr7\Response;
 class RoleEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new Role entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?float $hourlyFactor = null,
-        public ?float $hourlyRate = null,
-        public ?float $id = null,
-        public ?bool $isActive = null,
-        public ?string $name = null,
-        public ?string $description = null,
-        public ?bool $isExcludedFromNewContracts = null,
-        public ?bool $isSystemRole = null,
-        public ?int $quoteItemDefaultTaxCategoryId = null,
-        public ?int $roleType = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public float|array|null $hourlyFactor = null,
+                        public ?float $hourlyRate = null,
+                        public ?float $id = null,
+                        public ?bool $isActive = null,
+                        public ?string $name = null,
+                        public ?string $description = null,
+                        public ?bool $isExcludedFromNewContracts = null,
+                        public ?bool $isSystemRole = null,
+                        public ?int $quoteItemDefaultTaxCategoryId = null,
+                        public ?int $roleType = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($hourlyFactor)) {
+            foreach($hourlyFactor as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

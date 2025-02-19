@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\PaymentTerms\PaymentTermCollection;
-use Anteris\Autotask\API\PaymentTerms\PaymentTermEntity;
 use Anteris\Autotask\API\PaymentTerms\PaymentTermService;
+use Anteris\Autotask\API\PaymentTerms\PaymentTermEntity;
+
 use Anteris\Autotask\API\PaymentTerms\PaymentTermQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for PaymentTermService.
@@ -63,5 +67,16 @@ class PaymentTermServiceTest extends AbstractTest
             PaymentTermQueryBuilder::class,
             $this->client->paymentTerms()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), PaymentTermEntity::class);
+
+        $entity = new PaymentTermEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

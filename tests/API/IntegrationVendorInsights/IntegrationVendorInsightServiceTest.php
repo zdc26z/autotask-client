@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\IntegrationVendorInsights\IntegrationVendorInsightCollection;
-use Anteris\Autotask\API\IntegrationVendorInsights\IntegrationVendorInsightEntity;
 use Anteris\Autotask\API\IntegrationVendorInsights\IntegrationVendorInsightService;
+use Anteris\Autotask\API\IntegrationVendorInsights\IntegrationVendorInsightEntity;
+
 use Anteris\Autotask\API\IntegrationVendorInsights\IntegrationVendorInsightQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for IntegrationVendorInsightService.
@@ -63,5 +67,16 @@ class IntegrationVendorInsightServiceTest extends AbstractTest
             IntegrationVendorInsightQueryBuilder::class,
             $this->client->integrationVendorInsights()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), IntegrationVendorInsightEntity::class);
+
+        $entity = new IntegrationVendorInsightEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

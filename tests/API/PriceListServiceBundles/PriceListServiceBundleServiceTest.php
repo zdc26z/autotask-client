@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\PriceListServiceBundles\PriceListServiceBundleCollection;
-use Anteris\Autotask\API\PriceListServiceBundles\PriceListServiceBundleEntity;
 use Anteris\Autotask\API\PriceListServiceBundles\PriceListServiceBundleService;
+use Anteris\Autotask\API\PriceListServiceBundles\PriceListServiceBundleEntity;
+
 use Anteris\Autotask\API\PriceListServiceBundles\PriceListServiceBundleQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for PriceListServiceBundleService.
@@ -63,5 +67,16 @@ class PriceListServiceBundleServiceTest extends AbstractTest
             PriceListServiceBundleQueryBuilder::class,
             $this->client->priceListServiceBundles()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), PriceListServiceBundleEntity::class);
+
+        $entity = new PriceListServiceBundleEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

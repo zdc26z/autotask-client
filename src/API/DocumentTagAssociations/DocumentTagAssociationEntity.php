@@ -18,23 +18,30 @@ use GuzzleHttp\Psr7\Response;
 class DocumentTagAssociationEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new DocumentTagAssociation entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?int $documentID = null,
-        public ?float $id = null,
-        public ?int $tagID = null,
-        #[CastCarbon]
-        public ?Carbon $createDateTime = null,
-        public ?int $createdByResourceID = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public int|array|null $documentID = null,
+                        public ?float $id = null,
+                        public ?int $tagID = null,
+                #[CastCarbon]
+                public ?Carbon $createDateTime = null,
+                        public ?int $createdByResourceID = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($documentID)) {
+            foreach($documentID as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

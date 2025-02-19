@@ -18,51 +18,58 @@ use GuzzleHttp\Psr7\Response;
 class InventoryStockedItemEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new InventoryStockedItem entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?float $id = null,
-        public ?int $inventoryProductID = null,
-        public ?float $unitCost = null,
-        public ?int $availableUnits = null,
-        public ?int $companyID = null,
-        public ?int $configurationItemID = null,
-        public ?int $contractChargeID = null,
-        #[CastCarbon]
-        public ?Carbon $createDateTime = null,
-        public ?int $createdByResourceID = null,
-        public ?int $currentInventoryLocationID = null,
-        public ?int $deliveredUnits = null,
-        public ?int $onHandUnits = null,
-        public ?int $parentInventoryStockedItemID = null,
-        public ?int $parentStockedItemReceivedUnits = null,
-        public ?int $pickedRemovedByResourceID = null,
-        #[CastCarbon]
-        public ?Carbon $pickedRemovedDateTime = null,
-        public ?int $pickedUnits = null,
-        public ?int $projectChargeID = null,
-        public ?int $purchaseOrderID = null,
-        public ?int $purchaseOrderItemID = null,
-        public ?int $purchaseOrderItemReceivingID = null,
-        public ?int $quoteItemID = null,
-        public ?int $removedUnits = null,
-        public ?int $reservedUnits = null,
-        public ?float $returnPrice = null,
-        public ?int $returnTypeID = null,
-        public ?string $serialNumber = null,
-        public ?int $statusID = null,
-        public ?int $ticketChargeID = null,
-        public ?int $transferredUnits = null,
-        public ?int $vendorID = null,
-        public ?string $vendorInvoiceNumber = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public float|array|null $id = null,
+                        public ?int $inventoryProductID = null,
+                        public ?float $unitCost = null,
+                        public ?int $availableUnits = null,
+                        public ?int $companyID = null,
+                        public ?int $configurationItemID = null,
+                        public ?int $contractChargeID = null,
+                #[CastCarbon]
+                public ?Carbon $createDateTime = null,
+                        public ?int $createdByResourceID = null,
+                        public ?int $currentInventoryLocationID = null,
+                        public ?int $deliveredUnits = null,
+                        public ?int $onHandUnits = null,
+                        public ?int $parentInventoryStockedItemID = null,
+                        public ?int $parentStockedItemReceivedUnits = null,
+                        public ?int $pickedRemovedByResourceID = null,
+                #[CastCarbon]
+                public ?Carbon $pickedRemovedDateTime = null,
+                        public ?int $pickedUnits = null,
+                        public ?int $projectChargeID = null,
+                        public ?int $purchaseOrderID = null,
+                        public ?int $purchaseOrderItemID = null,
+                        public ?int $purchaseOrderItemReceivingID = null,
+                        public ?int $quoteItemID = null,
+                        public ?int $removedUnits = null,
+                        public ?int $reservedUnits = null,
+                        public ?float $returnPrice = null,
+                        public ?int $returnTypeID = null,
+                        public ?string $serialNumber = null,
+                        public ?int $statusID = null,
+                        public ?int $ticketChargeID = null,
+                        public ?int $transferredUnits = null,
+                        public ?int $vendorID = null,
+                        public ?string $vendorInvoiceNumber = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($id)) {
+            foreach($id as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

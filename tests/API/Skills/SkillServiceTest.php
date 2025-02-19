@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\Skills\SkillCollection;
-use Anteris\Autotask\API\Skills\SkillEntity;
 use Anteris\Autotask\API\Skills\SkillService;
+use Anteris\Autotask\API\Skills\SkillEntity;
+
 use Anteris\Autotask\API\Skills\SkillQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for SkillService.
@@ -63,5 +67,16 @@ class SkillServiceTest extends AbstractTest
             SkillQueryBuilder::class,
             $this->client->skills()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), SkillEntity::class);
+
+        $entity = new SkillEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

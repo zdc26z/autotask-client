@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\TicketNoteAttachments\TicketNoteAttachmentCollection;
-use Anteris\Autotask\API\TicketNoteAttachments\TicketNoteAttachmentEntity;
 use Anteris\Autotask\API\TicketNoteAttachments\TicketNoteAttachmentService;
+use Anteris\Autotask\API\TicketNoteAttachments\TicketNoteAttachmentEntity;
+
 use Anteris\Autotask\API\TicketNoteAttachments\TicketNoteAttachmentQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for TicketNoteAttachmentService.
@@ -63,5 +67,16 @@ class TicketNoteAttachmentServiceTest extends AbstractTest
             TicketNoteAttachmentQueryBuilder::class,
             $this->client->ticketNoteAttachments()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), TicketNoteAttachmentEntity::class);
+
+        $entity = new TicketNoteAttachmentEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

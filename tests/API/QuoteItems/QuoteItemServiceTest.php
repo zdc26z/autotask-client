@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\QuoteItems\QuoteItemCollection;
-use Anteris\Autotask\API\QuoteItems\QuoteItemEntity;
 use Anteris\Autotask\API\QuoteItems\QuoteItemService;
+use Anteris\Autotask\API\QuoteItems\QuoteItemEntity;
+
 use Anteris\Autotask\API\QuoteItems\QuoteItemQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for QuoteItemService.
@@ -63,5 +67,16 @@ class QuoteItemServiceTest extends AbstractTest
             QuoteItemQueryBuilder::class,
             $this->client->quoteItems()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), QuoteItemEntity::class);
+
+        $entity = new QuoteItemEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

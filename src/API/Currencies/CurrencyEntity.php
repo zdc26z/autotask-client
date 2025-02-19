@@ -18,29 +18,36 @@ use GuzzleHttp\Psr7\Response;
 class CurrencyEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new Currency entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?string $currencyNegativeFormat = null,
-        public ?string $currencyPositiveFormat = null,
-        public ?string $description = null,
-        public ?int $displaySymbol = null,
-        public ?float $exchangeRate = null,
-        public ?float $id = null,
-        public ?bool $isActive = null,
-        public ?bool $isInternalCurrency = null,
-        public ?string $name = null,
-        #[CastCarbon]
-        public ?Carbon $lastModifiedDateTime = null,
-        public ?int $updateResourceId = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public string|array|null $currencyNegativeFormat = null,
+                        public ?string $currencyPositiveFormat = null,
+                        public ?string $description = null,
+                        public ?int $displaySymbol = null,
+                        public ?float $exchangeRate = null,
+                        public ?float $id = null,
+                        public ?bool $isActive = null,
+                        public ?bool $isInternalCurrency = null,
+                        public ?string $name = null,
+                #[CastCarbon]
+                public ?Carbon $lastModifiedDateTime = null,
+                        public ?int $updateResourceId = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($currencyNegativeFormat)) {
+            foreach($currencyNegativeFormat as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

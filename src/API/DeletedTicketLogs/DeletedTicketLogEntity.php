@@ -18,24 +18,31 @@ use GuzzleHttp\Psr7\Response;
 class DeletedTicketLogEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new DeletedTicketLog entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?int $deletedByResourceID = null,
-        #[CastCarbon]
-        public ?Carbon $deletedDateTime = null,
-        public ?float $id = null,
-        public ?int $ticketID = null,
-        public ?string $ticketNumber = null,
-        public ?string $ticketTitle = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public int|array|null $deletedByResourceID = null,
+                #[CastCarbon]
+                public ?Carbon $deletedDateTime = null,
+                        public ?float $id = null,
+                        public ?int $ticketID = null,
+                        public ?string $ticketNumber = null,
+                        public ?string $ticketTitle = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($deletedByResourceID)) {
+            foreach($deletedByResourceID as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

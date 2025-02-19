@@ -18,49 +18,56 @@ use GuzzleHttp\Psr7\Response;
 class ChangeOrderChargeEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new ChangeOrderCharge entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?int $chargeType = null,
-        #[CastCarbon]
-        public ?Carbon $datePurchased = null,
-        public ?float $id = null,
-        public ?string $name = null,
-        public ?int $taskID = null,
-        public ?float $billableAmount = null,
-        public ?int $billingCodeID = null,
-        public ?float $changeOrderHours = null,
-        public ?int $contractServiceBundleID = null,
-        public ?int $contractServiceID = null,
-        #[CastCarbon]
-        public ?Carbon $createDate = null,
-        public ?int $creatorResourceID = null,
-        public ?string $description = null,
-        public ?float $extendedCost = null,
-        public ?float $internalCurrencyBillableAmount = null,
-        public ?float $internalCurrencyUnitPrice = null,
-        public ?string $internalPurchaseOrderNumber = null,
-        public ?bool $isBillableToCompany = null,
-        public ?bool $isBilled = null,
-        public ?string $notes = null,
-        public ?int $organizationalLevelAssociationID = null,
-        public ?int $productID = null,
-        public ?string $purchaseOrderNumber = null,
-        public ?int $status = null,
-        public ?int $statusLastModifiedBy = null,
-        #[CastCarbon]
-        public ?Carbon $statusLastModifiedDate = null,
-        public ?float $unitCost = null,
-        public ?float $unitPrice = null,
-        public ?float $unitQuantity = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public int|array|null $chargeType = null,
+                #[CastCarbon]
+                public ?Carbon $datePurchased = null,
+                        public ?float $id = null,
+                        public ?string $name = null,
+                        public ?int $taskID = null,
+                        public ?float $billableAmount = null,
+                        public ?int $billingCodeID = null,
+                        public ?float $changeOrderHours = null,
+                        public ?int $contractServiceBundleID = null,
+                        public ?int $contractServiceID = null,
+                #[CastCarbon]
+                public ?Carbon $createDate = null,
+                        public ?int $creatorResourceID = null,
+                        public ?string $description = null,
+                        public ?float $extendedCost = null,
+                        public ?float $internalCurrencyBillableAmount = null,
+                        public ?float $internalCurrencyUnitPrice = null,
+                        public ?string $internalPurchaseOrderNumber = null,
+                        public ?bool $isBillableToCompany = null,
+                        public ?bool $isBilled = null,
+                        public ?string $notes = null,
+                        public ?int $organizationalLevelAssociationID = null,
+                        public ?int $productID = null,
+                        public ?string $purchaseOrderNumber = null,
+                        public ?int $status = null,
+                        public ?int $statusLastModifiedBy = null,
+                #[CastCarbon]
+                public ?Carbon $statusLastModifiedDate = null,
+                        public ?float $unitCost = null,
+                        public ?float $unitPrice = null,
+                        public ?float $unitQuantity = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($chargeType)) {
+            foreach($chargeType as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

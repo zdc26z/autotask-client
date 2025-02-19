@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\ProjectNotes\ProjectNoteCollection;
-use Anteris\Autotask\API\ProjectNotes\ProjectNoteEntity;
 use Anteris\Autotask\API\ProjectNotes\ProjectNoteService;
+use Anteris\Autotask\API\ProjectNotes\ProjectNoteEntity;
+
 use Anteris\Autotask\API\ProjectNotes\ProjectNoteQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for ProjectNoteService.
@@ -63,5 +67,16 @@ class ProjectNoteServiceTest extends AbstractTest
             ProjectNoteQueryBuilder::class,
             $this->client->projectNotes()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), ProjectNoteEntity::class);
+
+        $entity = new ProjectNoteEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

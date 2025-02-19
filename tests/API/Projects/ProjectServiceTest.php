@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\Projects\ProjectCollection;
-use Anteris\Autotask\API\Projects\ProjectEntity;
 use Anteris\Autotask\API\Projects\ProjectService;
+use Anteris\Autotask\API\Projects\ProjectEntity;
+
 use Anteris\Autotask\API\Projects\ProjectQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for ProjectService.
@@ -63,5 +67,16 @@ class ProjectServiceTest extends AbstractTest
             ProjectQueryBuilder::class,
             $this->client->projects()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), ProjectEntity::class);
+
+        $entity = new ProjectEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

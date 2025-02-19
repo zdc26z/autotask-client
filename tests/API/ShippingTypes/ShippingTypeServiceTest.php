@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\ShippingTypes\ShippingTypeCollection;
-use Anteris\Autotask\API\ShippingTypes\ShippingTypeEntity;
 use Anteris\Autotask\API\ShippingTypes\ShippingTypeService;
+use Anteris\Autotask\API\ShippingTypes\ShippingTypeEntity;
+
 use Anteris\Autotask\API\ShippingTypes\ShippingTypeQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for ShippingTypeService.
@@ -63,5 +67,16 @@ class ShippingTypeServiceTest extends AbstractTest
             ShippingTypeQueryBuilder::class,
             $this->client->shippingTypes()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), ShippingTypeEntity::class);
+
+        $entity = new ShippingTypeEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\Subscriptions\SubscriptionCollection;
-use Anteris\Autotask\API\Subscriptions\SubscriptionEntity;
 use Anteris\Autotask\API\Subscriptions\SubscriptionService;
+use Anteris\Autotask\API\Subscriptions\SubscriptionEntity;
+
 use Anteris\Autotask\API\Subscriptions\SubscriptionQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for SubscriptionService.
@@ -63,5 +67,16 @@ class SubscriptionServiceTest extends AbstractTest
             SubscriptionQueryBuilder::class,
             $this->client->subscriptions()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), SubscriptionEntity::class);
+
+        $entity = new SubscriptionEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

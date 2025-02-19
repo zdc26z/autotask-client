@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\ProductTiers\ProductTierCollection;
-use Anteris\Autotask\API\ProductTiers\ProductTierEntity;
 use Anteris\Autotask\API\ProductTiers\ProductTierService;
+use Anteris\Autotask\API\ProductTiers\ProductTierEntity;
+
 use Anteris\Autotask\API\ProductTiers\ProductTierQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for ProductTierService.
@@ -63,5 +67,16 @@ class ProductTierServiceTest extends AbstractTest
             ProductTierQueryBuilder::class,
             $this->client->productTiers()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), ProductTierEntity::class);
+
+        $entity = new ProductTierEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

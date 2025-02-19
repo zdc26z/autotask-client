@@ -16,19 +16,26 @@ use GuzzleHttp\Psr7\Response;
 class ArticlePlainTextContentEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new ArticlePlainTextContent entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?string $contentData = null,
-        public ?float $id = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public string|array|null $contentData = null,
+                        public ?float $id = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($contentData)) {
+            foreach($contentData as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

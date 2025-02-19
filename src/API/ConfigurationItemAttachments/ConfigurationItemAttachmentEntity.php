@@ -18,36 +18,43 @@ use GuzzleHttp\Psr7\Response;
 class ConfigurationItemAttachmentEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new ConfigurationItemAttachment entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?string $attachmentType = null,
-        public ?string $fullPath = null,
-        public ?float $id = null,
-        public ?int $publish = null,
-        public ?string $title = null,
-        #[CastCarbon]
-        public ?Carbon $attachDate = null,
-        public ?float $attachedByContactID = null,
-        public ?float $attachedByResourceID = null,
-        public ?int $configurationItemID = null,
-        public ?int $configurationItemNoteID = null,
-        public ?string $contentType = null,
-        public ?int $creatorType = null,
-        public mixed $data = null,
-        public ?float $fileSize = null,
-        public ?int $impersonatorCreatorResourceID = null,
-        public ?float $opportunityID = null,
-        public ?int $parentAttachmentID = null,
-        public ?float $parentID = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public string|array|null $attachmentType = null,
+                        public ?string $fullPath = null,
+                        public ?float $id = null,
+                        public ?int $publish = null,
+                        public ?string $title = null,
+                #[CastCarbon]
+                public ?Carbon $attachDate = null,
+                        public ?float $attachedByContactID = null,
+                        public ?float $attachedByResourceID = null,
+                        public ?int $configurationItemID = null,
+                        public ?int $configurationItemNoteID = null,
+                        public ?string $contentType = null,
+                        public ?int $creatorType = null,
+                        public mixed $data = null,
+                        public ?float $fileSize = null,
+                        public ?int $impersonatorCreatorResourceID = null,
+                        public ?float $opportunityID = null,
+                        public ?int $parentAttachmentID = null,
+                        public ?float $parentID = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($attachmentType)) {
+            foreach($attachmentType as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

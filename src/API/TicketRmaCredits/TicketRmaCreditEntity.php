@@ -16,22 +16,29 @@ use GuzzleHttp\Psr7\Response;
 class TicketRmaCreditEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new TicketRmaCredit entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?float $creditAmount = null,
-        public ?float $id = null,
-        public ?int $ticketID = null,
-        public ?string $creditDetails = null,
-        public ?float $internalCurrencyCreditAmount = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public float|array|null $creditAmount = null,
+                        public ?float $id = null,
+                        public ?int $ticketID = null,
+                        public ?string $creditDetails = null,
+                        public ?float $internalCurrencyCreditAmount = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($creditAmount)) {
+            foreach($creditAmount as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

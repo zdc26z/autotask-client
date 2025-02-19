@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\ServiceLevelAgreementResults\ServiceLevelAgreementResultCollection;
-use Anteris\Autotask\API\ServiceLevelAgreementResults\ServiceLevelAgreementResultEntity;
 use Anteris\Autotask\API\ServiceLevelAgreementResults\ServiceLevelAgreementResultService;
+use Anteris\Autotask\API\ServiceLevelAgreementResults\ServiceLevelAgreementResultEntity;
+
 use Anteris\Autotask\API\ServiceLevelAgreementResults\ServiceLevelAgreementResultQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for ServiceLevelAgreementResultService.
@@ -63,5 +67,16 @@ class ServiceLevelAgreementResultServiceTest extends AbstractTest
             ServiceLevelAgreementResultQueryBuilder::class,
             $this->client->serviceLevelAgreementResults()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), ServiceLevelAgreementResultEntity::class);
+
+        $entity = new ServiceLevelAgreementResultEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

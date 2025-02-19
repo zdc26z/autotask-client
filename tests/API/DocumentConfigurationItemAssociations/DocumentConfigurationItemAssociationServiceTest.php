@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\DocumentConfigurationItemAssociations\DocumentConfigurationItemAssociationCollection;
-use Anteris\Autotask\API\DocumentConfigurationItemAssociations\DocumentConfigurationItemAssociationEntity;
 use Anteris\Autotask\API\DocumentConfigurationItemAssociations\DocumentConfigurationItemAssociationService;
+use Anteris\Autotask\API\DocumentConfigurationItemAssociations\DocumentConfigurationItemAssociationEntity;
+
 use Anteris\Autotask\API\DocumentConfigurationItemAssociations\DocumentConfigurationItemAssociationQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for DocumentConfigurationItemAssociationService.
@@ -63,5 +67,16 @@ class DocumentConfigurationItemAssociationServiceTest extends AbstractTest
             DocumentConfigurationItemAssociationQueryBuilder::class,
             $this->client->documentConfigurationItemAssociations()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), DocumentConfigurationItemAssociationEntity::class);
+
+        $entity = new DocumentConfigurationItemAssociationEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

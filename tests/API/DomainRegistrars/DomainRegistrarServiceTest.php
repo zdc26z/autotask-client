@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\DomainRegistrars\DomainRegistrarCollection;
-use Anteris\Autotask\API\DomainRegistrars\DomainRegistrarEntity;
 use Anteris\Autotask\API\DomainRegistrars\DomainRegistrarService;
+use Anteris\Autotask\API\DomainRegistrars\DomainRegistrarEntity;
+
 use Anteris\Autotask\API\DomainRegistrars\DomainRegistrarQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for DomainRegistrarService.
@@ -63,5 +67,16 @@ class DomainRegistrarServiceTest extends AbstractTest
             DomainRegistrarQueryBuilder::class,
             $this->client->domainRegistrars()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), DomainRegistrarEntity::class);
+
+        $entity = new DomainRegistrarEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

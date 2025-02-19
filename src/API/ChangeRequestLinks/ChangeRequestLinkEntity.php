@@ -16,20 +16,27 @@ use GuzzleHttp\Psr7\Response;
 class ChangeRequestLinkEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new ChangeRequestLink entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?int $changeRequestTicketID = null,
-        public ?int $id = null,
-        public ?int $problemOrIncidentTicketID = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public int|array|null $changeRequestTicketID = null,
+                        public ?int $id = null,
+                        public ?int $problemOrIncidentTicketID = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($changeRequestTicketID)) {
+            foreach($changeRequestTicketID as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

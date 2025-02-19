@@ -18,28 +18,35 @@ use GuzzleHttp\Psr7\Response;
 class ContractNoteEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new ContractNote entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?int $contractID = null,
-        public ?string $description = null,
-        public ?int $id = null,
-        public ?string $title = null,
-        #[CastCarbon]
-        public ?Carbon $createDateTime = null,
-        public ?int $creatorResourceID = null,
-        public ?int $impersonatorCreatorResourceID = null,
-        public ?int $impersonatorUpdaterResourceID = null,
-        #[CastCarbon]
-        public ?Carbon $lastActivityDate = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public int|array|null $contractID = null,
+                        public ?string $description = null,
+                        public ?int $id = null,
+                        public ?string $title = null,
+                #[CastCarbon]
+                public ?Carbon $createDateTime = null,
+                        public ?int $creatorResourceID = null,
+                        public ?int $impersonatorCreatorResourceID = null,
+                        public ?int $impersonatorUpdaterResourceID = null,
+                #[CastCarbon]
+                public ?Carbon $lastActivityDate = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($contractID)) {
+            foreach($contractID as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

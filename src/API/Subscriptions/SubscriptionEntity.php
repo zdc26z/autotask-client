@@ -18,36 +18,43 @@ use GuzzleHttp\Psr7\Response;
 class SubscriptionEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new Subscription entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?int $configurationItemID = null,
-        #[CastCarbon]
-        public ?Carbon $effectiveDate = null,
-        #[CastCarbon]
-        public ?Carbon $expirationDate = null,
-        public ?float $id = null,
-        public ?int $materialCodeID = null,
-        public ?float $periodPrice = null,
-        public ?int $periodType = null,
-        public ?int $status = null,
-        public ?string $subscriptionName = null,
-        public ?string $description = null,
-        public ?int $impersonatorCreatorResourceID = null,
-        public ?int $organizationalLevelAssociationID = null,
-        public ?float $periodCost = null,
-        public ?string $purchaseOrderNumber = null,
-        public ?float $totalCost = null,
-        public ?float $totalPrice = null,
-        public ?int $vendorID = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public int|array|null $configurationItemID = null,
+                #[CastCarbon]
+                public ?Carbon $effectiveDate = null,
+                #[CastCarbon]
+                public ?Carbon $expirationDate = null,
+                        public ?float $id = null,
+                        public ?int $materialCodeID = null,
+                        public ?float $periodPrice = null,
+                        public ?int $periodType = null,
+                        public ?int $status = null,
+                        public ?string $subscriptionName = null,
+                        public ?string $description = null,
+                        public ?int $impersonatorCreatorResourceID = null,
+                        public ?int $organizationalLevelAssociationID = null,
+                        public ?float $periodCost = null,
+                        public ?string $purchaseOrderNumber = null,
+                        public ?float $totalCost = null,
+                        public ?float $totalPrice = null,
+                        public ?int $vendorID = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($configurationItemID)) {
+            foreach($configurationItemID as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

@@ -16,20 +16,27 @@ use GuzzleHttp\Psr7\Response;
 class DocumentConfigurationItemCategoryAssociationEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new DocumentConfigurationItemCategoryAssociation entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?int $documentID = null,
-        public ?float $id = null,
-        public ?int $installedProductCategoryID = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public int|array|null $documentID = null,
+                        public ?float $id = null,
+                        public ?int $installedProductCategoryID = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($documentID)) {
+            foreach($documentID as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

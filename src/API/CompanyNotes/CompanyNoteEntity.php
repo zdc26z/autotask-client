@@ -18,37 +18,44 @@ use GuzzleHttp\Psr7\Response;
 class CompanyNoteEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new CompanyNote entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?int $actionType = null,
-        public ?int $assignedResourceID = null,
-        public ?int $companyID = null,
-        #[CastCarbon]
-        public ?Carbon $endDateTime = null,
-        public ?float $id = null,
-        #[CastCarbon]
-        public ?Carbon $startDateTime = null,
-        #[CastCarbon]
-        public ?Carbon $completedDateTime = null,
-        public ?int $contactID = null,
-        #[CastCarbon]
-        public ?Carbon $createDateTime = null,
-        public ?int $impersonatorCreatorResourceID = null,
-        public ?int $impersonatorUpdaterResourceID = null,
-        #[CastCarbon]
-        public ?Carbon $lastModifiedDate = null,
-        public ?string $name = null,
-        public ?string $note = null,
-        public ?int $opportunityID = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public int|array|null $actionType = null,
+                        public ?int $assignedResourceID = null,
+                        public ?int $companyID = null,
+                #[CastCarbon]
+                public ?Carbon $endDateTime = null,
+                        public ?float $id = null,
+                #[CastCarbon]
+                public ?Carbon $startDateTime = null,
+                #[CastCarbon]
+                public ?Carbon $completedDateTime = null,
+                        public ?int $contactID = null,
+                #[CastCarbon]
+                public ?Carbon $createDateTime = null,
+                        public ?int $impersonatorCreatorResourceID = null,
+                        public ?int $impersonatorUpdaterResourceID = null,
+                #[CastCarbon]
+                public ?Carbon $lastModifiedDate = null,
+                        public ?string $name = null,
+                        public ?string $note = null,
+                        public ?int $opportunityID = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($actionType)) {
+            foreach($actionType as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

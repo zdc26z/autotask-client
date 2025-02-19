@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\ConfigurationItemAttachments\ConfigurationItemAttachmentCollection;
-use Anteris\Autotask\API\ConfigurationItemAttachments\ConfigurationItemAttachmentEntity;
 use Anteris\Autotask\API\ConfigurationItemAttachments\ConfigurationItemAttachmentService;
+use Anteris\Autotask\API\ConfigurationItemAttachments\ConfigurationItemAttachmentEntity;
+
 use Anteris\Autotask\API\ConfigurationItemAttachments\ConfigurationItemAttachmentQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for ConfigurationItemAttachmentService.
@@ -63,5 +67,16 @@ class ConfigurationItemAttachmentServiceTest extends AbstractTest
             ConfigurationItemAttachmentQueryBuilder::class,
             $this->client->configurationItemAttachments()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), ConfigurationItemAttachmentEntity::class);
+
+        $entity = new ConfigurationItemAttachmentEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\Departments\DepartmentCollection;
-use Anteris\Autotask\API\Departments\DepartmentEntity;
 use Anteris\Autotask\API\Departments\DepartmentService;
+use Anteris\Autotask\API\Departments\DepartmentEntity;
+
 use Anteris\Autotask\API\Departments\DepartmentQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for DepartmentService.
@@ -63,5 +67,16 @@ class DepartmentServiceTest extends AbstractTest
             DepartmentQueryBuilder::class,
             $this->client->departments()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), DepartmentEntity::class);
+
+        $entity = new DepartmentEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

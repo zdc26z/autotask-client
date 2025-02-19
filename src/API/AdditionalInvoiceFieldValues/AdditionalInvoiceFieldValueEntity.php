@@ -16,21 +16,28 @@ use GuzzleHttp\Psr7\Response;
 class AdditionalInvoiceFieldValueEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new AdditionalInvoiceFieldValue entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?float $additionalInvoiceFieldID = null,
-        public ?string $fieldValue = null,
-        public ?float $id = null,
-        public ?float $invoiceBatchID = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public float|array|null $additionalInvoiceFieldID = null,
+                        public ?string $fieldValue = null,
+                        public ?float $id = null,
+                        public ?float $invoiceBatchID = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($additionalInvoiceFieldID)) {
+            foreach($additionalInvoiceFieldID as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

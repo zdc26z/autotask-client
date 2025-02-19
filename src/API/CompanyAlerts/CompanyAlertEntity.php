@@ -16,21 +16,28 @@ use GuzzleHttp\Psr7\Response;
 class CompanyAlertEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new CompanyAlert entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?string $alertText = null,
-        public ?int $alertTypeID = null,
-        public ?int $companyID = null,
-        public ?float $id = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public string|array|null $alertText = null,
+                        public ?int $alertTypeID = null,
+                        public ?int $companyID = null,
+                        public ?float $id = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($alertText)) {
+            foreach($alertText as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

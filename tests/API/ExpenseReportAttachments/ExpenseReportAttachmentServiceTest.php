@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\ExpenseReportAttachments\ExpenseReportAttachmentCollection;
-use Anteris\Autotask\API\ExpenseReportAttachments\ExpenseReportAttachmentEntity;
 use Anteris\Autotask\API\ExpenseReportAttachments\ExpenseReportAttachmentService;
+use Anteris\Autotask\API\ExpenseReportAttachments\ExpenseReportAttachmentEntity;
+
 use Anteris\Autotask\API\ExpenseReportAttachments\ExpenseReportAttachmentQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for ExpenseReportAttachmentService.
@@ -63,5 +67,16 @@ class ExpenseReportAttachmentServiceTest extends AbstractTest
             ExpenseReportAttachmentQueryBuilder::class,
             $this->client->expenseReportAttachments()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), ExpenseReportAttachmentEntity::class);
+
+        $entity = new ExpenseReportAttachmentEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\ArticleAttachments\ArticleAttachmentCollection;
-use Anteris\Autotask\API\ArticleAttachments\ArticleAttachmentEntity;
 use Anteris\Autotask\API\ArticleAttachments\ArticleAttachmentService;
+use Anteris\Autotask\API\ArticleAttachments\ArticleAttachmentEntity;
+
 use Anteris\Autotask\API\ArticleAttachments\ArticleAttachmentQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for ArticleAttachmentService.
@@ -63,5 +67,16 @@ class ArticleAttachmentServiceTest extends AbstractTest
             ArticleAttachmentQueryBuilder::class,
             $this->client->articleAttachments()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), ArticleAttachmentEntity::class);
+
+        $entity = new ArticleAttachmentEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

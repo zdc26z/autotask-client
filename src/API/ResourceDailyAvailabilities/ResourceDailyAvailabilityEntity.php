@@ -16,28 +16,35 @@ use GuzzleHttp\Psr7\Response;
 class ResourceDailyAvailabilityEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new ResourceDailyAvailability entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?float $id = null,
-        public ?int $resourceID = null,
-        public ?float $fridayAvailableHours = null,
-        public ?float $mondayAvailableHours = null,
-        public ?float $saturdayAvailableHours = null,
-        public ?float $sundayAvailableHours = null,
-        public ?float $thursdayAvailableHours = null,
-        public ?string $travelAvailability = null,
-        public ?float $tuesdayAvailableHours = null,
-        public ?float $wednesdayAvailableHours = null,
-        public ?float $weeklyBillableHoursGoal = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public float|array|null $id = null,
+                        public ?int $resourceID = null,
+                        public ?float $fridayAvailableHours = null,
+                        public ?float $mondayAvailableHours = null,
+                        public ?float $saturdayAvailableHours = null,
+                        public ?float $sundayAvailableHours = null,
+                        public ?float $thursdayAvailableHours = null,
+                        public ?string $travelAvailability = null,
+                        public ?float $tuesdayAvailableHours = null,
+                        public ?float $wednesdayAvailableHours = null,
+                        public ?float $weeklyBillableHoursGoal = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($id)) {
+            foreach($id as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

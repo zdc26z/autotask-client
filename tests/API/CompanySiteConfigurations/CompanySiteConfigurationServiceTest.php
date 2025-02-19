@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\CompanySiteConfigurations\CompanySiteConfigurationCollection;
-use Anteris\Autotask\API\CompanySiteConfigurations\CompanySiteConfigurationEntity;
 use Anteris\Autotask\API\CompanySiteConfigurations\CompanySiteConfigurationService;
+use Anteris\Autotask\API\CompanySiteConfigurations\CompanySiteConfigurationEntity;
+
 use Anteris\Autotask\API\CompanySiteConfigurations\CompanySiteConfigurationQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for CompanySiteConfigurationService.
@@ -63,5 +67,16 @@ class CompanySiteConfigurationServiceTest extends AbstractTest
             CompanySiteConfigurationQueryBuilder::class,
             $this->client->companySiteConfigurations()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), CompanySiteConfigurationEntity::class);
+
+        $entity = new CompanySiteConfigurationEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

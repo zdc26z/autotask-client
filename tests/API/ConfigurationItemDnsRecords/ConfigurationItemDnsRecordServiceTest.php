@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\ConfigurationItemDnsRecords\ConfigurationItemDnsRecordCollection;
-use Anteris\Autotask\API\ConfigurationItemDnsRecords\ConfigurationItemDnsRecordEntity;
 use Anteris\Autotask\API\ConfigurationItemDnsRecords\ConfigurationItemDnsRecordService;
+use Anteris\Autotask\API\ConfigurationItemDnsRecords\ConfigurationItemDnsRecordEntity;
+
 use Anteris\Autotask\API\ConfigurationItemDnsRecords\ConfigurationItemDnsRecordQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for ConfigurationItemDnsRecordService.
@@ -63,5 +67,16 @@ class ConfigurationItemDnsRecordServiceTest extends AbstractTest
             ConfigurationItemDnsRecordQueryBuilder::class,
             $this->client->configurationItemDnsRecords()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), ConfigurationItemDnsRecordEntity::class);
+
+        $entity = new ConfigurationItemDnsRecordEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

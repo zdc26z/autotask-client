@@ -18,28 +18,35 @@ use GuzzleHttp\Psr7\Response;
 class InventoryTransferEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new InventoryTransfer entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?float $fromLocationID = null,
-        public ?float $id = null,
-        public ?float $productID = null,
-        public ?int $quantityTransferred = null,
-        public ?float $toLocationID = null,
-        public ?string $notes = null,
-        public ?string $serialNumber = null,
-        public ?int $transferByResourceID = null,
-        #[CastCarbon]
-        public ?Carbon $transferDate = null,
-        public ?string $updateNote = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public float|array|null $fromLocationID = null,
+                        public ?float $id = null,
+                        public ?float $productID = null,
+                        public ?int $quantityTransferred = null,
+                        public ?float $toLocationID = null,
+                        public ?string $notes = null,
+                        public ?string $serialNumber = null,
+                        public ?int $transferByResourceID = null,
+                #[CastCarbon]
+                public ?Carbon $transferDate = null,
+                        public ?string $updateNote = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($fromLocationID)) {
+            foreach($fromLocationID as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

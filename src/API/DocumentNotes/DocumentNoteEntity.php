@@ -18,27 +18,34 @@ use GuzzleHttp\Psr7\Response;
 class DocumentNoteEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new DocumentNote entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?string $description = null,
-        public ?int $documentID = null,
-        public ?float $id = null,
-        public ?string $title = null,
-        public ?int $createdByResourceID = null,
-        #[CastCarbon]
-        public ?Carbon $createdDateTime = null,
-        public ?int $lastModifiedByResourceID = null,
-        #[CastCarbon]
-        public ?Carbon $lastModifiedDateTime = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public string|array|null $description = null,
+                        public ?int $documentID = null,
+                        public ?float $id = null,
+                        public ?string $title = null,
+                        public ?int $createdByResourceID = null,
+                #[CastCarbon]
+                public ?Carbon $createdDateTime = null,
+                        public ?int $lastModifiedByResourceID = null,
+                #[CastCarbon]
+                public ?Carbon $lastModifiedDateTime = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($description)) {
+            foreach($description as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

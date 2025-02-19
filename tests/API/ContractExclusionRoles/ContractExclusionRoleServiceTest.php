@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\ContractExclusionRoles\ContractExclusionRoleCollection;
-use Anteris\Autotask\API\ContractExclusionRoles\ContractExclusionRoleEntity;
 use Anteris\Autotask\API\ContractExclusionRoles\ContractExclusionRoleService;
+use Anteris\Autotask\API\ContractExclusionRoles\ContractExclusionRoleEntity;
+
 use Anteris\Autotask\API\ContractExclusionRoles\ContractExclusionRoleQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for ContractExclusionRoleService.
@@ -63,5 +67,16 @@ class ContractExclusionRoleServiceTest extends AbstractTest
             ContractExclusionRoleQueryBuilder::class,
             $this->client->contractExclusionRoles()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), ContractExclusionRoleEntity::class);
+
+        $entity = new ContractExclusionRoleEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

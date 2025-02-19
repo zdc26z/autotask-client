@@ -18,7 +18,7 @@ use GuzzleHttp\Psr7\Response;
 class ContractServiceBundleAdjustmentEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new ContractServiceBundleAdjustment entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
@@ -26,19 +26,26 @@ class ContractServiceBundleAdjustmentEntity extends Entity
      */
     public function __construct(
                 #[CastCarbon]
-        public ?Carbon $effectiveDate = null,
-        public ?float $id = null,
-        public ?float $adjustedUnitPrice = null,
-        public ?bool $allowRepeatServiceBundle = null,
-        public ?int $contractID = null,
-        public ?int $contractServiceBundleID = null,
-        public ?int $quoteItemID = null,
-        public ?int $serviceBundleID = null,
-        public ?int $unitChange = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                public Carbon|array|null $effectiveDate = null,
+                        public ?float $id = null,
+                        public ?float $adjustedUnitPrice = null,
+                        public ?bool $allowRepeatServiceBundle = null,
+                        public ?int $contractID = null,
+                        public ?int $contractServiceBundleID = null,
+                        public ?int $quoteItemID = null,
+                        public ?int $serviceBundleID = null,
+                        public ?int $unitChange = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($effectiveDate)) {
+            foreach($effectiveDate as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

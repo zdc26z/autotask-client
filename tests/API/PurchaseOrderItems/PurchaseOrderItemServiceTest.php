@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\PurchaseOrderItems\PurchaseOrderItemCollection;
-use Anteris\Autotask\API\PurchaseOrderItems\PurchaseOrderItemEntity;
 use Anteris\Autotask\API\PurchaseOrderItems\PurchaseOrderItemService;
+use Anteris\Autotask\API\PurchaseOrderItems\PurchaseOrderItemEntity;
+
 use Anteris\Autotask\API\PurchaseOrderItems\PurchaseOrderItemQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for PurchaseOrderItemService.
@@ -63,5 +67,16 @@ class PurchaseOrderItemServiceTest extends AbstractTest
             PurchaseOrderItemQueryBuilder::class,
             $this->client->purchaseOrderItems()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), PurchaseOrderItemEntity::class);
+
+        $entity = new PurchaseOrderItemEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

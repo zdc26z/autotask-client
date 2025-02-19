@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\PriceListRoles\PriceListRoleCollection;
-use Anteris\Autotask\API\PriceListRoles\PriceListRoleEntity;
 use Anteris\Autotask\API\PriceListRoles\PriceListRoleService;
+use Anteris\Autotask\API\PriceListRoles\PriceListRoleEntity;
+
 use Anteris\Autotask\API\PriceListRoles\PriceListRoleQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for PriceListRoleService.
@@ -63,5 +67,16 @@ class PriceListRoleServiceTest extends AbstractTest
             PriceListRoleQueryBuilder::class,
             $this->client->priceListRoles()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), PriceListRoleEntity::class);
+
+        $entity = new PriceListRoleEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

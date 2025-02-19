@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\TicketCategoryFieldDefaults\TicketCategoryFieldDefaultCollection;
-use Anteris\Autotask\API\TicketCategoryFieldDefaults\TicketCategoryFieldDefaultEntity;
 use Anteris\Autotask\API\TicketCategoryFieldDefaults\TicketCategoryFieldDefaultService;
+use Anteris\Autotask\API\TicketCategoryFieldDefaults\TicketCategoryFieldDefaultEntity;
+
 use Anteris\Autotask\API\TicketCategoryFieldDefaults\TicketCategoryFieldDefaultQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for TicketCategoryFieldDefaultService.
@@ -63,5 +67,16 @@ class TicketCategoryFieldDefaultServiceTest extends AbstractTest
             TicketCategoryFieldDefaultQueryBuilder::class,
             $this->client->ticketCategoryFieldDefaults()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), TicketCategoryFieldDefaultEntity::class);
+
+        $entity = new TicketCategoryFieldDefaultEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

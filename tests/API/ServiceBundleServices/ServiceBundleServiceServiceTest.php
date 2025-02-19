@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\ServiceBundleServices\ServiceBundleServiceCollection;
-use Anteris\Autotask\API\ServiceBundleServices\ServiceBundleServiceEntity;
 use Anteris\Autotask\API\ServiceBundleServices\ServiceBundleServiceService;
+use Anteris\Autotask\API\ServiceBundleServices\ServiceBundleServiceEntity;
+
 use Anteris\Autotask\API\ServiceBundleServices\ServiceBundleServiceQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for ServiceBundleServiceService.
@@ -63,5 +67,16 @@ class ServiceBundleServiceServiceTest extends AbstractTest
             ServiceBundleServiceQueryBuilder::class,
             $this->client->serviceBundleServices()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), ServiceBundleServiceEntity::class);
+
+        $entity = new ServiceBundleServiceEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

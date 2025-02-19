@@ -16,20 +16,27 @@ use GuzzleHttp\Psr7\Response;
 class TicketAdditionalContactEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new TicketAdditionalContact entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?int $contactID = null,
-        public ?float $id = null,
-        public ?int $ticketID = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public int|array|null $contactID = null,
+                        public ?float $id = null,
+                        public ?int $ticketID = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($contactID)) {
+            foreach($contactID as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

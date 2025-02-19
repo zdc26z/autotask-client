@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\ArticleNotes\ArticleNoteCollection;
-use Anteris\Autotask\API\ArticleNotes\ArticleNoteEntity;
 use Anteris\Autotask\API\ArticleNotes\ArticleNoteService;
+use Anteris\Autotask\API\ArticleNotes\ArticleNoteEntity;
+
 use Anteris\Autotask\API\ArticleNotes\ArticleNoteQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for ArticleNoteService.
@@ -63,5 +67,16 @@ class ArticleNoteServiceTest extends AbstractTest
             ArticleNoteQueryBuilder::class,
             $this->client->articleNotes()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), ArticleNoteEntity::class);
+
+        $entity = new ArticleNoteEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\BillingItems\BillingItemCollection;
-use Anteris\Autotask\API\BillingItems\BillingItemEntity;
 use Anteris\Autotask\API\BillingItems\BillingItemService;
+use Anteris\Autotask\API\BillingItems\BillingItemEntity;
+
 use Anteris\Autotask\API\BillingItems\BillingItemQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for BillingItemService.
@@ -63,5 +67,16 @@ class BillingItemServiceTest extends AbstractTest
             BillingItemQueryBuilder::class,
             $this->client->billingItems()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), BillingItemEntity::class);
+
+        $entity = new BillingItemEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

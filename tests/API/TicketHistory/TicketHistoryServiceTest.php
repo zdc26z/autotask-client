@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\TicketHistory\TicketHistoryCollection;
-use Anteris\Autotask\API\TicketHistory\TicketHistoryEntity;
 use Anteris\Autotask\API\TicketHistory\TicketHistoryService;
+use Anteris\Autotask\API\TicketHistory\TicketHistoryEntity;
+
 use Anteris\Autotask\API\TicketHistory\TicketHistoryQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for TicketHistoryService.
@@ -63,5 +67,16 @@ class TicketHistoryServiceTest extends AbstractTest
             TicketHistoryQueryBuilder::class,
             $this->client->ticketHistory()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), TicketHistoryEntity::class);
+
+        $entity = new TicketHistoryEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

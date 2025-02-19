@@ -18,55 +18,62 @@ use GuzzleHttp\Psr7\Response;
 class PurchaseOrderEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new PurchaseOrder entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?float $id = null,
-        public ?string $shipToAddress1 = null,
-        public ?string $shipToName = null,
-        public ?int $status = null,
-        public ?int $vendorID = null,
-        public ?string $additionalVendorInvoiceNumbers = null,
-        #[CastCarbon]
-        public ?Carbon $cancelDateTime = null,
-        #[CastCarbon]
-        public ?Carbon $createDateTime = null,
-        public ?int $creatorResourceID = null,
-        public ?string $externalPONumber = null,
-        public ?string $fax = null,
-        public ?float $freight = null,
-        public ?string $generalMemo = null,
-        public ?int $impersonatorCreatorResourceID = null,
-        public ?float $internalCurrencyFreight = null,
-        #[CastCarbon]
-        public ?Carbon $latestEstimatedArrivalDate = null,
-        public ?int $paymentTerm = null,
-        public ?string $phone = null,
-        public ?int $purchaseForCompanyID = null,
-        public ?string $purchaseOrderNumber = null,
-        public ?int $purchaseOrderTemplateID = null,
-        #[CastCarbon]
-        public ?Carbon $shippingDate = null,
-        public ?int $shippingType = null,
-        public ?string $shipToAddress2 = null,
-        public ?string $shipToCity = null,
-        public ?string $shipToPostalCode = null,
-        public ?string $shipToState = null,
-        public ?bool $showEachTaxInGroup = null,
-        public ?bool $showTaxCategory = null,
-        #[CastCarbon]
-        public ?Carbon $submitDateTime = null,
-        public ?int $taxRegionID = null,
-        public ?int $useItemDescriptionsFrom = null,
-        public ?string $vendorInvoiceNumber = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public float|array|null $id = null,
+                        public ?string $shipToAddress1 = null,
+                        public ?string $shipToName = null,
+                        public ?int $status = null,
+                        public ?int $vendorID = null,
+                        public ?string $additionalVendorInvoiceNumbers = null,
+                #[CastCarbon]
+                public ?Carbon $cancelDateTime = null,
+                #[CastCarbon]
+                public ?Carbon $createDateTime = null,
+                        public ?int $creatorResourceID = null,
+                        public ?string $externalPONumber = null,
+                        public ?string $fax = null,
+                        public ?float $freight = null,
+                        public ?string $generalMemo = null,
+                        public ?int $impersonatorCreatorResourceID = null,
+                        public ?float $internalCurrencyFreight = null,
+                #[CastCarbon]
+                public ?Carbon $latestEstimatedArrivalDate = null,
+                        public ?int $paymentTerm = null,
+                        public ?string $phone = null,
+                        public ?int $purchaseForCompanyID = null,
+                        public ?string $purchaseOrderNumber = null,
+                        public ?int $purchaseOrderTemplateID = null,
+                #[CastCarbon]
+                public ?Carbon $shippingDate = null,
+                        public ?int $shippingType = null,
+                        public ?string $shipToAddress2 = null,
+                        public ?string $shipToCity = null,
+                        public ?string $shipToPostalCode = null,
+                        public ?string $shipToState = null,
+                        public ?bool $showEachTaxInGroup = null,
+                        public ?bool $showTaxCategory = null,
+                #[CastCarbon]
+                public ?Carbon $submitDateTime = null,
+                        public ?int $taxRegionID = null,
+                        public ?int $useItemDescriptionsFrom = null,
+                        public ?string $vendorInvoiceNumber = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($id)) {
+            foreach($id as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

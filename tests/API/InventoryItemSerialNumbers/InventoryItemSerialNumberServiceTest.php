@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\InventoryItemSerialNumbers\InventoryItemSerialNumberCollection;
-use Anteris\Autotask\API\InventoryItemSerialNumbers\InventoryItemSerialNumberEntity;
 use Anteris\Autotask\API\InventoryItemSerialNumbers\InventoryItemSerialNumberService;
+use Anteris\Autotask\API\InventoryItemSerialNumbers\InventoryItemSerialNumberEntity;
+
 use Anteris\Autotask\API\InventoryItemSerialNumbers\InventoryItemSerialNumberQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for InventoryItemSerialNumberService.
@@ -63,5 +67,16 @@ class InventoryItemSerialNumberServiceTest extends AbstractTest
             InventoryItemSerialNumberQueryBuilder::class,
             $this->client->inventoryItemSerialNumbers()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), InventoryItemSerialNumberEntity::class);
+
+        $entity = new InventoryItemSerialNumberEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

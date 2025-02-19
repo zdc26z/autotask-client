@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\ConfigurationItemCategoryUdfAssociations\ConfigurationItemCategoryUdfAssociationCollection;
-use Anteris\Autotask\API\ConfigurationItemCategoryUdfAssociations\ConfigurationItemCategoryUdfAssociationEntity;
 use Anteris\Autotask\API\ConfigurationItemCategoryUdfAssociations\ConfigurationItemCategoryUdfAssociationService;
+use Anteris\Autotask\API\ConfigurationItemCategoryUdfAssociations\ConfigurationItemCategoryUdfAssociationEntity;
+
 use Anteris\Autotask\API\ConfigurationItemCategoryUdfAssociations\ConfigurationItemCategoryUdfAssociationQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for ConfigurationItemCategoryUdfAssociationService.
@@ -63,5 +67,16 @@ class ConfigurationItemCategoryUdfAssociationServiceTest extends AbstractTest
             ConfigurationItemCategoryUdfAssociationQueryBuilder::class,
             $this->client->configurationItemCategoryUdfAssociations()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), ConfigurationItemCategoryUdfAssociationEntity::class);
+
+        $entity = new ConfigurationItemCategoryUdfAssociationEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\ContractNoteAttachments\ContractNoteAttachmentCollection;
-use Anteris\Autotask\API\ContractNoteAttachments\ContractNoteAttachmentEntity;
 use Anteris\Autotask\API\ContractNoteAttachments\ContractNoteAttachmentService;
+use Anteris\Autotask\API\ContractNoteAttachments\ContractNoteAttachmentEntity;
+
 use Anteris\Autotask\API\ContractNoteAttachments\ContractNoteAttachmentQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for ContractNoteAttachmentService.
@@ -63,5 +67,16 @@ class ContractNoteAttachmentServiceTest extends AbstractTest
             ContractNoteAttachmentQueryBuilder::class,
             $this->client->contractNoteAttachments()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), ContractNoteAttachmentEntity::class);
+
+        $entity = new ContractNoteAttachmentEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

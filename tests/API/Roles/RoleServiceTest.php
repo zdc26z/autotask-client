@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\Roles\RoleCollection;
-use Anteris\Autotask\API\Roles\RoleEntity;
 use Anteris\Autotask\API\Roles\RoleService;
+use Anteris\Autotask\API\Roles\RoleEntity;
+
 use Anteris\Autotask\API\Roles\RoleQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for RoleService.
@@ -63,5 +67,16 @@ class RoleServiceTest extends AbstractTest
             RoleQueryBuilder::class,
             $this->client->roles()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), RoleEntity::class);
+
+        $entity = new RoleEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

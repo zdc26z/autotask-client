@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\ResourceAttachments\ResourceAttachmentCollection;
-use Anteris\Autotask\API\ResourceAttachments\ResourceAttachmentEntity;
 use Anteris\Autotask\API\ResourceAttachments\ResourceAttachmentService;
+use Anteris\Autotask\API\ResourceAttachments\ResourceAttachmentEntity;
+
 use Anteris\Autotask\API\ResourceAttachments\ResourceAttachmentQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for ResourceAttachmentService.
@@ -63,5 +67,16 @@ class ResourceAttachmentServiceTest extends AbstractTest
             ResourceAttachmentQueryBuilder::class,
             $this->client->resourceAttachments()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), ResourceAttachmentEntity::class);
+
+        $entity = new ResourceAttachmentEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

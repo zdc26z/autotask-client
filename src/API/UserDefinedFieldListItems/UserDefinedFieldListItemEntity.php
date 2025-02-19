@@ -18,24 +18,31 @@ use GuzzleHttp\Psr7\Response;
 class UserDefinedFieldListItemEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new UserDefinedFieldListItem entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?float $id = null,
-        public ?float $udfFieldId = null,
-        public ?string $valueForDisplay = null,
-        public ?string $valueForExport = null,
-        #[CastCarbon]
-        public ?Carbon $createDate = null,
-        public ?bool $isActive = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public float|array|null $id = null,
+                        public ?float $udfFieldId = null,
+                        public ?string $valueForDisplay = null,
+                        public ?string $valueForExport = null,
+                #[CastCarbon]
+                public ?Carbon $createDate = null,
+                        public ?bool $isActive = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($id)) {
+            foreach($id as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

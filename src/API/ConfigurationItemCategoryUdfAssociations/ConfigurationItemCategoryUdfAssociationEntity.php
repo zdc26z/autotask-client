@@ -16,21 +16,28 @@ use GuzzleHttp\Psr7\Response;
 class ConfigurationItemCategoryUdfAssociationEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new ConfigurationItemCategoryUdfAssociation entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?int $configurationItemCategoryID = null,
-        public ?float $id = null,
-        public ?bool $isRequired = null,
-        public ?int $userDefinedFieldDefinitionID = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public int|array|null $configurationItemCategoryID = null,
+                        public ?float $id = null,
+                        public ?bool $isRequired = null,
+                        public ?int $userDefinedFieldDefinitionID = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($configurationItemCategoryID)) {
+            foreach($configurationItemCategoryID as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

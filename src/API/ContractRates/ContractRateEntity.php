@@ -16,22 +16,29 @@ use GuzzleHttp\Psr7\Response;
 class ContractRateEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new ContractRate entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?float $contractHourlyRate = null,
-        public ?int $contractID = null,
-        public ?float $id = null,
-        public ?int $roleID = null,
-        public ?float $internalCurrencyContractHourlyRate = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public float|array|null $contractHourlyRate = null,
+                        public ?int $contractID = null,
+                        public ?float $id = null,
+                        public ?int $roleID = null,
+                        public ?float $internalCurrencyContractHourlyRate = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($contractHourlyRate)) {
+            foreach($contractHourlyRate as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

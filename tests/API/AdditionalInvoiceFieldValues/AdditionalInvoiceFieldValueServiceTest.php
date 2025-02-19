@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\AdditionalInvoiceFieldValues\AdditionalInvoiceFieldValueCollection;
-use Anteris\Autotask\API\AdditionalInvoiceFieldValues\AdditionalInvoiceFieldValueEntity;
 use Anteris\Autotask\API\AdditionalInvoiceFieldValues\AdditionalInvoiceFieldValueService;
+use Anteris\Autotask\API\AdditionalInvoiceFieldValues\AdditionalInvoiceFieldValueEntity;
+
 use Anteris\Autotask\API\AdditionalInvoiceFieldValues\AdditionalInvoiceFieldValueQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for AdditionalInvoiceFieldValueService.
@@ -63,5 +67,16 @@ class AdditionalInvoiceFieldValueServiceTest extends AbstractTest
             AdditionalInvoiceFieldValueQueryBuilder::class,
             $this->client->additionalInvoiceFieldValues()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), AdditionalInvoiceFieldValueEntity::class);
+
+        $entity = new AdditionalInvoiceFieldValueEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

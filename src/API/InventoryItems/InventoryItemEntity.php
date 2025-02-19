@@ -16,30 +16,37 @@ use GuzzleHttp\Psr7\Response;
 class InventoryItemEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new InventoryItem entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?float $id = null,
-        public ?int $inventoryLocationID = null,
-        public ?int $productID = null,
-        public ?int $quantityMaximum = null,
-        public ?int $quantityMinimum = null,
-        public ?int $quantityOnHand = null,
-        public ?int $backOrderQuantity = null,
-        public ?string $bin = null,
-        public ?int $impersonatorCreatorResourceID = null,
-        public ?int $quantityOnOrder = null,
-        public ?int $quantityPicked = null,
-        public ?int $quantityReserved = null,
-        public ?string $referenceNumber = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public float|array|null $id = null,
+                        public ?int $inventoryLocationID = null,
+                        public ?int $productID = null,
+                        public ?int $quantityMaximum = null,
+                        public ?int $quantityMinimum = null,
+                        public ?int $quantityOnHand = null,
+                        public ?int $backOrderQuantity = null,
+                        public ?string $bin = null,
+                        public ?int $impersonatorCreatorResourceID = null,
+                        public ?int $quantityOnOrder = null,
+                        public ?int $quantityPicked = null,
+                        public ?int $quantityReserved = null,
+                        public ?string $referenceNumber = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($id)) {
+            foreach($id as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

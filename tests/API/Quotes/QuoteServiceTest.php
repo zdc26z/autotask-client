@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\Quotes\QuoteCollection;
-use Anteris\Autotask\API\Quotes\QuoteEntity;
 use Anteris\Autotask\API\Quotes\QuoteService;
+use Anteris\Autotask\API\Quotes\QuoteEntity;
+
 use Anteris\Autotask\API\Quotes\QuoteQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for QuoteService.
@@ -63,5 +67,16 @@ class QuoteServiceTest extends AbstractTest
             QuoteQueryBuilder::class,
             $this->client->quotes()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), QuoteEntity::class);
+
+        $entity = new QuoteEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

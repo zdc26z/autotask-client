@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\InventoryProducts\InventoryProductCollection;
-use Anteris\Autotask\API\InventoryProducts\InventoryProductEntity;
 use Anteris\Autotask\API\InventoryProducts\InventoryProductService;
+use Anteris\Autotask\API\InventoryProducts\InventoryProductEntity;
+
 use Anteris\Autotask\API\InventoryProducts\InventoryProductQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for InventoryProductService.
@@ -63,5 +67,16 @@ class InventoryProductServiceTest extends AbstractTest
             InventoryProductQueryBuilder::class,
             $this->client->inventoryProducts()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), InventoryProductEntity::class);
+
+        $entity = new InventoryProductEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

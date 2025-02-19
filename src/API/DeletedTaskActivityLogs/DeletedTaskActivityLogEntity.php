@@ -18,7 +18,7 @@ use GuzzleHttp\Psr7\Response;
 class DeletedTaskActivityLogEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new DeletedTaskActivityLog entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
@@ -26,25 +26,32 @@ class DeletedTaskActivityLogEntity extends Entity
      */
     public function __construct(
                 #[CastCarbon]
-        public ?Carbon $activityDateTime = null,
-        public ?int $createdByResourceID = null,
-        public ?int $deletedByResourceID = null,
-        #[CastCarbon]
-        public ?Carbon $deletedDateTime = null,
-        #[CastCarbon]
-        public ?Carbon $endDateTime = null,
-        public ?float $hoursWorked = null,
-        public ?float $id = null,
-        public ?string $noteOrAttachmentTitle = null,
-        #[CastCarbon]
-        public ?Carbon $startDateTime = null,
-        public ?int $taskID = null,
-        public ?string $taskNumber = null,
-        public ?int $typeID = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                public Carbon|array|null $activityDateTime = null,
+                        public ?int $createdByResourceID = null,
+                        public ?int $deletedByResourceID = null,
+                #[CastCarbon]
+                public ?Carbon $deletedDateTime = null,
+                #[CastCarbon]
+                public ?Carbon $endDateTime = null,
+                        public ?float $hoursWorked = null,
+                        public ?float $id = null,
+                        public ?string $noteOrAttachmentTitle = null,
+                #[CastCarbon]
+                public ?Carbon $startDateTime = null,
+                        public ?int $taskID = null,
+                        public ?string $taskNumber = null,
+                        public ?int $typeID = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($activityDateTime)) {
+            foreach($activityDateTime as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

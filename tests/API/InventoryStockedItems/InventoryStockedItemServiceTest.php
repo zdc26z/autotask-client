@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\InventoryStockedItems\InventoryStockedItemCollection;
-use Anteris\Autotask\API\InventoryStockedItems\InventoryStockedItemEntity;
 use Anteris\Autotask\API\InventoryStockedItems\InventoryStockedItemService;
+use Anteris\Autotask\API\InventoryStockedItems\InventoryStockedItemEntity;
+
 use Anteris\Autotask\API\InventoryStockedItems\InventoryStockedItemQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for InventoryStockedItemService.
@@ -63,5 +67,16 @@ class InventoryStockedItemServiceTest extends AbstractTest
             InventoryStockedItemQueryBuilder::class,
             $this->client->inventoryStockedItems()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), InventoryStockedItemEntity::class);
+
+        $entity = new InventoryStockedItemEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

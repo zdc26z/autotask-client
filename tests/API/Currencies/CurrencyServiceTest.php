@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\Currencies\CurrencyCollection;
-use Anteris\Autotask\API\Currencies\CurrencyEntity;
 use Anteris\Autotask\API\Currencies\CurrencyService;
+use Anteris\Autotask\API\Currencies\CurrencyEntity;
+
 use Anteris\Autotask\API\Currencies\CurrencyQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for CurrencyService.
@@ -63,5 +67,16 @@ class CurrencyServiceTest extends AbstractTest
             CurrencyQueryBuilder::class,
             $this->client->currencies()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), CurrencyEntity::class);
+
+        $entity = new CurrencyEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

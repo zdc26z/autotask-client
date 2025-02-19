@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\CompanyLocations\CompanyLocationCollection;
-use Anteris\Autotask\API\CompanyLocations\CompanyLocationEntity;
 use Anteris\Autotask\API\CompanyLocations\CompanyLocationService;
+use Anteris\Autotask\API\CompanyLocations\CompanyLocationEntity;
+
 use Anteris\Autotask\API\CompanyLocations\CompanyLocationQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for CompanyLocationService.
@@ -63,5 +67,16 @@ class CompanyLocationServiceTest extends AbstractTest
             CompanyLocationQueryBuilder::class,
             $this->client->companyLocations()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), CompanyLocationEntity::class);
+
+        $entity = new CompanyLocationEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

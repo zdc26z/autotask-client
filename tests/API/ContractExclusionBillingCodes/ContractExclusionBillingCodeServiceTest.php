@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\ContractExclusionBillingCodes\ContractExclusionBillingCodeCollection;
-use Anteris\Autotask\API\ContractExclusionBillingCodes\ContractExclusionBillingCodeEntity;
 use Anteris\Autotask\API\ContractExclusionBillingCodes\ContractExclusionBillingCodeService;
+use Anteris\Autotask\API\ContractExclusionBillingCodes\ContractExclusionBillingCodeEntity;
+
 use Anteris\Autotask\API\ContractExclusionBillingCodes\ContractExclusionBillingCodeQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for ContractExclusionBillingCodeService.
@@ -63,5 +67,16 @@ class ContractExclusionBillingCodeServiceTest extends AbstractTest
             ContractExclusionBillingCodeQueryBuilder::class,
             $this->client->contractExclusionBillingCodes()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), ContractExclusionBillingCodeEntity::class);
+
+        $entity = new ContractExclusionBillingCodeEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

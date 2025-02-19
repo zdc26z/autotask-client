@@ -18,32 +18,39 @@ use GuzzleHttp\Psr7\Response;
 class ContractMilestoneEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new ContractMilestone entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?float $amount = null,
-        public ?int $contractID = null,
-        #[CastCarbon]
-        public ?Carbon $dateDue = null,
-        public ?float $id = null,
-        public ?bool $isInitialPayment = null,
-        public ?int $status = null,
-        public ?string $title = null,
-        public ?int $billingCodeID = null,
-        #[CastCarbon]
-        public ?Carbon $createDate = null,
-        public ?int $creatorResourceID = null,
-        public ?string $description = null,
-        public ?float $internalCurrencyAmount = null,
-        public ?int $organizationalLevelAssociationID = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public float|array|null $amount = null,
+                        public ?int $contractID = null,
+                #[CastCarbon]
+                public ?Carbon $dateDue = null,
+                        public ?float $id = null,
+                        public ?bool $isInitialPayment = null,
+                        public ?int $status = null,
+                        public ?string $title = null,
+                        public ?int $billingCodeID = null,
+                #[CastCarbon]
+                public ?Carbon $createDate = null,
+                        public ?int $creatorResourceID = null,
+                        public ?string $description = null,
+                        public ?float $internalCurrencyAmount = null,
+                        public ?int $organizationalLevelAssociationID = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($amount)) {
+            foreach($amount as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

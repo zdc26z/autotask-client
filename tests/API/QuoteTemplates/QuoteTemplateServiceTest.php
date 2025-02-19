@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\QuoteTemplates\QuoteTemplateCollection;
-use Anteris\Autotask\API\QuoteTemplates\QuoteTemplateEntity;
 use Anteris\Autotask\API\QuoteTemplates\QuoteTemplateService;
+use Anteris\Autotask\API\QuoteTemplates\QuoteTemplateEntity;
+
 use Anteris\Autotask\API\QuoteTemplates\QuoteTemplateQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for QuoteTemplateService.
@@ -63,5 +67,16 @@ class QuoteTemplateServiceTest extends AbstractTest
             QuoteTemplateQueryBuilder::class,
             $this->client->quoteTemplates()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), QuoteTemplateEntity::class);
+
+        $entity = new QuoteTemplateEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

@@ -18,38 +18,45 @@ use GuzzleHttp\Psr7\Response;
 class ServiceCallEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new ServiceCall entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?int $companyID = null,
-        #[CastCarbon]
-        public ?Carbon $endDateTime = null,
-        public ?float $id = null,
-        #[CastCarbon]
-        public ?Carbon $startDateTime = null,
-        public ?float $cancelationNoticeHours = null,
-        public ?int $canceledByResourceID = null,
-        #[CastCarbon]
-        public ?Carbon $canceledDateTime = null,
-        public ?int $companyLocationID = null,
-        #[CastCarbon]
-        public ?Carbon $createDateTime = null,
-        public ?int $creatorResourceID = null,
-        public ?string $description = null,
-        public ?float $duration = null,
-        public ?int $impersonatorCreatorResourceID = null,
-        public mixed $isComplete = null,
-        #[CastCarbon]
-        public ?Carbon $lastModifiedDateTime = null,
-        public ?int $status = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public int|array|null $companyID = null,
+                #[CastCarbon]
+                public ?Carbon $endDateTime = null,
+                        public ?float $id = null,
+                #[CastCarbon]
+                public ?Carbon $startDateTime = null,
+                        public ?float $cancelationNoticeHours = null,
+                        public ?int $canceledByResourceID = null,
+                #[CastCarbon]
+                public ?Carbon $canceledDateTime = null,
+                        public ?int $companyLocationID = null,
+                #[CastCarbon]
+                public ?Carbon $createDateTime = null,
+                        public ?int $creatorResourceID = null,
+                        public ?string $description = null,
+                        public ?float $duration = null,
+                        public ?int $impersonatorCreatorResourceID = null,
+                        public mixed $isComplete = null,
+                #[CastCarbon]
+                public ?Carbon $lastModifiedDateTime = null,
+                        public ?int $status = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($companyID)) {
+            foreach($companyID as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

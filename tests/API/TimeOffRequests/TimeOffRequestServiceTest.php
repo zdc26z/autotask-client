@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\TimeOffRequests\TimeOffRequestCollection;
-use Anteris\Autotask\API\TimeOffRequests\TimeOffRequestEntity;
 use Anteris\Autotask\API\TimeOffRequests\TimeOffRequestService;
+use Anteris\Autotask\API\TimeOffRequests\TimeOffRequestEntity;
+
 use Anteris\Autotask\API\TimeOffRequests\TimeOffRequestQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for TimeOffRequestService.
@@ -63,5 +67,16 @@ class TimeOffRequestServiceTest extends AbstractTest
             TimeOffRequestQueryBuilder::class,
             $this->client->timeOffRequests()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), TimeOffRequestEntity::class);
+
+        $entity = new TimeOffRequestEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

@@ -16,23 +16,30 @@ use GuzzleHttp\Psr7\Response;
 class ContractBlockHourFactorEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new ContractBlockHourFactor entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?float $blockHourMultiplier = null,
-        public ?int $contractID = null,
-        public ?float $id = null,
-        public ?int $roleID = null,
-        public ?float $contractHourlyRate = null,
-        public ?float $internalCurrencyContractHourlyRate = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public float|array|null $blockHourMultiplier = null,
+                        public ?int $contractID = null,
+                        public ?float $id = null,
+                        public ?int $roleID = null,
+                        public ?float $contractHourlyRate = null,
+                        public ?float $internalCurrencyContractHourlyRate = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($blockHourMultiplier)) {
+            foreach($blockHourMultiplier as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\KnowledgeBaseCategories\KnowledgeBaseCategoryCollection;
-use Anteris\Autotask\API\KnowledgeBaseCategories\KnowledgeBaseCategoryEntity;
 use Anteris\Autotask\API\KnowledgeBaseCategories\KnowledgeBaseCategoryService;
+use Anteris\Autotask\API\KnowledgeBaseCategories\KnowledgeBaseCategoryEntity;
+
 use Anteris\Autotask\API\KnowledgeBaseCategories\KnowledgeBaseCategoryQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for KnowledgeBaseCategoryService.
@@ -63,5 +67,16 @@ class KnowledgeBaseCategoryServiceTest extends AbstractTest
             KnowledgeBaseCategoryQueryBuilder::class,
             $this->client->knowledgeBaseCategories()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), KnowledgeBaseCategoryEntity::class);
+
+        $entity = new KnowledgeBaseCategoryEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

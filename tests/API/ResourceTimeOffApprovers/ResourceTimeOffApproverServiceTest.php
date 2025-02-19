@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\ResourceTimeOffApprovers\ResourceTimeOffApproverCollection;
-use Anteris\Autotask\API\ResourceTimeOffApprovers\ResourceTimeOffApproverEntity;
 use Anteris\Autotask\API\ResourceTimeOffApprovers\ResourceTimeOffApproverService;
+use Anteris\Autotask\API\ResourceTimeOffApprovers\ResourceTimeOffApproverEntity;
+
 use Anteris\Autotask\API\ResourceTimeOffApprovers\ResourceTimeOffApproverQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for ResourceTimeOffApproverService.
@@ -63,5 +67,16 @@ class ResourceTimeOffApproverServiceTest extends AbstractTest
             ResourceTimeOffApproverQueryBuilder::class,
             $this->client->resourceTimeOffApprovers()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), ResourceTimeOffApproverEntity::class);
+
+        $entity = new ResourceTimeOffApproverEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

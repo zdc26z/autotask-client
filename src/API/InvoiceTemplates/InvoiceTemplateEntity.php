@@ -16,43 +16,50 @@ use GuzzleHttp\Psr7\Response;
 class InvoiceTemplateEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new InvoiceTemplate entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?string $currencyNegativeFormat = null,
-        public ?string $currencyPositiveFormat = null,
-        public ?int $dateFormat = null,
-        public ?bool $displayFixedPriceContractLabor = null,
-        public ?bool $displayRecurringServiceContractLabor = null,
-        public ?bool $displaySeparateLineItemForEachTax = null,
-        public ?bool $displayTaxCategory = null,
-        public ?bool $displayTaxCategorySuperscripts = null,
-        public ?bool $displayZeroAmountRecurringServicesAndBundles = null,
-        public ?int $groupBy = null,
-        public ?float $id = null,
-        public ?int $itemizeItemsInEachGroup = null,
-        public ?bool $itemizeServicesAndBundles = null,
-        public ?string $name = null,
-        public ?int $numberFormat = null,
-        public ?int $pageLayout = null,
-        public ?int $pageNumberFormat = null,
-        public ?bool $showGridHeader = null,
-        public ?bool $showVerticalGridLines = null,
-        public ?int $sortBy = null,
-        public ?int $timeFormat = null,
-        public ?string $coveredByBlockRetainerContractLabel = null,
-        public ?string $coveredByRecurringServiceFixedPricePerTicketContractLabel = null,
-        public ?string $nonBillableLaborLabel = null,
-        public ?int $paymentTerms = null,
-        public ?string $rateCostExpression = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public string|array|null $currencyNegativeFormat = null,
+                        public ?string $currencyPositiveFormat = null,
+                        public ?int $dateFormat = null,
+                        public ?bool $displayFixedPriceContractLabor = null,
+                        public ?bool $displayRecurringServiceContractLabor = null,
+                        public ?bool $displaySeparateLineItemForEachTax = null,
+                        public ?bool $displayTaxCategory = null,
+                        public ?bool $displayTaxCategorySuperscripts = null,
+                        public ?bool $displayZeroAmountRecurringServicesAndBundles = null,
+                        public ?int $groupBy = null,
+                        public ?float $id = null,
+                        public ?int $itemizeItemsInEachGroup = null,
+                        public ?bool $itemizeServicesAndBundles = null,
+                        public ?string $name = null,
+                        public ?int $numberFormat = null,
+                        public ?int $pageLayout = null,
+                        public ?int $pageNumberFormat = null,
+                        public ?bool $showGridHeader = null,
+                        public ?bool $showVerticalGridLines = null,
+                        public ?int $sortBy = null,
+                        public ?int $timeFormat = null,
+                        public ?string $coveredByBlockRetainerContractLabel = null,
+                        public ?string $coveredByRecurringServiceFixedPricePerTicketContractLabel = null,
+                        public ?string $nonBillableLaborLabel = null,
+                        public ?int $paymentTerms = null,
+                        public ?string $rateCostExpression = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($currencyNegativeFormat)) {
+            foreach($currencyNegativeFormat as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

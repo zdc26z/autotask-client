@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\ContractMilestones\ContractMilestoneCollection;
-use Anteris\Autotask\API\ContractMilestones\ContractMilestoneEntity;
 use Anteris\Autotask\API\ContractMilestones\ContractMilestoneService;
+use Anteris\Autotask\API\ContractMilestones\ContractMilestoneEntity;
+
 use Anteris\Autotask\API\ContractMilestones\ContractMilestoneQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for ContractMilestoneService.
@@ -63,5 +67,16 @@ class ContractMilestoneServiceTest extends AbstractTest
             ContractMilestoneQueryBuilder::class,
             $this->client->contractMilestones()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), ContractMilestoneEntity::class);
+
+        $entity = new ContractMilestoneEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

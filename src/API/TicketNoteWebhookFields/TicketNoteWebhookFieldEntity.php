@@ -16,22 +16,29 @@ use GuzzleHttp\Psr7\Response;
 class TicketNoteWebhookFieldEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new TicketNoteWebhookField entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?int $fieldID = null,
-        public ?float $id = null,
-        public ?bool $isDisplayAlwaysField = null,
-        public ?bool $isSubscribedField = null,
-        public ?int $webhookID = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public int|array|null $fieldID = null,
+                        public ?float $id = null,
+                        public ?bool $isDisplayAlwaysField = null,
+                        public ?bool $isSubscribedField = null,
+                        public ?int $webhookID = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($fieldID)) {
+            foreach($fieldID as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

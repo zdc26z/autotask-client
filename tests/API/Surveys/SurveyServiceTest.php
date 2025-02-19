@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\Surveys\SurveyCollection;
-use Anteris\Autotask\API\Surveys\SurveyEntity;
 use Anteris\Autotask\API\Surveys\SurveyService;
+use Anteris\Autotask\API\Surveys\SurveyEntity;
+
 use Anteris\Autotask\API\Surveys\SurveyQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for SurveyService.
@@ -63,5 +67,16 @@ class SurveyServiceTest extends AbstractTest
             SurveyQueryBuilder::class,
             $this->client->surveys()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), SurveyEntity::class);
+
+        $entity = new SurveyEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

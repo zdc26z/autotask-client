@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\ContractServiceBundles\ContractServiceBundleCollection;
-use Anteris\Autotask\API\ContractServiceBundles\ContractServiceBundleEntity;
 use Anteris\Autotask\API\ContractServiceBundles\ContractServiceBundleService;
+use Anteris\Autotask\API\ContractServiceBundles\ContractServiceBundleEntity;
+
 use Anteris\Autotask\API\ContractServiceBundles\ContractServiceBundleQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for ContractServiceBundleService.
@@ -63,5 +67,16 @@ class ContractServiceBundleServiceTest extends AbstractTest
             ContractServiceBundleQueryBuilder::class,
             $this->client->contractServiceBundles()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), ContractServiceBundleEntity::class);
+
+        $entity = new ContractServiceBundleEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

@@ -16,20 +16,27 @@ use GuzzleHttp\Psr7\Response;
 class ContactGroupContactEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new ContactGroupContact entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?int $contactGroupId = null,
-        public ?int $contactId = null,
-        public ?float $id = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public int|array|null $contactGroupId = null,
+                        public ?int $contactId = null,
+                        public ?float $id = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($contactGroupId)) {
+            foreach($contactGroupId as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

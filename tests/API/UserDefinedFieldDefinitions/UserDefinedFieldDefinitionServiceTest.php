@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\UserDefinedFieldDefinitions\UserDefinedFieldDefinitionCollection;
-use Anteris\Autotask\API\UserDefinedFieldDefinitions\UserDefinedFieldDefinitionEntity;
 use Anteris\Autotask\API\UserDefinedFieldDefinitions\UserDefinedFieldDefinitionService;
+use Anteris\Autotask\API\UserDefinedFieldDefinitions\UserDefinedFieldDefinitionEntity;
+
 use Anteris\Autotask\API\UserDefinedFieldDefinitions\UserDefinedFieldDefinitionQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for UserDefinedFieldDefinitionService.
@@ -63,5 +67,16 @@ class UserDefinedFieldDefinitionServiceTest extends AbstractTest
             UserDefinedFieldDefinitionQueryBuilder::class,
             $this->client->userDefinedFieldDefinitions()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), UserDefinedFieldDefinitionEntity::class);
+
+        $entity = new UserDefinedFieldDefinitionEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\PurchaseApprovals\PurchaseApprovalCollection;
-use Anteris\Autotask\API\PurchaseApprovals\PurchaseApprovalEntity;
 use Anteris\Autotask\API\PurchaseApprovals\PurchaseApprovalService;
+use Anteris\Autotask\API\PurchaseApprovals\PurchaseApprovalEntity;
+
 use Anteris\Autotask\API\PurchaseApprovals\PurchaseApprovalQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for PurchaseApprovalService.
@@ -63,5 +67,16 @@ class PurchaseApprovalServiceTest extends AbstractTest
             PurchaseApprovalQueryBuilder::class,
             $this->client->purchaseApprovals()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), PurchaseApprovalEntity::class);
+
+        $entity = new PurchaseApprovalEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\DocumentTicketAssociations\DocumentTicketAssociationCollection;
-use Anteris\Autotask\API\DocumentTicketAssociations\DocumentTicketAssociationEntity;
 use Anteris\Autotask\API\DocumentTicketAssociations\DocumentTicketAssociationService;
+use Anteris\Autotask\API\DocumentTicketAssociations\DocumentTicketAssociationEntity;
+
 use Anteris\Autotask\API\DocumentTicketAssociations\DocumentTicketAssociationQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for DocumentTicketAssociationService.
@@ -63,5 +67,16 @@ class DocumentTicketAssociationServiceTest extends AbstractTest
             DocumentTicketAssociationQueryBuilder::class,
             $this->client->documentTicketAssociations()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), DocumentTicketAssociationEntity::class);
+
+        $entity = new DocumentTicketAssociationEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\ConfigurationItemRelatedItems\ConfigurationItemRelatedItemCollection;
-use Anteris\Autotask\API\ConfigurationItemRelatedItems\ConfigurationItemRelatedItemEntity;
 use Anteris\Autotask\API\ConfigurationItemRelatedItems\ConfigurationItemRelatedItemService;
+use Anteris\Autotask\API\ConfigurationItemRelatedItems\ConfigurationItemRelatedItemEntity;
+
 use Anteris\Autotask\API\ConfigurationItemRelatedItems\ConfigurationItemRelatedItemQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for ConfigurationItemRelatedItemService.
@@ -63,5 +67,16 @@ class ConfigurationItemRelatedItemServiceTest extends AbstractTest
             ConfigurationItemRelatedItemQueryBuilder::class,
             $this->client->configurationItemRelatedItems()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), ConfigurationItemRelatedItemEntity::class);
+
+        $entity = new ConfigurationItemRelatedItemEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

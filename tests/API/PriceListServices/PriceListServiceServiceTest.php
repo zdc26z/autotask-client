@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\PriceListServices\PriceListServiceCollection;
-use Anteris\Autotask\API\PriceListServices\PriceListServiceEntity;
 use Anteris\Autotask\API\PriceListServices\PriceListServiceService;
+use Anteris\Autotask\API\PriceListServices\PriceListServiceEntity;
+
 use Anteris\Autotask\API\PriceListServices\PriceListServiceQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for PriceListServiceService.
@@ -63,5 +67,16 @@ class PriceListServiceServiceTest extends AbstractTest
             PriceListServiceQueryBuilder::class,
             $this->client->priceListServices()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), PriceListServiceEntity::class);
+
+        $entity = new PriceListServiceEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

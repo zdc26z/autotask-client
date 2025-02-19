@@ -18,33 +18,40 @@ use GuzzleHttp\Psr7\Response;
 class ContractServiceUnitEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new ContractServiceUnit entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?int $contractID = null,
-        #[CastCarbon]
-        public ?Carbon $endDate = null,
-        public ?float $id = null,
-        public ?int $serviceID = null,
-        #[CastCarbon]
-        public ?Carbon $startDate = null,
-        public ?int $units = null,
-        #[CastCarbon]
-        public ?Carbon $approveAndPostDate = null,
-        public ?int $contractServiceID = null,
-        public ?float $cost = null,
-        public ?float $internalCurrencyPrice = null,
-        public ?int $organizationalLevelAssociationID = null,
-        public ?float $price = null,
-        public ?int $vendorCompanyID = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public int|array|null $contractID = null,
+                #[CastCarbon]
+                public ?Carbon $endDate = null,
+                        public ?float $id = null,
+                        public ?int $serviceID = null,
+                #[CastCarbon]
+                public ?Carbon $startDate = null,
+                        public ?int $units = null,
+                #[CastCarbon]
+                public ?Carbon $approveAndPostDate = null,
+                        public ?int $contractServiceID = null,
+                        public ?float $cost = null,
+                        public ?float $internalCurrencyPrice = null,
+                        public ?int $organizationalLevelAssociationID = null,
+                        public ?float $price = null,
+                        public ?int $vendorCompanyID = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($contractID)) {
+            foreach($contractID as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

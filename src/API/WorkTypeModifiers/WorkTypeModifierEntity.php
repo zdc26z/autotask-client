@@ -16,20 +16,27 @@ use GuzzleHttp\Psr7\Response;
 class WorkTypeModifierEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new WorkTypeModifier entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?float $id = null,
-        public ?int $modifierType = null,
-        public ?float $modifierValue = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public float|array|null $id = null,
+                        public ?int $modifierType = null,
+                        public ?float $modifierValue = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($id)) {
+            foreach($id as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

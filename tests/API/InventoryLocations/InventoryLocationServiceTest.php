@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\InventoryLocations\InventoryLocationCollection;
-use Anteris\Autotask\API\InventoryLocations\InventoryLocationEntity;
 use Anteris\Autotask\API\InventoryLocations\InventoryLocationService;
+use Anteris\Autotask\API\InventoryLocations\InventoryLocationEntity;
+
 use Anteris\Autotask\API\InventoryLocations\InventoryLocationQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for InventoryLocationService.
@@ -63,5 +67,16 @@ class InventoryLocationServiceTest extends AbstractTest
             InventoryLocationQueryBuilder::class,
             $this->client->inventoryLocations()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), InventoryLocationEntity::class);
+
+        $entity = new InventoryLocationEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

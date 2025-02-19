@@ -18,64 +18,71 @@ use GuzzleHttp\Psr7\Response;
 class QuoteEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new Quote entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?int $billToLocationID = null,
-        #[CastCarbon]
-        public ?Carbon $effectiveDate = null,
-        #[CastCarbon]
-        public ?Carbon $expirationDate = null,
-        public ?float $id = null,
-        public ?string $name = null,
-        public ?int $opportunityID = null,
-        public ?int $shipToLocationID = null,
-        public ?int $soldToLocationID = null,
-        public ?int $approvalStatus = null,
-        public ?int $approvalStatusChangedByResourceID = null,
-        #[CastCarbon]
-        public ?Carbon $approvalStatusChangedDate = null,
-        public ?bool $calculateTaxSeparately = null,
-        public ?string $comment = null,
-        public ?int $companyID = null,
-        public ?int $contactID = null,
-        #[CastCarbon]
-        public ?Carbon $createDate = null,
-        public ?int $creatorResourceID = null,
-        public ?string $description = null,
-        public ?int $extApprovalContactResponse = null,
-        #[CastCarbon]
-        public ?Carbon $extApprovalResponseDate = null,
-        public ?string $extApprovalResponseSignature = null,
-        public ?string $externalQuoteNumber = null,
-        public ?int $groupByID = null,
-        public ?int $impersonatorCreatorResourceID = null,
-        public ?bool $isActive = null,
-        #[CastCarbon]
-        public ?Carbon $lastActivityDate = null,
-        public ?int $lastModifiedBy = null,
-        public ?int $lastPublishedByResourceID = null,
-        #[CastCarbon]
-        public ?Carbon $lastPublishedDateTime = null,
-        public ?int $paymentTerm = null,
-        public ?int $paymentType = null,
-        public ?bool $primaryQuote = null,
-        public ?int $proposalProjectID = null,
-        public ?string $purchaseOrderNumber = null,
-        public ?int $quoteNumber = null,
-        public ?int $quoteTemplateID = null,
-        public ?int $shippingType = null,
-        public ?bool $showEachTaxInGroup = null,
-        public ?bool $showTaxCategory = null,
-        public ?int $taxRegionID = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public int|array|null $billToLocationID = null,
+                #[CastCarbon]
+                public ?Carbon $effectiveDate = null,
+                #[CastCarbon]
+                public ?Carbon $expirationDate = null,
+                        public ?float $id = null,
+                        public ?string $name = null,
+                        public ?int $opportunityID = null,
+                        public ?int $shipToLocationID = null,
+                        public ?int $soldToLocationID = null,
+                        public ?int $approvalStatus = null,
+                        public ?int $approvalStatusChangedByResourceID = null,
+                #[CastCarbon]
+                public ?Carbon $approvalStatusChangedDate = null,
+                        public ?bool $calculateTaxSeparately = null,
+                        public ?string $comment = null,
+                        public ?int $companyID = null,
+                        public ?int $contactID = null,
+                #[CastCarbon]
+                public ?Carbon $createDate = null,
+                        public ?int $creatorResourceID = null,
+                        public ?string $description = null,
+                        public ?int $extApprovalContactResponse = null,
+                #[CastCarbon]
+                public ?Carbon $extApprovalResponseDate = null,
+                        public ?string $extApprovalResponseSignature = null,
+                        public ?string $externalQuoteNumber = null,
+                        public ?int $groupByID = null,
+                        public ?int $impersonatorCreatorResourceID = null,
+                        public ?bool $isActive = null,
+                #[CastCarbon]
+                public ?Carbon $lastActivityDate = null,
+                        public ?int $lastModifiedBy = null,
+                        public ?int $lastPublishedByResourceID = null,
+                #[CastCarbon]
+                public ?Carbon $lastPublishedDateTime = null,
+                        public ?int $paymentTerm = null,
+                        public ?int $paymentType = null,
+                        public ?bool $primaryQuote = null,
+                        public ?int $proposalProjectID = null,
+                        public ?string $purchaseOrderNumber = null,
+                        public ?int $quoteNumber = null,
+                        public ?int $quoteTemplateID = null,
+                        public ?int $shippingType = null,
+                        public ?bool $showEachTaxInGroup = null,
+                        public ?bool $showTaxCategory = null,
+                        public ?int $taxRegionID = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($billToLocationID)) {
+            foreach($billToLocationID as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

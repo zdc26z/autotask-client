@@ -16,21 +16,28 @@ use GuzzleHttp\Psr7\Response;
 class CompanyTeamEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new CompanyTeam entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?float $companyID = null,
-        public ?float $id = null,
-        public ?float $resourceID = null,
-        public ?bool $isAssociatedAsComanaged = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public float|array|null $companyID = null,
+                        public ?float $id = null,
+                        public ?float $resourceID = null,
+                        public ?bool $isAssociatedAsComanaged = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($companyID)) {
+            foreach($companyID as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

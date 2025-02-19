@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\InternalLocations\InternalLocationCollection;
-use Anteris\Autotask\API\InternalLocations\InternalLocationEntity;
 use Anteris\Autotask\API\InternalLocations\InternalLocationService;
+use Anteris\Autotask\API\InternalLocations\InternalLocationEntity;
+
 use Anteris\Autotask\API\InternalLocations\InternalLocationQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for InternalLocationService.
@@ -63,5 +67,16 @@ class InternalLocationServiceTest extends AbstractTest
             InternalLocationQueryBuilder::class,
             $this->client->internalLocations()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), InternalLocationEntity::class);
+
+        $entity = new InternalLocationEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

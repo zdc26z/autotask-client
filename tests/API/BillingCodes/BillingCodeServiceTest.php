@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\BillingCodes\BillingCodeCollection;
-use Anteris\Autotask\API\BillingCodes\BillingCodeEntity;
 use Anteris\Autotask\API\BillingCodes\BillingCodeService;
+use Anteris\Autotask\API\BillingCodes\BillingCodeEntity;
+
 use Anteris\Autotask\API\BillingCodes\BillingCodeQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for BillingCodeService.
@@ -63,5 +67,16 @@ class BillingCodeServiceTest extends AbstractTest
             BillingCodeQueryBuilder::class,
             $this->client->billingCodes()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), BillingCodeEntity::class);
+
+        $entity = new BillingCodeEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

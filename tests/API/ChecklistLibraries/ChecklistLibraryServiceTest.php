@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\ChecklistLibraries\ChecklistLibraryCollection;
-use Anteris\Autotask\API\ChecklistLibraries\ChecklistLibraryEntity;
 use Anteris\Autotask\API\ChecklistLibraries\ChecklistLibraryService;
+use Anteris\Autotask\API\ChecklistLibraries\ChecklistLibraryEntity;
+
 use Anteris\Autotask\API\ChecklistLibraries\ChecklistLibraryQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for ChecklistLibraryService.
@@ -63,5 +67,16 @@ class ChecklistLibraryServiceTest extends AbstractTest
             ChecklistLibraryQueryBuilder::class,
             $this->client->checklistLibraries()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), ChecklistLibraryEntity::class);
+
+        $entity = new ChecklistLibraryEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\TaskNotes\TaskNoteCollection;
-use Anteris\Autotask\API\TaskNotes\TaskNoteEntity;
 use Anteris\Autotask\API\TaskNotes\TaskNoteService;
+use Anteris\Autotask\API\TaskNotes\TaskNoteEntity;
+
 use Anteris\Autotask\API\TaskNotes\TaskNoteQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for TaskNoteService.
@@ -63,5 +67,16 @@ class TaskNoteServiceTest extends AbstractTest
             TaskNoteQueryBuilder::class,
             $this->client->taskNotes()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), TaskNoteEntity::class);
+
+        $entity = new TaskNoteEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

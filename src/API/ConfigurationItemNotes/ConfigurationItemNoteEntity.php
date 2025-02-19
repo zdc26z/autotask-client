@@ -18,29 +18,36 @@ use GuzzleHttp\Psr7\Response;
 class ConfigurationItemNoteEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new ConfigurationItemNote entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?int $configurationItemID = null,
-        public ?string $description = null,
-        public ?float $id = null,
-        public ?int $noteType = null,
-        public ?string $title = null,
-        #[CastCarbon]
-        public ?Carbon $createDateTime = null,
-        public ?int $creatorResourceID = null,
-        public ?int $impersonatorCreatorResourceID = null,
-        public ?int $impersonatorUpdaterResourceID = null,
-        #[CastCarbon]
-        public ?Carbon $lastActivityDate = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public int|array|null $configurationItemID = null,
+                        public ?string $description = null,
+                        public ?float $id = null,
+                        public ?int $noteType = null,
+                        public ?string $title = null,
+                #[CastCarbon]
+                public ?Carbon $createDateTime = null,
+                        public ?int $creatorResourceID = null,
+                        public ?int $impersonatorCreatorResourceID = null,
+                        public ?int $impersonatorUpdaterResourceID = null,
+                #[CastCarbon]
+                public ?Carbon $lastActivityDate = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($configurationItemID)) {
+            foreach($configurationItemID as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

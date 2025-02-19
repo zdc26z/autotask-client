@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\ResourceSkills\ResourceSkillCollection;
-use Anteris\Autotask\API\ResourceSkills\ResourceSkillEntity;
 use Anteris\Autotask\API\ResourceSkills\ResourceSkillService;
+use Anteris\Autotask\API\ResourceSkills\ResourceSkillEntity;
+
 use Anteris\Autotask\API\ResourceSkills\ResourceSkillQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for ResourceSkillService.
@@ -63,5 +67,16 @@ class ResourceSkillServiceTest extends AbstractTest
             ResourceSkillQueryBuilder::class,
             $this->client->resourceSkills()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), ResourceSkillEntity::class);
+
+        $entity = new ResourceSkillEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

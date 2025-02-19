@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\ContractRates\ContractRateCollection;
-use Anteris\Autotask\API\ContractRates\ContractRateEntity;
 use Anteris\Autotask\API\ContractRates\ContractRateService;
+use Anteris\Autotask\API\ContractRates\ContractRateEntity;
+
 use Anteris\Autotask\API\ContractRates\ContractRateQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for ContractRateService.
@@ -63,5 +67,16 @@ class ContractRateServiceTest extends AbstractTest
             ContractRateQueryBuilder::class,
             $this->client->contractRates()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), ContractRateEntity::class);
+
+        $entity = new ContractRateEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

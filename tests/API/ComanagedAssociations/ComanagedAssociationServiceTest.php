@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\ComanagedAssociations\ComanagedAssociationCollection;
-use Anteris\Autotask\API\ComanagedAssociations\ComanagedAssociationEntity;
 use Anteris\Autotask\API\ComanagedAssociations\ComanagedAssociationService;
+use Anteris\Autotask\API\ComanagedAssociations\ComanagedAssociationEntity;
+
 use Anteris\Autotask\API\ComanagedAssociations\ComanagedAssociationQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for ComanagedAssociationService.
@@ -63,5 +67,16 @@ class ComanagedAssociationServiceTest extends AbstractTest
             ComanagedAssociationQueryBuilder::class,
             $this->client->comanagedAssociations()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), ComanagedAssociationEntity::class);
+
+        $entity = new ComanagedAssociationEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

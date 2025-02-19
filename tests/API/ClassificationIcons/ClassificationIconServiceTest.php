@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\ClassificationIcons\ClassificationIconCollection;
-use Anteris\Autotask\API\ClassificationIcons\ClassificationIconEntity;
 use Anteris\Autotask\API\ClassificationIcons\ClassificationIconService;
+use Anteris\Autotask\API\ClassificationIcons\ClassificationIconEntity;
+
 use Anteris\Autotask\API\ClassificationIcons\ClassificationIconQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for ClassificationIconService.
@@ -63,5 +67,16 @@ class ClassificationIconServiceTest extends AbstractTest
             ClassificationIconQueryBuilder::class,
             $this->client->classificationIcons()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), ClassificationIconEntity::class);
+
+        $entity = new ClassificationIconEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\ExpenseItems\ExpenseItemCollection;
-use Anteris\Autotask\API\ExpenseItems\ExpenseItemEntity;
 use Anteris\Autotask\API\ExpenseItems\ExpenseItemService;
+use Anteris\Autotask\API\ExpenseItems\ExpenseItemEntity;
+
 use Anteris\Autotask\API\ExpenseItems\ExpenseItemQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for ExpenseItemService.
@@ -63,5 +67,16 @@ class ExpenseItemServiceTest extends AbstractTest
             ExpenseItemQueryBuilder::class,
             $this->client->expenseItems()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), ExpenseItemEntity::class);
+
+        $entity = new ExpenseItemEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

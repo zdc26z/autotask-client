@@ -16,24 +16,31 @@ use GuzzleHttp\Psr7\Response;
 class ResourceRoleDepartmentEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new ResourceRoleDepartment entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?int $departmentID = null,
-        public ?float $id = null,
-        public ?bool $isActive = null,
-        public ?bool $isDefault = null,
-        public ?bool $isDepartmentLead = null,
-        public ?int $resourceID = null,
-        public ?int $roleID = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public int|array|null $departmentID = null,
+                        public ?float $id = null,
+                        public ?bool $isActive = null,
+                        public ?bool $isDefault = null,
+                        public ?bool $isDepartmentLead = null,
+                        public ?int $resourceID = null,
+                        public ?int $roleID = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($departmentID)) {
+            foreach($departmentID as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

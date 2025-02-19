@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\TaskSecondaryResources\TaskSecondaryResourceCollection;
-use Anteris\Autotask\API\TaskSecondaryResources\TaskSecondaryResourceEntity;
 use Anteris\Autotask\API\TaskSecondaryResources\TaskSecondaryResourceService;
+use Anteris\Autotask\API\TaskSecondaryResources\TaskSecondaryResourceEntity;
+
 use Anteris\Autotask\API\TaskSecondaryResources\TaskSecondaryResourceQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for TaskSecondaryResourceService.
@@ -63,5 +67,16 @@ class TaskSecondaryResourceServiceTest extends AbstractTest
             TaskSecondaryResourceQueryBuilder::class,
             $this->client->taskSecondaryResources()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), TaskSecondaryResourceEntity::class);
+
+        $entity = new TaskSecondaryResourceEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

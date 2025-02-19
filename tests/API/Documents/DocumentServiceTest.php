@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\Documents\DocumentCollection;
-use Anteris\Autotask\API\Documents\DocumentEntity;
 use Anteris\Autotask\API\Documents\DocumentService;
+use Anteris\Autotask\API\Documents\DocumentEntity;
+
 use Anteris\Autotask\API\Documents\DocumentQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for DocumentService.
@@ -63,5 +67,16 @@ class DocumentServiceTest extends AbstractTest
             DocumentQueryBuilder::class,
             $this->client->documents()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), DocumentEntity::class);
+
+        $entity = new DocumentEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\SalesOrders\SalesOrderCollection;
-use Anteris\Autotask\API\SalesOrders\SalesOrderEntity;
 use Anteris\Autotask\API\SalesOrders\SalesOrderService;
+use Anteris\Autotask\API\SalesOrders\SalesOrderEntity;
+
 use Anteris\Autotask\API\SalesOrders\SalesOrderQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for SalesOrderService.
@@ -63,5 +67,16 @@ class SalesOrderServiceTest extends AbstractTest
             SalesOrderQueryBuilder::class,
             $this->client->salesOrders()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), SalesOrderEntity::class);
+
+        $entity = new SalesOrderEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

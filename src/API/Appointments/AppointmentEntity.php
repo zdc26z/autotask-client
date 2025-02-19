@@ -18,7 +18,7 @@ use GuzzleHttp\Psr7\Response;
 class AppointmentEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new Appointment entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
@@ -26,22 +26,29 @@ class AppointmentEntity extends Entity
      */
     public function __construct(
                 #[CastCarbon]
-        public ?Carbon $endDateTime = null,
-        public ?float $id = null,
-        public ?int $resourceID = null,
-        #[CastCarbon]
-        public ?Carbon $startDateTime = null,
-        public ?string $title = null,
-        #[CastCarbon]
-        public ?Carbon $createDateTime = null,
-        public ?int $creatorResourceID = null,
-        public ?string $description = null,
-        #[CastCarbon]
-        public ?Carbon $updateDateTime = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                public Carbon|array|null $endDateTime = null,
+                        public ?float $id = null,
+                        public ?int $resourceID = null,
+                #[CastCarbon]
+                public ?Carbon $startDateTime = null,
+                        public ?string $title = null,
+                #[CastCarbon]
+                public ?Carbon $createDateTime = null,
+                        public ?int $creatorResourceID = null,
+                        public ?string $description = null,
+                #[CastCarbon]
+                public ?Carbon $updateDateTime = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($endDateTime)) {
+            foreach($endDateTime as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\DocumentAttachments\DocumentAttachmentCollection;
-use Anteris\Autotask\API\DocumentAttachments\DocumentAttachmentEntity;
 use Anteris\Autotask\API\DocumentAttachments\DocumentAttachmentService;
+use Anteris\Autotask\API\DocumentAttachments\DocumentAttachmentEntity;
+
 use Anteris\Autotask\API\DocumentAttachments\DocumentAttachmentQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for DocumentAttachmentService.
@@ -63,5 +67,16 @@ class DocumentAttachmentServiceTest extends AbstractTest
             DocumentAttachmentQueryBuilder::class,
             $this->client->documentAttachments()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), DocumentAttachmentEntity::class);
+
+        $entity = new DocumentAttachmentEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

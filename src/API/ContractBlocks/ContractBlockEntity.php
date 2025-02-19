@@ -18,33 +18,40 @@ use GuzzleHttp\Psr7\Response;
 class ContractBlockEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new ContractBlock entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?int $contractID = null,
-        #[CastCarbon]
-        public ?Carbon $datePurchased = null,
-        #[CastCarbon]
-        public ?Carbon $endDate = null,
-        public ?float $hourlyRate = null,
-        public ?float $hours = null,
-        public ?float $id = null,
-        #[CastCarbon]
-        public ?Carbon $startDate = null,
-        public ?float $hoursApproved = null,
-        public ?string $invoiceNumber = null,
-        public ?bool $isPaid = null,
-        public ?string $paymentNumber = null,
-        public ?int $paymentType = null,
-        public ?int $status = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public int|array|null $contractID = null,
+                #[CastCarbon]
+                public ?Carbon $datePurchased = null,
+                #[CastCarbon]
+                public ?Carbon $endDate = null,
+                        public ?float $hourlyRate = null,
+                        public ?float $hours = null,
+                        public ?float $id = null,
+                #[CastCarbon]
+                public ?Carbon $startDate = null,
+                        public ?float $hoursApproved = null,
+                        public ?string $invoiceNumber = null,
+                        public ?bool $isPaid = null,
+                        public ?string $paymentNumber = null,
+                        public ?int $paymentType = null,
+                        public ?int $status = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($contractID)) {
+            foreach($contractID as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

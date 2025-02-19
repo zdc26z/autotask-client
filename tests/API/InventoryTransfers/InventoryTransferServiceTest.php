@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\InventoryTransfers\InventoryTransferCollection;
-use Anteris\Autotask\API\InventoryTransfers\InventoryTransferEntity;
 use Anteris\Autotask\API\InventoryTransfers\InventoryTransferService;
+use Anteris\Autotask\API\InventoryTransfers\InventoryTransferEntity;
+
 use Anteris\Autotask\API\InventoryTransfers\InventoryTransferQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for InventoryTransferService.
@@ -63,5 +67,16 @@ class InventoryTransferServiceTest extends AbstractTest
             InventoryTransferQueryBuilder::class,
             $this->client->inventoryTransfers()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), InventoryTransferEntity::class);
+
+        $entity = new InventoryTransferEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

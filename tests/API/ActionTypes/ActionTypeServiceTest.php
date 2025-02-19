@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\ActionTypes\ActionTypeCollection;
-use Anteris\Autotask\API\ActionTypes\ActionTypeEntity;
 use Anteris\Autotask\API\ActionTypes\ActionTypeService;
+use Anteris\Autotask\API\ActionTypes\ActionTypeEntity;
+
 use Anteris\Autotask\API\ActionTypes\ActionTypeQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for ActionTypeService.
@@ -63,5 +67,16 @@ class ActionTypeServiceTest extends AbstractTest
             ActionTypeQueryBuilder::class,
             $this->client->actionTypes()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), ActionTypeEntity::class);
+
+        $entity = new ActionTypeEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

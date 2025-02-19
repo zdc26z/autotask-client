@@ -16,31 +16,38 @@ use GuzzleHttp\Psr7\Response;
 class CompanyWebhookEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new CompanyWebhook entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?string $deactivationUrl = null,
-        public ?float $id = null,
-        public ?bool $isActive = null,
-        public ?string $name = null,
-        public ?string $secretKey = null,
-        public ?bool $sendThresholdExceededNotification = null,
-        public ?string $webhookUrl = null,
-        public ?bool $isReady = null,
-        public ?bool $isSubscribedToCreateEvents = null,
-        public ?bool $isSubscribedToDeleteEvents = null,
-        public ?bool $isSubscribedToUpdateEvents = null,
-        public ?string $notificationEmailAddress = null,
-        public ?int $ownerResourceID = null,
-        public ?string $webhookGuid = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public string|array|null $deactivationUrl = null,
+                        public ?float $id = null,
+                        public ?bool $isActive = null,
+                        public ?string $name = null,
+                        public ?string $secretKey = null,
+                        public ?bool $sendThresholdExceededNotification = null,
+                        public ?string $webhookUrl = null,
+                        public ?bool $isReady = null,
+                        public ?bool $isSubscribedToCreateEvents = null,
+                        public ?bool $isSubscribedToDeleteEvents = null,
+                        public ?bool $isSubscribedToUpdateEvents = null,
+                        public ?string $notificationEmailAddress = null,
+                        public ?int $ownerResourceID = null,
+                        public ?string $webhookGuid = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($deactivationUrl)) {
+            foreach($deactivationUrl as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

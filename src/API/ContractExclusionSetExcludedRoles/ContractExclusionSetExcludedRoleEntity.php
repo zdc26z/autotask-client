@@ -16,20 +16,27 @@ use GuzzleHttp\Psr7\Response;
 class ContractExclusionSetExcludedRoleEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new ContractExclusionSetExcludedRole entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?int $contractExclusionSetID = null,
-        public ?int $excludedRoleID = null,
-        public ?float $id = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public int|array|null $contractExclusionSetID = null,
+                        public ?int $excludedRoleID = null,
+                        public ?float $id = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($contractExclusionSetID)) {
+            foreach($contractExclusionSetID as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

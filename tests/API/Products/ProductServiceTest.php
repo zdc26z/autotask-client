@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\Products\ProductCollection;
-use Anteris\Autotask\API\Products\ProductEntity;
 use Anteris\Autotask\API\Products\ProductService;
+use Anteris\Autotask\API\Products\ProductEntity;
+
 use Anteris\Autotask\API\Products\ProductQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for ProductService.
@@ -63,5 +67,16 @@ class ProductServiceTest extends AbstractTest
             ProductQueryBuilder::class,
             $this->client->products()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), ProductEntity::class);
+
+        $entity = new ProductEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

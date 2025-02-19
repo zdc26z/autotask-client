@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\ServiceCallTicketResources\ServiceCallTicketResourceCollection;
-use Anteris\Autotask\API\ServiceCallTicketResources\ServiceCallTicketResourceEntity;
 use Anteris\Autotask\API\ServiceCallTicketResources\ServiceCallTicketResourceService;
+use Anteris\Autotask\API\ServiceCallTicketResources\ServiceCallTicketResourceEntity;
+
 use Anteris\Autotask\API\ServiceCallTicketResources\ServiceCallTicketResourceQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for ServiceCallTicketResourceService.
@@ -63,5 +67,16 @@ class ServiceCallTicketResourceServiceTest extends AbstractTest
             ServiceCallTicketResourceQueryBuilder::class,
             $this->client->serviceCallTicketResources()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), ServiceCallTicketResourceEntity::class);
+
+        $entity = new ServiceCallTicketResourceEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

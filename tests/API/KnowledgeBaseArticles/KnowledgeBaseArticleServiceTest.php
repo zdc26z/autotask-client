@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\KnowledgeBaseArticles\KnowledgeBaseArticleCollection;
-use Anteris\Autotask\API\KnowledgeBaseArticles\KnowledgeBaseArticleEntity;
 use Anteris\Autotask\API\KnowledgeBaseArticles\KnowledgeBaseArticleService;
+use Anteris\Autotask\API\KnowledgeBaseArticles\KnowledgeBaseArticleEntity;
+
 use Anteris\Autotask\API\KnowledgeBaseArticles\KnowledgeBaseArticleQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for KnowledgeBaseArticleService.
@@ -63,5 +67,16 @@ class KnowledgeBaseArticleServiceTest extends AbstractTest
             KnowledgeBaseArticleQueryBuilder::class,
             $this->client->knowledgeBaseArticles()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), KnowledgeBaseArticleEntity::class);
+
+        $entity = new KnowledgeBaseArticleEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

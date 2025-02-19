@@ -18,24 +18,31 @@ use GuzzleHttp\Psr7\Response;
 class ConfigurationItemBillingProductAssociationEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new ConfigurationItemBillingProductAssociation entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?int $billingProductID = null,
-        public ?int $configurationItemID = null,
-        #[CastCarbon]
-        public ?Carbon $effectiveDate = null,
-        public ?float $id = null,
-        #[CastCarbon]
-        public ?Carbon $expirationDate = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public int|array|null $billingProductID = null,
+                        public ?int $configurationItemID = null,
+                #[CastCarbon]
+                public ?Carbon $effectiveDate = null,
+                        public ?float $id = null,
+                #[CastCarbon]
+                public ?Carbon $expirationDate = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($billingProductID)) {
+            foreach($billingProductID as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\PriceListMaterialCodes\PriceListMaterialCodeCollection;
-use Anteris\Autotask\API\PriceListMaterialCodes\PriceListMaterialCodeEntity;
 use Anteris\Autotask\API\PriceListMaterialCodes\PriceListMaterialCodeService;
+use Anteris\Autotask\API\PriceListMaterialCodes\PriceListMaterialCodeEntity;
+
 use Anteris\Autotask\API\PriceListMaterialCodes\PriceListMaterialCodeQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for PriceListMaterialCodeService.
@@ -63,5 +67,16 @@ class PriceListMaterialCodeServiceTest extends AbstractTest
             PriceListMaterialCodeQueryBuilder::class,
             $this->client->priceListMaterialCodes()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), PriceListMaterialCodeEntity::class);
+
+        $entity = new PriceListMaterialCodeEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

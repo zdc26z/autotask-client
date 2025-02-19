@@ -18,7 +18,7 @@ use GuzzleHttp\Psr7\Response;
 class HolidayEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new Holiday entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
@@ -26,14 +26,21 @@ class HolidayEntity extends Entity
      */
     public function __construct(
                 #[CastCarbon]
-        public ?Carbon $holidayDate = null,
-        public ?string $holidayName = null,
-        public ?int $holidaySetID = null,
-        public ?float $id = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                public Carbon|array|null $holidayDate = null,
+                        public ?string $holidayName = null,
+                        public ?int $holidaySetID = null,
+                        public ?float $id = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($holidayDate)) {
+            foreach($holidayDate as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

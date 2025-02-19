@@ -16,23 +16,30 @@ use GuzzleHttp\Psr7\Response;
 class PriceListWorkTypeModifierEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new PriceListWorkTypeModifier entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?int $currencyID = null,
-        public ?float $id = null,
-        public ?bool $usesInternalCurrencyPrice = null,
-        public ?int $workTypeModifierID = null,
-        public ?int $modifierType = null,
-        public ?float $modifierValue = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public int|array|null $currencyID = null,
+                        public ?float $id = null,
+                        public ?bool $usesInternalCurrencyPrice = null,
+                        public ?int $workTypeModifierID = null,
+                        public ?int $modifierType = null,
+                        public ?float $modifierValue = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($currencyID)) {
+            foreach($currencyID as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

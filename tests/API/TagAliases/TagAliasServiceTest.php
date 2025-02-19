@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\TagAliases\TagAliasCollection;
-use Anteris\Autotask\API\TagAliases\TagAliasEntity;
 use Anteris\Autotask\API\TagAliases\TagAliasService;
+use Anteris\Autotask\API\TagAliases\TagAliasEntity;
+
 use Anteris\Autotask\API\TagAliases\TagAliasQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for TagAliasService.
@@ -63,5 +67,16 @@ class TagAliasServiceTest extends AbstractTest
             TagAliasQueryBuilder::class,
             $this->client->tagAliases()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), TagAliasEntity::class);
+
+        $entity = new TagAliasEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

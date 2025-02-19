@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\DocumentCategories\DocumentCategoryCollection;
-use Anteris\Autotask\API\DocumentCategories\DocumentCategoryEntity;
 use Anteris\Autotask\API\DocumentCategories\DocumentCategoryService;
+use Anteris\Autotask\API\DocumentCategories\DocumentCategoryEntity;
+
 use Anteris\Autotask\API\DocumentCategories\DocumentCategoryQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for DocumentCategoryService.
@@ -63,5 +67,16 @@ class DocumentCategoryServiceTest extends AbstractTest
             DocumentCategoryQueryBuilder::class,
             $this->client->documentCategories()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), DocumentCategoryEntity::class);
+
+        $entity = new DocumentCategoryEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

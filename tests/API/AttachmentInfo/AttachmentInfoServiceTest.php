@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\AttachmentInfo\AttachmentInfoCollection;
-use Anteris\Autotask\API\AttachmentInfo\AttachmentInfoEntity;
 use Anteris\Autotask\API\AttachmentInfo\AttachmentInfoService;
+use Anteris\Autotask\API\AttachmentInfo\AttachmentInfoEntity;
+
 use Anteris\Autotask\API\AttachmentInfo\AttachmentInfoQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for AttachmentInfoService.
@@ -63,5 +67,16 @@ class AttachmentInfoServiceTest extends AbstractTest
             AttachmentInfoQueryBuilder::class,
             $this->client->attachmentInfo()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), AttachmentInfoEntity::class);
+
+        $entity = new AttachmentInfoEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

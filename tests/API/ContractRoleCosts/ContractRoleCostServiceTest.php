@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\ContractRoleCosts\ContractRoleCostCollection;
-use Anteris\Autotask\API\ContractRoleCosts\ContractRoleCostEntity;
 use Anteris\Autotask\API\ContractRoleCosts\ContractRoleCostService;
+use Anteris\Autotask\API\ContractRoleCosts\ContractRoleCostEntity;
+
 use Anteris\Autotask\API\ContractRoleCosts\ContractRoleCostQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for ContractRoleCostService.
@@ -63,5 +67,16 @@ class ContractRoleCostServiceTest extends AbstractTest
             ContractRoleCostQueryBuilder::class,
             $this->client->contractRoleCosts()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), ContractRoleCostEntity::class);
+
+        $entity = new ContractRoleCostEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

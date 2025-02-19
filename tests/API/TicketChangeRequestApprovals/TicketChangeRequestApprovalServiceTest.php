@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\TicketChangeRequestApprovals\TicketChangeRequestApprovalCollection;
-use Anteris\Autotask\API\TicketChangeRequestApprovals\TicketChangeRequestApprovalEntity;
 use Anteris\Autotask\API\TicketChangeRequestApprovals\TicketChangeRequestApprovalService;
+use Anteris\Autotask\API\TicketChangeRequestApprovals\TicketChangeRequestApprovalEntity;
+
 use Anteris\Autotask\API\TicketChangeRequestApprovals\TicketChangeRequestApprovalQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for TicketChangeRequestApprovalService.
@@ -63,5 +67,16 @@ class TicketChangeRequestApprovalServiceTest extends AbstractTest
             TicketChangeRequestApprovalQueryBuilder::class,
             $this->client->ticketChangeRequestApprovals()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), TicketChangeRequestApprovalEntity::class);
+
+        $entity = new TicketChangeRequestApprovalEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\ConfigurationItemNotes\ConfigurationItemNoteCollection;
-use Anteris\Autotask\API\ConfigurationItemNotes\ConfigurationItemNoteEntity;
 use Anteris\Autotask\API\ConfigurationItemNotes\ConfigurationItemNoteService;
+use Anteris\Autotask\API\ConfigurationItemNotes\ConfigurationItemNoteEntity;
+
 use Anteris\Autotask\API\ConfigurationItemNotes\ConfigurationItemNoteQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for ConfigurationItemNoteService.
@@ -63,5 +67,16 @@ class ConfigurationItemNoteServiceTest extends AbstractTest
             ConfigurationItemNoteQueryBuilder::class,
             $this->client->configurationItemNotes()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), ConfigurationItemNoteEntity::class);
+
+        $entity = new ConfigurationItemNoteEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\TicketAdditionalConfigurationItems\TicketAdditionalConfigurationItemCollection;
-use Anteris\Autotask\API\TicketAdditionalConfigurationItems\TicketAdditionalConfigurationItemEntity;
 use Anteris\Autotask\API\TicketAdditionalConfigurationItems\TicketAdditionalConfigurationItemService;
+use Anteris\Autotask\API\TicketAdditionalConfigurationItems\TicketAdditionalConfigurationItemEntity;
+
 use Anteris\Autotask\API\TicketAdditionalConfigurationItems\TicketAdditionalConfigurationItemQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for TicketAdditionalConfigurationItemService.
@@ -63,5 +67,16 @@ class TicketAdditionalConfigurationItemServiceTest extends AbstractTest
             TicketAdditionalConfigurationItemQueryBuilder::class,
             $this->client->ticketAdditionalConfigurationItems()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), TicketAdditionalConfigurationItemEntity::class);
+
+        $entity = new TicketAdditionalConfigurationItemEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

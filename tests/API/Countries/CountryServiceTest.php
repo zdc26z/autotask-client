@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\Countries\CountryCollection;
-use Anteris\Autotask\API\Countries\CountryEntity;
 use Anteris\Autotask\API\Countries\CountryService;
+use Anteris\Autotask\API\Countries\CountryEntity;
+
 use Anteris\Autotask\API\Countries\CountryQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for CountryService.
@@ -63,5 +67,16 @@ class CountryServiceTest extends AbstractTest
             CountryQueryBuilder::class,
             $this->client->countries()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), CountryEntity::class);
+
+        $entity = new CountryEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

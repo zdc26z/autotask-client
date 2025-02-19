@@ -18,7 +18,7 @@ use GuzzleHttp\Psr7\Response;
 class BillingItemApprovalLevelEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new BillingItemApprovalLevel entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
@@ -26,15 +26,22 @@ class BillingItemApprovalLevelEntity extends Entity
      */
     public function __construct(
                 #[CastCarbon]
-        public ?Carbon $approvalDateTime = null,
-        public ?int $approvalLevel = null,
-        public ?int $approvalResourceID = null,
-        public ?int $id = null,
-        public ?int $timeEntryID = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                public Carbon|array|null $approvalDateTime = null,
+                        public ?int $approvalLevel = null,
+                        public ?int $approvalResourceID = null,
+                        public ?int $id = null,
+                        public ?int $timeEntryID = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($approvalDateTime)) {
+            foreach($approvalDateTime as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

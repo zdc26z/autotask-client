@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\TagGroups\TagGroupCollection;
-use Anteris\Autotask\API\TagGroups\TagGroupEntity;
 use Anteris\Autotask\API\TagGroups\TagGroupService;
+use Anteris\Autotask\API\TagGroups\TagGroupEntity;
+
 use Anteris\Autotask\API\TagGroups\TagGroupQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for TagGroupService.
@@ -63,5 +67,16 @@ class TagGroupServiceTest extends AbstractTest
             TagGroupQueryBuilder::class,
             $this->client->tagGroups()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), TagGroupEntity::class);
+
+        $entity = new TagGroupEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\ResourceRoles\ResourceRoleCollection;
-use Anteris\Autotask\API\ResourceRoles\ResourceRoleEntity;
 use Anteris\Autotask\API\ResourceRoles\ResourceRoleService;
+use Anteris\Autotask\API\ResourceRoles\ResourceRoleEntity;
+
 use Anteris\Autotask\API\ResourceRoles\ResourceRoleQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for ResourceRoleService.
@@ -63,5 +67,16 @@ class ResourceRoleServiceTest extends AbstractTest
             ResourceRoleQueryBuilder::class,
             $this->client->resourceRoles()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), ResourceRoleEntity::class);
+
+        $entity = new ResourceRoleEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

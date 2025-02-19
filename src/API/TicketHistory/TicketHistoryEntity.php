@@ -18,24 +18,31 @@ use GuzzleHttp\Psr7\Response;
 class TicketHistoryEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new TicketHistory entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?string $action = null,
-        #[CastCarbon]
-        public ?Carbon $date = null,
-        public ?string $detail = null,
-        public ?float $id = null,
-        public ?int $resourceID = null,
-        public ?int $ticketID = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public string|array|null $action = null,
+                #[CastCarbon]
+                public ?Carbon $date = null,
+                        public ?string $detail = null,
+                        public ?float $id = null,
+                        public ?int $resourceID = null,
+                        public ?int $ticketID = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($action)) {
+            foreach($action as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

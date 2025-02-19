@@ -16,23 +16,30 @@ use GuzzleHttp\Psr7\Response;
 class QuoteLocationEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new QuoteLocation entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?float $id = null,
-        public ?string $address1 = null,
-        public ?string $address2 = null,
-        public ?string $city = null,
-        public ?string $postalCode = null,
-        public ?string $state = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public float|array|null $id = null,
+                        public ?string $address1 = null,
+                        public ?string $address2 = null,
+                        public ?string $city = null,
+                        public ?string $postalCode = null,
+                        public ?string $state = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($id)) {
+            foreach($id as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

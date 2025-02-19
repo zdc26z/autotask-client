@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\ContractRetainers\ContractRetainerCollection;
-use Anteris\Autotask\API\ContractRetainers\ContractRetainerEntity;
 use Anteris\Autotask\API\ContractRetainers\ContractRetainerService;
+use Anteris\Autotask\API\ContractRetainers\ContractRetainerEntity;
+
 use Anteris\Autotask\API\ContractRetainers\ContractRetainerQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for ContractRetainerService.
@@ -63,5 +67,16 @@ class ContractRetainerServiceTest extends AbstractTest
             ContractRetainerQueryBuilder::class,
             $this->client->contractRetainers()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), ContractRetainerEntity::class);
+
+        $entity = new ContractRetainerEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

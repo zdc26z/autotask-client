@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\ServiceCalls\ServiceCallCollection;
-use Anteris\Autotask\API\ServiceCalls\ServiceCallEntity;
 use Anteris\Autotask\API\ServiceCalls\ServiceCallService;
+use Anteris\Autotask\API\ServiceCalls\ServiceCallEntity;
+
 use Anteris\Autotask\API\ServiceCalls\ServiceCallQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for ServiceCallService.
@@ -63,5 +67,16 @@ class ServiceCallServiceTest extends AbstractTest
             ServiceCallQueryBuilder::class,
             $this->client->serviceCalls()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), ServiceCallEntity::class);
+
+        $entity = new ServiceCallEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

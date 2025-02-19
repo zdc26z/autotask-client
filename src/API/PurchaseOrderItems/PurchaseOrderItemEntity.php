@@ -18,32 +18,39 @@ use GuzzleHttp\Psr7\Response;
 class PurchaseOrderItemEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new PurchaseOrderItem entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?float $id = null,
-        public ?int $inventoryLocationID = null,
-        public ?int $orderID = null,
-        public ?int $quantity = null,
-        public ?float $unitCost = null,
-        public ?int $chargeID = null,
-        public ?float $contractID = null,
-        #[CastCarbon]
-        public ?Carbon $estimatedArrivalDate = null,
-        public ?float $internalCurrencyUnitCost = null,
-        public ?string $memo = null,
-        public ?int $productID = null,
-        public ?float $projectID = null,
-        public ?float $salesOrderID = null,
-        public ?float $ticketID = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public float|array|null $id = null,
+                        public ?int $inventoryLocationID = null,
+                        public ?int $orderID = null,
+                        public ?int $quantity = null,
+                        public ?float $unitCost = null,
+                        public ?int $chargeID = null,
+                        public ?float $contractID = null,
+                #[CastCarbon]
+                public ?Carbon $estimatedArrivalDate = null,
+                        public ?float $internalCurrencyUnitCost = null,
+                        public ?string $memo = null,
+                        public ?int $productID = null,
+                        public ?float $projectID = null,
+                        public ?float $salesOrderID = null,
+                        public ?float $ticketID = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($id)) {
+            foreach($id as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

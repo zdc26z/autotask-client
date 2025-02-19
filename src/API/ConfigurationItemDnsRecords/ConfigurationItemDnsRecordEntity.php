@@ -18,7 +18,7 @@ use GuzzleHttp\Psr7\Response;
 class ConfigurationItemDnsRecordEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new ConfigurationItemDnsRecord entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
@@ -26,16 +26,23 @@ class ConfigurationItemDnsRecordEntity extends Entity
      */
     public function __construct(
                 #[CastCarbon]
-        public ?Carbon $createDateTime = null,
-        public ?string $data = null,
-        public ?string $dnsType = null,
-        public ?float $id = null,
-        public ?int $installedProductID = null,
-        public ?int $timeToLiveSeconds = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                public Carbon|array|null $createDateTime = null,
+                        public ?string $data = null,
+                        public ?string $dnsType = null,
+                        public ?float $id = null,
+                        public ?int $installedProductID = null,
+                        public ?int $timeToLiveSeconds = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($createDateTime)) {
+            foreach($createDateTime as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

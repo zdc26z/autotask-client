@@ -18,35 +18,42 @@ use GuzzleHttp\Psr7\Response;
 class ContractBillingRuleEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new ContractBillingRule entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?int $contractID = null,
-        public ?bool $createChargesAsBillable = null,
-        public ?int $determineUnits = null,
-        public ?float $id = null,
-        public ?bool $includeItemsInChargeDescription = null,
-        public ?bool $isActive = null,
-        public ?bool $isDailyProrationEnabled = null,
-        public ?int $productID = null,
-        #[CastCarbon]
-        public ?Carbon $startDate = null,
-        public ?float $dailyProratedCost = null,
-        public ?float $dailyProratedPrice = null,
-        #[CastCarbon]
-        public ?Carbon $endDate = null,
-        public ?int $executionMethod = null,
-        public ?string $invoiceDescription = null,
-        public ?int $maximumUnits = null,
-        public ?int $minimumUnits = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public int|array|null $contractID = null,
+                        public ?bool $createChargesAsBillable = null,
+                        public ?int $determineUnits = null,
+                        public ?float $id = null,
+                        public ?bool $includeItemsInChargeDescription = null,
+                        public ?bool $isActive = null,
+                        public ?bool $isDailyProrationEnabled = null,
+                        public ?int $productID = null,
+                #[CastCarbon]
+                public ?Carbon $startDate = null,
+                        public ?float $dailyProratedCost = null,
+                        public ?float $dailyProratedPrice = null,
+                #[CastCarbon]
+                public ?Carbon $endDate = null,
+                        public ?int $executionMethod = null,
+                        public ?string $invoiceDescription = null,
+                        public ?int $maximumUnits = null,
+                        public ?int $minimumUnits = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($contractID)) {
+            foreach($contractID as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\DeletedTicketLogs\DeletedTicketLogCollection;
-use Anteris\Autotask\API\DeletedTicketLogs\DeletedTicketLogEntity;
 use Anteris\Autotask\API\DeletedTicketLogs\DeletedTicketLogService;
+use Anteris\Autotask\API\DeletedTicketLogs\DeletedTicketLogEntity;
+
 use Anteris\Autotask\API\DeletedTicketLogs\DeletedTicketLogQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for DeletedTicketLogService.
@@ -63,5 +67,16 @@ class DeletedTicketLogServiceTest extends AbstractTest
             DeletedTicketLogQueryBuilder::class,
             $this->client->deletedTicketLogs()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), DeletedTicketLogEntity::class);
+
+        $entity = new DeletedTicketLogEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

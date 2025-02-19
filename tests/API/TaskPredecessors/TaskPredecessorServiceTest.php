@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\TaskPredecessors\TaskPredecessorCollection;
-use Anteris\Autotask\API\TaskPredecessors\TaskPredecessorEntity;
 use Anteris\Autotask\API\TaskPredecessors\TaskPredecessorService;
+use Anteris\Autotask\API\TaskPredecessors\TaskPredecessorEntity;
+
 use Anteris\Autotask\API\TaskPredecessors\TaskPredecessorQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for TaskPredecessorService.
@@ -63,5 +67,16 @@ class TaskPredecessorServiceTest extends AbstractTest
             TaskPredecessorQueryBuilder::class,
             $this->client->taskPredecessors()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), TaskPredecessorEntity::class);
+
+        $entity = new TaskPredecessorEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

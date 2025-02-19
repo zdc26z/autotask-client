@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\Appointments\AppointmentCollection;
-use Anteris\Autotask\API\Appointments\AppointmentEntity;
 use Anteris\Autotask\API\Appointments\AppointmentService;
+use Anteris\Autotask\API\Appointments\AppointmentEntity;
+
 use Anteris\Autotask\API\Appointments\AppointmentQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for AppointmentService.
@@ -63,5 +67,16 @@ class AppointmentServiceTest extends AbstractTest
             AppointmentQueryBuilder::class,
             $this->client->appointments()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), AppointmentEntity::class);
+
+        $entity = new AppointmentEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

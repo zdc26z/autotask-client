@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\Opportunities\OpportunityCollection;
-use Anteris\Autotask\API\Opportunities\OpportunityEntity;
 use Anteris\Autotask\API\Opportunities\OpportunityService;
+use Anteris\Autotask\API\Opportunities\OpportunityEntity;
+
 use Anteris\Autotask\API\Opportunities\OpportunityQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for OpportunityService.
@@ -63,5 +67,16 @@ class OpportunityServiceTest extends AbstractTest
             OpportunityQueryBuilder::class,
             $this->client->opportunities()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), OpportunityEntity::class);
+
+        $entity = new OpportunityEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

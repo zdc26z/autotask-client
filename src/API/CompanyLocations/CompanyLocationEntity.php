@@ -16,37 +16,44 @@ use GuzzleHttp\Psr7\Response;
 class CompanyLocationEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new CompanyLocation entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?int $companyID = null,
-        public ?float $id = null,
-        public ?string $name = null,
-        public ?string $address1 = null,
-        public ?string $address2 = null,
-        public ?string $alternatePhone1 = null,
-        public ?string $alternatePhone2 = null,
-        public ?string $city = null,
-        public ?int $countryID = null,
-        public ?string $description = null,
-        public ?string $fax = null,
-        public ?bool $isActive = null,
-        public ?bool $isPrimary = null,
-        public ?bool $isTaxExempt = null,
-        public ?bool $overrideCompanyTaxSettings = null,
-        public ?string $phone = null,
-        public ?string $postalCode = null,
-        public ?float $roundtripDistance = null,
-        public ?string $state = null,
-        public ?int $taxRegionID = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public int|array|null $companyID = null,
+                        public ?float $id = null,
+                        public ?string $name = null,
+                        public ?string $address1 = null,
+                        public ?string $address2 = null,
+                        public ?string $alternatePhone1 = null,
+                        public ?string $alternatePhone2 = null,
+                        public ?string $city = null,
+                        public ?int $countryID = null,
+                        public ?string $description = null,
+                        public ?string $fax = null,
+                        public ?bool $isActive = null,
+                        public ?bool $isPrimary = null,
+                        public ?bool $isTaxExempt = null,
+                        public ?bool $overrideCompanyTaxSettings = null,
+                        public ?string $phone = null,
+                        public ?string $postalCode = null,
+                        public ?float $roundtripDistance = null,
+                        public ?string $state = null,
+                        public ?int $taxRegionID = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($companyID)) {
+            foreach($companyID as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

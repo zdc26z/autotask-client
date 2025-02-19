@@ -16,20 +16,27 @@ use GuzzleHttp\Psr7\Response;
 class ArticleTicketAssociationEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new ArticleTicketAssociation entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?int $articleID = null,
-        public ?float $id = null,
-        public ?int $ticketID = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public int|array|null $articleID = null,
+                        public ?float $id = null,
+                        public ?int $ticketID = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($articleID)) {
+            foreach($articleID as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

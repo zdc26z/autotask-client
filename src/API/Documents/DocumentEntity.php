@@ -18,32 +18,39 @@ use GuzzleHttp\Psr7\Response;
 class DocumentEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new Document entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?int $companyID = null,
-        public ?int $documentCategoryID = null,
-        public ?float $id = null,
-        public ?int $publish = null,
-        public ?string $title = null,
-        public ?int $createdByResourceID = null,
-        #[CastCarbon]
-        public ?Carbon $createdDateTime = null,
-        public ?string $errorCodes = null,
-        public ?bool $isActive = null,
-        public ?string $keywords = null,
-        public ?int $lastModifiedByResourceID = null,
-        #[CastCarbon]
-        public ?Carbon $lastModifiedDateTime = null,
-        public ?string $referenceLink = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public int|array|null $companyID = null,
+                        public ?int $documentCategoryID = null,
+                        public ?float $id = null,
+                        public ?int $publish = null,
+                        public ?string $title = null,
+                        public ?int $createdByResourceID = null,
+                #[CastCarbon]
+                public ?Carbon $createdDateTime = null,
+                        public ?string $errorCodes = null,
+                        public ?bool $isActive = null,
+                        public ?string $keywords = null,
+                        public ?int $lastModifiedByResourceID = null,
+                #[CastCarbon]
+                public ?Carbon $lastModifiedDateTime = null,
+                        public ?string $referenceLink = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($companyID)) {
+            foreach($companyID as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

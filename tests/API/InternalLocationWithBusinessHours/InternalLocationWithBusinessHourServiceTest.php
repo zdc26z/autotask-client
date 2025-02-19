@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\InternalLocationWithBusinessHours\InternalLocationWithBusinessHourCollection;
-use Anteris\Autotask\API\InternalLocationWithBusinessHours\InternalLocationWithBusinessHourEntity;
 use Anteris\Autotask\API\InternalLocationWithBusinessHours\InternalLocationWithBusinessHourService;
+use Anteris\Autotask\API\InternalLocationWithBusinessHours\InternalLocationWithBusinessHourEntity;
+
 use Anteris\Autotask\API\InternalLocationWithBusinessHours\InternalLocationWithBusinessHourQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for InternalLocationWithBusinessHourService.
@@ -63,5 +67,16 @@ class InternalLocationWithBusinessHourServiceTest extends AbstractTest
             InternalLocationWithBusinessHourQueryBuilder::class,
             $this->client->internalLocationWithBusinessHours()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), InternalLocationWithBusinessHourEntity::class);
+
+        $entity = new InternalLocationWithBusinessHourEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

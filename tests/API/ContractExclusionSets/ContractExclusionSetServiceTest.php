@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\ContractExclusionSets\ContractExclusionSetCollection;
-use Anteris\Autotask\API\ContractExclusionSets\ContractExclusionSetEntity;
 use Anteris\Autotask\API\ContractExclusionSets\ContractExclusionSetService;
+use Anteris\Autotask\API\ContractExclusionSets\ContractExclusionSetEntity;
+
 use Anteris\Autotask\API\ContractExclusionSets\ContractExclusionSetQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for ContractExclusionSetService.
@@ -63,5 +67,16 @@ class ContractExclusionSetServiceTest extends AbstractTest
             ContractExclusionSetQueryBuilder::class,
             $this->client->contractExclusionSets()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), ContractExclusionSetEntity::class);
+
+        $entity = new ContractExclusionSetEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

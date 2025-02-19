@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\SalesOrderAttachments\SalesOrderAttachmentCollection;
-use Anteris\Autotask\API\SalesOrderAttachments\SalesOrderAttachmentEntity;
 use Anteris\Autotask\API\SalesOrderAttachments\SalesOrderAttachmentService;
+use Anteris\Autotask\API\SalesOrderAttachments\SalesOrderAttachmentEntity;
+
 use Anteris\Autotask\API\SalesOrderAttachments\SalesOrderAttachmentQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for SalesOrderAttachmentService.
@@ -63,5 +67,16 @@ class SalesOrderAttachmentServiceTest extends AbstractTest
             SalesOrderAttachmentQueryBuilder::class,
             $this->client->salesOrderAttachments()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), SalesOrderAttachmentEntity::class);
+
+        $entity = new SalesOrderAttachmentEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

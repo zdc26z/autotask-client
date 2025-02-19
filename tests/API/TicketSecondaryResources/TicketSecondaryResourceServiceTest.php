@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\TicketSecondaryResources\TicketSecondaryResourceCollection;
-use Anteris\Autotask\API\TicketSecondaryResources\TicketSecondaryResourceEntity;
 use Anteris\Autotask\API\TicketSecondaryResources\TicketSecondaryResourceService;
+use Anteris\Autotask\API\TicketSecondaryResources\TicketSecondaryResourceEntity;
+
 use Anteris\Autotask\API\TicketSecondaryResources\TicketSecondaryResourceQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for TicketSecondaryResourceService.
@@ -63,5 +67,16 @@ class TicketSecondaryResourceServiceTest extends AbstractTest
             TicketSecondaryResourceQueryBuilder::class,
             $this->client->ticketSecondaryResources()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), TicketSecondaryResourceEntity::class);
+
+        $entity = new TicketSecondaryResourceEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

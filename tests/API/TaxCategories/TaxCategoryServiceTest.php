@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\TaxCategories\TaxCategoryCollection;
-use Anteris\Autotask\API\TaxCategories\TaxCategoryEntity;
 use Anteris\Autotask\API\TaxCategories\TaxCategoryService;
+use Anteris\Autotask\API\TaxCategories\TaxCategoryEntity;
+
 use Anteris\Autotask\API\TaxCategories\TaxCategoryQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for TaxCategoryService.
@@ -63,5 +67,16 @@ class TaxCategoryServiceTest extends AbstractTest
             TaxCategoryQueryBuilder::class,
             $this->client->taxCategories()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), TaxCategoryEntity::class);
+
+        $entity = new TaxCategoryEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

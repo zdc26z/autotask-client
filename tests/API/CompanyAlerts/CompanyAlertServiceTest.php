@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\CompanyAlerts\CompanyAlertCollection;
-use Anteris\Autotask\API\CompanyAlerts\CompanyAlertEntity;
 use Anteris\Autotask\API\CompanyAlerts\CompanyAlertService;
+use Anteris\Autotask\API\CompanyAlerts\CompanyAlertEntity;
+
 use Anteris\Autotask\API\CompanyAlerts\CompanyAlertQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for CompanyAlertService.
@@ -63,5 +67,16 @@ class CompanyAlertServiceTest extends AbstractTest
             CompanyAlertQueryBuilder::class,
             $this->client->companyAlerts()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), CompanyAlertEntity::class);
+
+        $entity = new CompanyAlertEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

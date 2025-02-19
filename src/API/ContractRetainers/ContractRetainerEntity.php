@@ -18,34 +18,41 @@ use GuzzleHttp\Psr7\Response;
 class ContractRetainerEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new ContractRetainer entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?float $amount = null,
-        public ?int $contractID = null,
-        #[CastCarbon]
-        public ?Carbon $datePurchased = null,
-        #[CastCarbon]
-        public ?Carbon $endDate = null,
-        public ?int $id = null,
-        #[CastCarbon]
-        public ?Carbon $startDate = null,
-        public ?int $status = null,
-        public ?float $amountApproved = null,
-        public ?float $internalCurrencyAmount = null,
-        public ?float $internalCurrencyAmountApproved = null,
-        public ?string $invoiceNumber = null,
-        public ?bool $isPaid = null,
-        public ?int $paymentID = null,
-        public ?string $paymentNumber = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public float|array|null $amount = null,
+                        public ?int $contractID = null,
+                #[CastCarbon]
+                public ?Carbon $datePurchased = null,
+                #[CastCarbon]
+                public ?Carbon $endDate = null,
+                        public ?int $id = null,
+                #[CastCarbon]
+                public ?Carbon $startDate = null,
+                        public ?int $status = null,
+                        public ?float $amountApproved = null,
+                        public ?float $internalCurrencyAmount = null,
+                        public ?float $internalCurrencyAmountApproved = null,
+                        public ?string $invoiceNumber = null,
+                        public ?bool $isPaid = null,
+                        public ?int $paymentID = null,
+                        public ?string $paymentNumber = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($amount)) {
+            foreach($amount as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

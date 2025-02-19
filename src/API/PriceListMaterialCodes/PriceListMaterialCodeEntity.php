@@ -16,22 +16,29 @@ use GuzzleHttp\Psr7\Response;
 class PriceListMaterialCodeEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new PriceListMaterialCode entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?int $billingCodeID = null,
-        public ?int $currencyID = null,
-        public ?float $id = null,
-        public ?bool $usesInternalCurrencyPrice = null,
-        public ?float $unitPrice = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public int|array|null $billingCodeID = null,
+                        public ?int $currencyID = null,
+                        public ?float $id = null,
+                        public ?bool $usesInternalCurrencyPrice = null,
+                        public ?float $unitPrice = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($billingCodeID)) {
+            foreach($billingCodeID as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

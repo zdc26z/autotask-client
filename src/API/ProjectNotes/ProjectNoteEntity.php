@@ -18,32 +18,39 @@ use GuzzleHttp\Psr7\Response;
 class ProjectNoteEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new ProjectNote entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?string $description = null,
-        public ?float $id = null,
-        public ?bool $isAnnouncement = null,
-        public ?int $noteType = null,
-        public ?int $projectID = null,
-        public ?int $publish = null,
-        public ?string $title = null,
-        #[CastCarbon]
-        public ?Carbon $createDateTime = null,
-        public ?int $createdByContactID = null,
-        public ?int $creatorResourceID = null,
-        public ?int $impersonatorCreatorResourceID = null,
-        public ?int $impersonatorUpdaterResourceID = null,
-        #[CastCarbon]
-        public ?Carbon $lastActivityDate = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public string|array|null $description = null,
+                        public ?float $id = null,
+                        public ?bool $isAnnouncement = null,
+                        public ?int $noteType = null,
+                        public ?int $projectID = null,
+                        public ?int $publish = null,
+                        public ?string $title = null,
+                #[CastCarbon]
+                public ?Carbon $createDateTime = null,
+                        public ?int $createdByContactID = null,
+                        public ?int $creatorResourceID = null,
+                        public ?int $impersonatorCreatorResourceID = null,
+                        public ?int $impersonatorUpdaterResourceID = null,
+                #[CastCarbon]
+                public ?Carbon $lastActivityDate = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($description)) {
+            foreach($description as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

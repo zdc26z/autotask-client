@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\PriceListProductTiers\PriceListProductTierCollection;
-use Anteris\Autotask\API\PriceListProductTiers\PriceListProductTierEntity;
 use Anteris\Autotask\API\PriceListProductTiers\PriceListProductTierService;
+use Anteris\Autotask\API\PriceListProductTiers\PriceListProductTierEntity;
+
 use Anteris\Autotask\API\PriceListProductTiers\PriceListProductTierQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for PriceListProductTierService.
@@ -63,5 +67,16 @@ class PriceListProductTierServiceTest extends AbstractTest
             PriceListProductTierQueryBuilder::class,
             $this->client->priceListProductTiers()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), PriceListProductTierEntity::class);
+
+        $entity = new PriceListProductTierEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

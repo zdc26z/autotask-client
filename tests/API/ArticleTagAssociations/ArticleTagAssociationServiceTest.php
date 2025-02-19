@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\ArticleTagAssociations\ArticleTagAssociationCollection;
-use Anteris\Autotask\API\ArticleTagAssociations\ArticleTagAssociationEntity;
 use Anteris\Autotask\API\ArticleTagAssociations\ArticleTagAssociationService;
+use Anteris\Autotask\API\ArticleTagAssociations\ArticleTagAssociationEntity;
+
 use Anteris\Autotask\API\ArticleTagAssociations\ArticleTagAssociationQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for ArticleTagAssociationService.
@@ -63,5 +67,16 @@ class ArticleTagAssociationServiceTest extends AbstractTest
             ArticleTagAssociationQueryBuilder::class,
             $this->client->articleTagAssociations()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), ArticleTagAssociationEntity::class);
+
+        $entity = new ArticleTagAssociationEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

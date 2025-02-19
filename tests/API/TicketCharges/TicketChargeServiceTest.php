@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\TicketCharges\TicketChargeCollection;
-use Anteris\Autotask\API\TicketCharges\TicketChargeEntity;
 use Anteris\Autotask\API\TicketCharges\TicketChargeService;
+use Anteris\Autotask\API\TicketCharges\TicketChargeEntity;
+
 use Anteris\Autotask\API\TicketCharges\TicketChargeQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for TicketChargeService.
@@ -63,5 +67,16 @@ class TicketChargeServiceTest extends AbstractTest
             TicketChargeQueryBuilder::class,
             $this->client->ticketCharges()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), TicketChargeEntity::class);
+
+        $entity = new TicketChargeEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

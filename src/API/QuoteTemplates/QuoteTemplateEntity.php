@@ -18,39 +18,46 @@ use GuzzleHttp\Psr7\Response;
 class QuoteTemplateEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new QuoteTemplate entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?string $currencyNegativeFormat = null,
-        public ?string $currencyPositiveFormat = null,
-        public ?float $id = null,
-        public ?string $name = null,
-        public ?bool $calculateTaxSeparately = null,
-        #[CastCarbon]
-        public ?Carbon $createDate = null,
-        public ?int $createdBy = null,
-        public ?int $dateFormat = null,
-        public ?string $description = null,
-        public ?bool $displayTaxCategorySuperscripts = null,
-        public ?bool $isActive = null,
-        public ?int $lastActivityBy = null,
-        #[CastCarbon]
-        public ?Carbon $lastActivityDate = null,
-        public ?int $numberFormat = null,
-        public ?int $pageLayout = null,
-        public ?int $pageNumberFormat = null,
-        public ?bool $showEachTaxInGroup = null,
-        public ?bool $showGridHeader = null,
-        public ?bool $showTaxCategory = null,
-        public ?bool $showVerticalGridLines = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public string|array|null $currencyNegativeFormat = null,
+                        public ?string $currencyPositiveFormat = null,
+                        public ?float $id = null,
+                        public ?string $name = null,
+                        public ?bool $calculateTaxSeparately = null,
+                #[CastCarbon]
+                public ?Carbon $createDate = null,
+                        public ?int $createdBy = null,
+                        public ?int $dateFormat = null,
+                        public ?string $description = null,
+                        public ?bool $displayTaxCategorySuperscripts = null,
+                        public ?bool $isActive = null,
+                        public ?int $lastActivityBy = null,
+                #[CastCarbon]
+                public ?Carbon $lastActivityDate = null,
+                        public ?int $numberFormat = null,
+                        public ?int $pageLayout = null,
+                        public ?int $pageNumberFormat = null,
+                        public ?bool $showEachTaxInGroup = null,
+                        public ?bool $showGridHeader = null,
+                        public ?bool $showTaxCategory = null,
+                        public ?bool $showVerticalGridLines = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($currencyNegativeFormat)) {
+            foreach($currencyNegativeFormat as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

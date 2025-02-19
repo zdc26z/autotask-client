@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\ContactBillingProductAssociations\ContactBillingProductAssociationCollection;
-use Anteris\Autotask\API\ContactBillingProductAssociations\ContactBillingProductAssociationEntity;
 use Anteris\Autotask\API\ContactBillingProductAssociations\ContactBillingProductAssociationService;
+use Anteris\Autotask\API\ContactBillingProductAssociations\ContactBillingProductAssociationEntity;
+
 use Anteris\Autotask\API\ContactBillingProductAssociations\ContactBillingProductAssociationQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for ContactBillingProductAssociationService.
@@ -63,5 +67,16 @@ class ContactBillingProductAssociationServiceTest extends AbstractTest
             ContactBillingProductAssociationQueryBuilder::class,
             $this->client->contactBillingProductAssociations()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), ContactBillingProductAssociationEntity::class);
+
+        $entity = new ContactBillingProductAssociationEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

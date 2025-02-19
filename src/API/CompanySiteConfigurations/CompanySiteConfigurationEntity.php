@@ -16,20 +16,27 @@ use GuzzleHttp\Psr7\Response;
 class CompanySiteConfigurationEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new CompanySiteConfiguration entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?int $companyID = null,
-        public ?float $id = null,
-        public ?string $locationName = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public int|array|null $companyID = null,
+                        public ?float $id = null,
+                        public ?string $locationName = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($companyID)) {
+            foreach($companyID as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

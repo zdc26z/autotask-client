@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\ConfigurationItemTypes\ConfigurationItemTypeCollection;
-use Anteris\Autotask\API\ConfigurationItemTypes\ConfigurationItemTypeEntity;
 use Anteris\Autotask\API\ConfigurationItemTypes\ConfigurationItemTypeService;
+use Anteris\Autotask\API\ConfigurationItemTypes\ConfigurationItemTypeEntity;
+
 use Anteris\Autotask\API\ConfigurationItemTypes\ConfigurationItemTypeQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for ConfigurationItemTypeService.
@@ -63,5 +67,16 @@ class ConfigurationItemTypeServiceTest extends AbstractTest
             ConfigurationItemTypeQueryBuilder::class,
             $this->client->configurationItemTypes()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), ConfigurationItemTypeEntity::class);
+
+        $entity = new ConfigurationItemTypeEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

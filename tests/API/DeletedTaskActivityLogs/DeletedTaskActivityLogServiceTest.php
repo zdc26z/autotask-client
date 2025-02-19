@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\DeletedTaskActivityLogs\DeletedTaskActivityLogCollection;
-use Anteris\Autotask\API\DeletedTaskActivityLogs\DeletedTaskActivityLogEntity;
 use Anteris\Autotask\API\DeletedTaskActivityLogs\DeletedTaskActivityLogService;
+use Anteris\Autotask\API\DeletedTaskActivityLogs\DeletedTaskActivityLogEntity;
+
 use Anteris\Autotask\API\DeletedTaskActivityLogs\DeletedTaskActivityLogQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for DeletedTaskActivityLogService.
@@ -63,5 +67,16 @@ class DeletedTaskActivityLogServiceTest extends AbstractTest
             DeletedTaskActivityLogQueryBuilder::class,
             $this->client->deletedTaskActivityLogs()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), DeletedTaskActivityLogEntity::class);
+
+        $entity = new DeletedTaskActivityLogEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

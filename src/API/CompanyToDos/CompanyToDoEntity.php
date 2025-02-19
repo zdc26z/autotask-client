@@ -18,38 +18,45 @@ use GuzzleHttp\Psr7\Response;
 class CompanyToDoEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new CompanyToDo entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?int $actionType = null,
-        public ?float $assignedToResourceID = null,
-        public ?float $companyID = null,
-        #[CastCarbon]
-        public ?Carbon $endDateTime = null,
-        public ?float $id = null,
-        #[CastCarbon]
-        public ?Carbon $startDateTime = null,
-        public ?string $activityDescription = null,
-        #[CastCarbon]
-        public ?Carbon $completedDate = null,
-        public ?float $contactID = null,
-        public ?float $contractID = null,
-        #[CastCarbon]
-        public ?Carbon $createDateTime = null,
-        public ?float $creatorResourceID = null,
-        public ?int $impersonatorCreatorResourceID = null,
-        #[CastCarbon]
-        public ?Carbon $lastModifiedDate = null,
-        public ?float $opportunityID = null,
-        public ?float $ticketID = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public int|array|null $actionType = null,
+                        public ?float $assignedToResourceID = null,
+                        public ?float $companyID = null,
+                #[CastCarbon]
+                public ?Carbon $endDateTime = null,
+                        public ?float $id = null,
+                #[CastCarbon]
+                public ?Carbon $startDateTime = null,
+                        public ?string $activityDescription = null,
+                #[CastCarbon]
+                public ?Carbon $completedDate = null,
+                        public ?float $contactID = null,
+                        public ?float $contractID = null,
+                #[CastCarbon]
+                public ?Carbon $createDateTime = null,
+                        public ?float $creatorResourceID = null,
+                        public ?int $impersonatorCreatorResourceID = null,
+                #[CastCarbon]
+                public ?Carbon $lastModifiedDate = null,
+                        public ?float $opportunityID = null,
+                        public ?float $ticketID = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($actionType)) {
+            foreach($actionType as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

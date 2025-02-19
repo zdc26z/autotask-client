@@ -18,27 +18,34 @@ use GuzzleHttp\Psr7\Response;
 class TagEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new Tag entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?float $id = null,
-        public ?string $label = null,
-        #[CastCarbon]
-        public ?Carbon $createDateTime = null,
-        public ?bool $isActive = null,
-        public ?bool $isExcludedFromAutomaticTagging = null,
-        public ?bool $isSystem = null,
-        #[CastCarbon]
-        public ?Carbon $lastModifiedDateTime = null,
-        public ?int $tagGroupID = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public float|array|null $id = null,
+                        public ?string $label = null,
+                #[CastCarbon]
+                public ?Carbon $createDateTime = null,
+                        public ?bool $isActive = null,
+                        public ?bool $isExcludedFromAutomaticTagging = null,
+                        public ?bool $isSystem = null,
+                #[CastCarbon]
+                public ?Carbon $lastModifiedDateTime = null,
+                        public ?int $tagGroupID = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($id)) {
+            foreach($id as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

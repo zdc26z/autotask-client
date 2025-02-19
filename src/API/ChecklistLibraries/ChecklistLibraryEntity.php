@@ -16,22 +16,29 @@ use GuzzleHttp\Psr7\Response;
 class ChecklistLibraryEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new ChecklistLibrary entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?int $entityType = null,
-        public ?float $id = null,
-        public ?bool $isActive = null,
-        public ?string $name = null,
-        public ?string $description = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public int|array|null $entityType = null,
+                        public ?float $id = null,
+                        public ?bool $isActive = null,
+                        public ?string $name = null,
+                        public ?string $description = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($entityType)) {
+            foreach($entityType as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

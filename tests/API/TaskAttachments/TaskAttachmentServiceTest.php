@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\TaskAttachments\TaskAttachmentCollection;
-use Anteris\Autotask\API\TaskAttachments\TaskAttachmentEntity;
 use Anteris\Autotask\API\TaskAttachments\TaskAttachmentService;
+use Anteris\Autotask\API\TaskAttachments\TaskAttachmentEntity;
+
 use Anteris\Autotask\API\TaskAttachments\TaskAttachmentQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for TaskAttachmentService.
@@ -63,5 +67,16 @@ class TaskAttachmentServiceTest extends AbstractTest
             TaskAttachmentQueryBuilder::class,
             $this->client->taskAttachments()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), TaskAttachmentEntity::class);
+
+        $entity = new TaskAttachmentEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

@@ -3,6 +3,8 @@ services:
   appserver:
     type: php:8.3
 tooling:
+  php:
+    service: appserver
   phpunit:
     service: appserver
   autotask:

@@ -18,30 +18,37 @@ use GuzzleHttp\Psr7\Response;
 class IntegrationVendorWidgetEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new IntegrationVendorWidget entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?float $id = null,
-        public ?string $referenceUrl = null,
-        public ?string $secret = null,
-        public ?string $title = null,
-        public ?string $vendorSuppliedID = null,
-        public ?string $widgetKey = null,
-        #[CastCarbon]
-        public ?Carbon $createDateTime = null,
-        public ?string $description = null,
-        public ?bool $isActive = null,
-        #[CastCarbon]
-        public ?Carbon $lastModifiedDateTime = null,
-        public ?int $width = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public float|array|null $id = null,
+                        public ?string $referenceUrl = null,
+                        public ?string $secret = null,
+                        public ?string $title = null,
+                        public ?string $vendorSuppliedID = null,
+                        public ?string $widgetKey = null,
+                #[CastCarbon]
+                public ?Carbon $createDateTime = null,
+                        public ?string $description = null,
+                        public ?bool $isActive = null,
+                #[CastCarbon]
+                public ?Carbon $lastModifiedDateTime = null,
+                        public ?int $width = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($id)) {
+            foreach($id as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

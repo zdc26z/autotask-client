@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\ContactGroups\ContactGroupCollection;
-use Anteris\Autotask\API\ContactGroups\ContactGroupEntity;
 use Anteris\Autotask\API\ContactGroups\ContactGroupService;
+use Anteris\Autotask\API\ContactGroups\ContactGroupEntity;
+
 use Anteris\Autotask\API\ContactGroups\ContactGroupQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for ContactGroupService.
@@ -63,5 +67,16 @@ class ContactGroupServiceTest extends AbstractTest
             ContactGroupQueryBuilder::class,
             $this->client->contactGroups()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), ContactGroupEntity::class);
+
+        $entity = new ContactGroupEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

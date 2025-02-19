@@ -16,20 +16,27 @@ use GuzzleHttp\Psr7\Response;
 class TagAliasEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new TagAlias entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?string $alias = null,
-        public ?float $id = null,
-        public ?int $tagID = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public string|array|null $alias = null,
+                        public ?float $id = null,
+                        public ?int $tagID = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($alias)) {
+            foreach($alias as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

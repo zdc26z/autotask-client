@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\ClientPortalUsers\ClientPortalUserCollection;
-use Anteris\Autotask\API\ClientPortalUsers\ClientPortalUserEntity;
 use Anteris\Autotask\API\ClientPortalUsers\ClientPortalUserService;
+use Anteris\Autotask\API\ClientPortalUsers\ClientPortalUserEntity;
+
 use Anteris\Autotask\API\ClientPortalUsers\ClientPortalUserQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for ClientPortalUserService.
@@ -63,5 +67,16 @@ class ClientPortalUserServiceTest extends AbstractTest
             ClientPortalUserQueryBuilder::class,
             $this->client->clientPortalUsers()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), ClientPortalUserEntity::class);
+
+        $entity = new ClientPortalUserEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

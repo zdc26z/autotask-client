@@ -18,38 +18,45 @@ use GuzzleHttp\Psr7\Response;
 class NotificationHistoryEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new NotificationHistory entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?float $id = null,
-        public ?bool $isActive = null,
-        public ?bool $isDeleted = null,
-        public ?bool $isTemplateJob = null,
-        public ?float $companyID = null,
-        public ?string $entityNumber = null,
-        public ?string $entityTitle = null,
-        public ?float $initiatingContactID = null,
-        public ?float $initiatingResourceID = null,
-        public ?int $notificationHistoryTypeID = null,
-        #[CastCarbon]
-        public ?Carbon $notificationSentTime = null,
-        public ?float $opportunityID = null,
-        public ?float $projectID = null,
-        public ?float $quoteID = null,
-        public ?string $recipientDisplayName = null,
-        public ?string $recipientEmailAddress = null,
-        public ?float $taskID = null,
-        public ?string $templateName = null,
-        public ?float $ticketID = null,
-        public ?float $timeEntryID = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public float|array|null $id = null,
+                        public ?bool $isActive = null,
+                        public ?bool $isDeleted = null,
+                        public ?bool $isTemplateJob = null,
+                        public ?float $companyID = null,
+                        public ?string $entityNumber = null,
+                        public ?string $entityTitle = null,
+                        public ?float $initiatingContactID = null,
+                        public ?float $initiatingResourceID = null,
+                        public ?int $notificationHistoryTypeID = null,
+                #[CastCarbon]
+                public ?Carbon $notificationSentTime = null,
+                        public ?float $opportunityID = null,
+                        public ?float $projectID = null,
+                        public ?float $quoteID = null,
+                        public ?string $recipientDisplayName = null,
+                        public ?string $recipientEmailAddress = null,
+                        public ?float $taskID = null,
+                        public ?string $templateName = null,
+                        public ?float $ticketID = null,
+                        public ?float $timeEntryID = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($id)) {
+            foreach($id as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

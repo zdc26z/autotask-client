@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\CompanyCategories\CompanyCategoryCollection;
-use Anteris\Autotask\API\CompanyCategories\CompanyCategoryEntity;
 use Anteris\Autotask\API\CompanyCategories\CompanyCategoryService;
+use Anteris\Autotask\API\CompanyCategories\CompanyCategoryEntity;
+
 use Anteris\Autotask\API\CompanyCategories\CompanyCategoryQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for CompanyCategoryService.
@@ -63,5 +67,16 @@ class CompanyCategoryServiceTest extends AbstractTest
             CompanyCategoryQueryBuilder::class,
             $this->client->companyCategories()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), CompanyCategoryEntity::class);
+
+        $entity = new CompanyCategoryEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

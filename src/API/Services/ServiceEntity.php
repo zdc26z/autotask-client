@@ -18,42 +18,49 @@ use GuzzleHttp\Psr7\Response;
 class ServiceEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new Service entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?int $billingCodeID = null,
-        public ?float $id = null,
-        public ?string $name = null,
-        public ?int $periodType = null,
-        public ?float $unitPrice = null,
-        public ?string $catalogNumberPartNumber = null,
-        #[CastCarbon]
-        public ?Carbon $createDate = null,
-        public ?int $creatorResourceID = null,
-        public ?string $description = null,
-        public ?string $externalID = null,
-        public ?string $internalID = null,
-        public ?string $invoiceDescription = null,
-        public ?bool $isActive = null,
-        #[CastCarbon]
-        public ?Carbon $lastModifiedDate = null,
-        public ?string $manufacturerServiceProvider = null,
-        public ?string $manufacturerServiceProviderProductNumber = null,
-        public ?float $markupRate = null,
-        public ?float $serviceLevelAgreementID = null,
-        public ?string $sku = null,
-        public ?float $unitCost = null,
-        public ?int $updateResourceID = null,
-        public ?string $url = null,
-        public ?int $vendorCompanyID = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public int|array|null $billingCodeID = null,
+                        public ?float $id = null,
+                        public ?string $name = null,
+                        public ?int $periodType = null,
+                        public ?float $unitPrice = null,
+                        public ?string $catalogNumberPartNumber = null,
+                #[CastCarbon]
+                public ?Carbon $createDate = null,
+                        public ?int $creatorResourceID = null,
+                        public ?string $description = null,
+                        public ?string $externalID = null,
+                        public ?string $internalID = null,
+                        public ?string $invoiceDescription = null,
+                        public ?bool $isActive = null,
+                #[CastCarbon]
+                public ?Carbon $lastModifiedDate = null,
+                        public ?string $manufacturerServiceProvider = null,
+                        public ?string $manufacturerServiceProviderProductNumber = null,
+                        public ?float $markupRate = null,
+                        public ?float $serviceLevelAgreementID = null,
+                        public ?string $sku = null,
+                        public ?float $unitCost = null,
+                        public ?int $updateResourceID = null,
+                        public ?string $url = null,
+                        public ?int $vendorCompanyID = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($billingCodeID)) {
+            foreach($billingCodeID as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

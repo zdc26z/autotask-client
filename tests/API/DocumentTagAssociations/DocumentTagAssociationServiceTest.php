@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\DocumentTagAssociations\DocumentTagAssociationCollection;
-use Anteris\Autotask\API\DocumentTagAssociations\DocumentTagAssociationEntity;
 use Anteris\Autotask\API\DocumentTagAssociations\DocumentTagAssociationService;
+use Anteris\Autotask\API\DocumentTagAssociations\DocumentTagAssociationEntity;
+
 use Anteris\Autotask\API\DocumentTagAssociations\DocumentTagAssociationQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for DocumentTagAssociationService.
@@ -63,5 +67,16 @@ class DocumentTagAssociationServiceTest extends AbstractTest
             DocumentTagAssociationQueryBuilder::class,
             $this->client->documentTagAssociations()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), DocumentTagAssociationEntity::class);
+
+        $entity = new DocumentTagAssociationEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

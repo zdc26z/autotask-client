@@ -18,33 +18,40 @@ use GuzzleHttp\Psr7\Response;
 class InventoryProductEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new InventoryProduct entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?int $availableUnits = null,
-        public ?float $id = null,
-        public ?int $inventoryLocationID = null,
-        public ?int $productID = null,
-        public ?int $quantityMaximum = null,
-        public ?int $quantityMinimum = null,
-        public ?int $backOrderQuantity = null,
-        public ?string $bin = null,
-        #[CastCarbon]
-        public ?Carbon $createDateTime = null,
-        public ?int $createdByResourceID = null,
-        public ?int $onHandUnits = null,
-        public ?int $pickedUnits = null,
-        public ?string $referenceNumber = null,
-        public ?int $reservedUnits = null,
-        public ?int $unitsOnOrder = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public int|array|null $availableUnits = null,
+                        public ?float $id = null,
+                        public ?int $inventoryLocationID = null,
+                        public ?int $productID = null,
+                        public ?int $quantityMaximum = null,
+                        public ?int $quantityMinimum = null,
+                        public ?int $backOrderQuantity = null,
+                        public ?string $bin = null,
+                #[CastCarbon]
+                public ?Carbon $createDateTime = null,
+                        public ?int $createdByResourceID = null,
+                        public ?int $onHandUnits = null,
+                        public ?int $pickedUnits = null,
+                        public ?string $referenceNumber = null,
+                        public ?int $reservedUnits = null,
+                        public ?int $unitsOnOrder = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($availableUnits)) {
+            foreach($availableUnits as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

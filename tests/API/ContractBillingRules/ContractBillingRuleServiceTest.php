@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\ContractBillingRules\ContractBillingRuleCollection;
-use Anteris\Autotask\API\ContractBillingRules\ContractBillingRuleEntity;
 use Anteris\Autotask\API\ContractBillingRules\ContractBillingRuleService;
+use Anteris\Autotask\API\ContractBillingRules\ContractBillingRuleEntity;
+
 use Anteris\Autotask\API\ContractBillingRules\ContractBillingRuleQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for ContractBillingRuleService.
@@ -63,5 +67,16 @@ class ContractBillingRuleServiceTest extends AbstractTest
             ContractBillingRuleQueryBuilder::class,
             $this->client->contractBillingRules()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), ContractBillingRuleEntity::class);
+
+        $entity = new ContractBillingRuleEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

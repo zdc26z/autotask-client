@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\ArticleToDocumentAssociations\ArticleToDocumentAssociationCollection;
-use Anteris\Autotask\API\ArticleToDocumentAssociations\ArticleToDocumentAssociationEntity;
 use Anteris\Autotask\API\ArticleToDocumentAssociations\ArticleToDocumentAssociationService;
+use Anteris\Autotask\API\ArticleToDocumentAssociations\ArticleToDocumentAssociationEntity;
+
 use Anteris\Autotask\API\ArticleToDocumentAssociations\ArticleToDocumentAssociationQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for ArticleToDocumentAssociationService.
@@ -63,5 +67,16 @@ class ArticleToDocumentAssociationServiceTest extends AbstractTest
             ArticleToDocumentAssociationQueryBuilder::class,
             $this->client->articleToDocumentAssociations()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), ArticleToDocumentAssociationEntity::class);
+
+        $entity = new ArticleToDocumentAssociationEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

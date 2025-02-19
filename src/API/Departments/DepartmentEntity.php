@@ -16,22 +16,29 @@ use GuzzleHttp\Psr7\Response;
 class DepartmentEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new Department entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?float $id = null,
-        public ?string $name = null,
-        public ?int $primaryLocationID = null,
-        public ?string $description = null,
-        public ?string $number = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public float|array|null $id = null,
+                        public ?string $name = null,
+                        public ?int $primaryLocationID = null,
+                        public ?string $description = null,
+                        public ?string $number = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($id)) {
+            foreach($id as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

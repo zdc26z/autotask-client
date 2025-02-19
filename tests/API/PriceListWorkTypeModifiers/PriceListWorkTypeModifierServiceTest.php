@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\PriceListWorkTypeModifiers\PriceListWorkTypeModifierCollection;
-use Anteris\Autotask\API\PriceListWorkTypeModifiers\PriceListWorkTypeModifierEntity;
 use Anteris\Autotask\API\PriceListWorkTypeModifiers\PriceListWorkTypeModifierService;
+use Anteris\Autotask\API\PriceListWorkTypeModifiers\PriceListWorkTypeModifierEntity;
+
 use Anteris\Autotask\API\PriceListWorkTypeModifiers\PriceListWorkTypeModifierQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for PriceListWorkTypeModifierService.
@@ -63,5 +67,16 @@ class PriceListWorkTypeModifierServiceTest extends AbstractTest
             PriceListWorkTypeModifierQueryBuilder::class,
             $this->client->priceListWorkTypeModifiers()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), PriceListWorkTypeModifierEntity::class);
+
+        $entity = new PriceListWorkTypeModifierEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

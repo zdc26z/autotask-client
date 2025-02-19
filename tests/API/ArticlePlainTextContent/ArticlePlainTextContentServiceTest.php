@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\ArticlePlainTextContent\ArticlePlainTextContentCollection;
-use Anteris\Autotask\API\ArticlePlainTextContent\ArticlePlainTextContentEntity;
 use Anteris\Autotask\API\ArticlePlainTextContent\ArticlePlainTextContentService;
+use Anteris\Autotask\API\ArticlePlainTextContent\ArticlePlainTextContentEntity;
+
 use Anteris\Autotask\API\ArticlePlainTextContent\ArticlePlainTextContentQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for ArticlePlainTextContentService.
@@ -63,5 +67,16 @@ class ArticlePlainTextContentServiceTest extends AbstractTest
             ArticlePlainTextContentQueryBuilder::class,
             $this->client->articlePlainTextContent()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), ArticlePlainTextContentEntity::class);
+
+        $entity = new ArticlePlainTextContentEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }

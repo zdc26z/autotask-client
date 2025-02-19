@@ -16,26 +16,33 @@ use GuzzleHttp\Psr7\Response;
 class ClientPortalUserEntity extends Entity
 {
 
-    /**
+                /**
      * Creates a new ClientPortalUser entity.
      * If this entity has dates, they will be cast as Carbon objects.
      *
      * @author Aidan Casey <aidan.casey@anteris.com>
      */
     public function __construct(
-                public ?int $contactID = null,
-        public ?int $dateFormat = null,
-        public ?float $id = null,
-        public ?bool $isClientPortalActive = null,
-        public ?int $numberFormat = null,
-        public ?int $securityLevel = null,
-        public ?int $timeFormat = null,
-        public ?string $userName = null,
-        public ?string $password = null,
-        #[CastListToType(UserDefinedFieldEntity::class)]
+                        public int|array|null $contactID = null,
+                        public ?int $dateFormat = null,
+                        public ?float $id = null,
+                        public ?bool $isClientPortalActive = null,
+                        public ?int $numberFormat = null,
+                        public ?int $securityLevel = null,
+                        public ?int $timeFormat = null,
+                        public ?string $userName = null,
+                        public ?string $password = null,
+                #[CastListToType(UserDefinedFieldEntity::class)]
         public array $userDefinedFields = [],
     )
     {
+        if(is_array($contactID)) {
+            foreach($contactID as $prop => $value) {
+                if(property_exists($this, $prop)) {
+                    $this->$prop = $value;
+                }
+            }
+        }
     }
 
     /**

@@ -1,10 +1,14 @@
 <?php
 
 use Anteris\Autotask\API\CompanyNoteAttachments\CompanyNoteAttachmentCollection;
-use Anteris\Autotask\API\CompanyNoteAttachments\CompanyNoteAttachmentEntity;
 use Anteris\Autotask\API\CompanyNoteAttachments\CompanyNoteAttachmentService;
+use Anteris\Autotask\API\CompanyNoteAttachments\CompanyNoteAttachmentEntity;
+
 use Anteris\Autotask\API\CompanyNoteAttachments\CompanyNoteAttachmentQueryBuilder;
+ 
 use Tests\AbstractTest;
+use Tests\Mocks\ClientMock;
+use Faker\Factory as Faker;
 
 /**
  * Runs tests for CompanyNoteAttachmentService.
@@ -63,5 +67,16 @@ class CompanyNoteAttachmentServiceTest extends AbstractTest
             CompanyNoteAttachmentQueryBuilder::class,
             $this->client->companyNoteAttachments()->query()
         );
+    }
+
+    public function test_entity_can_be_constructed_from_array()
+    {
+        $values = ClientMock::mockValues(Faker::create(), CompanyNoteAttachmentEntity::class);
+
+        $entity = new CompanyNoteAttachmentEntity($values);
+        foreach($values as $key => $value) {
+            $actual = $entity->{$key};
+            $this->assertEquals($value, $actual, "Value of {$key} does not equal expected.");
+        }
     }
 }
